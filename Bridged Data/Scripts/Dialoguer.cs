@@ -409,7 +409,14 @@ namespace DaiMangou.BridgedData
         /// </summary>
        public void MoveNext()
         {
-            if(ActiveIndex +1 < dialogueData.ActiveCharacterDialogueSet.Count)
+
+            // we also deactivate the buttons BEFORE 
+            foreach(var button in RouteButtons)
+                button.gameObject.SetActive(false);
+          
+
+
+            if (ActiveIndex +1 < dialogueData.ActiveCharacterDialogueSet.Count)
             ActiveIndex += 1;
         }
         /// <summary>
@@ -417,7 +424,11 @@ namespace DaiMangou.BridgedData
         /// </summary>
       public  void MovePrevious()
         {
-            if(ActiveIndex>0)
+            foreach (var button in RouteButtons)
+                button.gameObject.SetActive(false);
+          
+
+            if (ActiveIndex>0)
             ActiveIndex -= 1;
         }
 

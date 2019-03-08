@@ -23,4 +23,11 @@ public class ExampleCondition1 : MonoBehaviour
 
         return false;
     }
+
+    public bool Del()
+    {
+        Debug.Log("deld");
+
+        return true;
+    }
 }

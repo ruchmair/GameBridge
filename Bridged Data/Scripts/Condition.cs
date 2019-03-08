@@ -22,7 +22,7 @@ namespace DaiMangou.BridgedData
         public GameObject TargetGameObject;
         // helps with setting first component data
         public GameObject cachedTargetObject;
-
+        private bool bl;
         //  public SerializableMethodInfo[] SerializedMethods;
 
         /* public string path ="";
@@ -48,6 +48,10 @@ namespace DaiMangou.BridgedData
 
         public int ComponentIndex = 0;
         public int MethodIndex = 0;
+
+        public delegate bool Del();
+        private static Del theDelegate;
+        bool addeddel = false;
 
         /*   [SerializeField]
            ReflectedData parent;
@@ -119,7 +123,7 @@ namespace DaiMangou.BridgedData
 
         public void GetGameObjectComponents()
         {
-            Components = TargetGameObject.GetComponents(typeof(Component));
+            Components = TargetGameObject.GetComponents(typeof(MonoBehaviour));// Component
 
 
         }
@@ -132,6 +136,7 @@ namespace DaiMangou.BridgedData
 
         public void GetComponentMethods()
         {
+
             Methods = Type.GetType(Components[ComponentIndex].GetType().Name)
                         .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
@@ -227,12 +232,26 @@ namespace DaiMangou.BridgedData
 
                 var comp = Components[ComponentIndex];
 
-                var bl = (bool)Methods[MethodIndex].Invoke(comp, null);
-                if (bl == ObjectiveBool)
+                // if(f == null)
+                //  f = (Func<bool>)Delegate.CreateDelegate(typeof(Func<bool>), Methods[MethodIndex])
+
+               
+                if (theDelegate == null)
+                theDelegate = (Del)Delegate.CreateDelegate(typeof(Del),comp, Methods[MethodIndex].Name);
+
+              // theDelegate();
+                if(theDelegate() == ObjectiveBool)
                 {
                     if (!Invoked)
                         targetEvent.Invoke();
                 }
+
+                /*   var bl = (bool)Methods[MethodIndex].Invoke(comp, null);
+                   if (bl == ObjectiveBool)
+                   {
+                       if (!Invoked)
+                           targetEvent.Invoke();
+                   }*/
 
 
             }
