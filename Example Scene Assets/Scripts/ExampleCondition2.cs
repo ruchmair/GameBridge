@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExampleCondition1 : MonoBehaviour
+public class ExampleCondition2 : MonoBehaviour
 {
 
-    public float health = 100;
-    public bool glove;
+    public int money = 100;
+    public int stamina = 100;
 
-    public bool Healthy()
+    public bool Rich()
     {
-        if (health > 70)
+        if (money > 10000000)
             return true;
 
         return false;
     }
 
-    public bool HasLegendaryGloves()
+    public bool Tired()
     {
-        if (glove)
+        if (stamina < 30)
             return true;
 
         return false;

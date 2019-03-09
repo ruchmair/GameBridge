@@ -23,56 +23,17 @@ namespace DaiMangou.BridgedData
         // helps with setting first component data
         public GameObject cachedTargetObject;
         private bool bl;
-        //  public SerializableMethodInfo[] SerializedMethods;
-
-        /* public string path ="";
-         public class ComponentAndMethods
-         {
-             public Component Component;
-             public MethodInfo[] Methods;
-             //public SerializableMethodInfo[] SerializedMethods;
-         }*/
-        // public ComponentAndMethods[] ComponentAndMethodsArray;
-
-
-        //   public string[] StringComponents = new string[1] { "None"};
-        //   public string[] StringMethods = new string[1] {"None" };
-
-        //  public string TargetComponentName = "";
-        //  public string TargetMethodName = "";
-
-        //  public string[][] ComponentsAndMethodData;
 
         public Component[] Components = new Component[0];
-        public MethodInfo[] Methods = new MethodInfo[0];
+        public MethodInfo[] cacheMethods = new MethodInfo[0];
+        public SerializableMethodInfo[] serializedMethods = new SerializableMethodInfo[0];
 
         public int ComponentIndex = 0;
         public int MethodIndex = 0;
 
         public delegate bool Del();
         private static Del theDelegate;
-        bool addeddel = false;
 
-        /*   [SerializeField]
-           ReflectedData parent;
-           public ReflectedData parentReflectedDataObject
-           {
-               get
-               {
-                   if(parent == null)
-                   {
-                       parent = transform.parent.GetComponent<ReflectedData>();
-                   }
-
-                   return parent;
-
-               }
-               set
-               {
-                   value = parent;
-               }
-
-           }*/
         public bool Invoked;
         public bool AutoStart = false;
         public bool PlaySoundEffect;
@@ -88,38 +49,7 @@ namespace DaiMangou.BridgedData
 
         }
 
-       /* public void GetAllComponentsAndMethodData()
-        {
-            var components = TargetGameObject.GetComponents(typeof(Component));
-            ComponentAndMethodsArray = new ComponentAndMethods[components.Count()];
 
-            for (int i = 0; i < components.Count(); i++)
-            {
-                ComponentAndMethodsArray[i].Component = components[i];
-
-                var methods = Type.GetType(ComponentAndMethodsArray[i].Component.GetType().ToString())// or components[i].GetType().ToString()
-          .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-
-                ComponentAndMethodsArray[i].Methods = new MethodInfo[methods.Count()];
-
-                for(int m = 0; m < ComponentAndMethodsArray[i].Methods.Count(); m++)
-                {
-                    ComponentAndMethodsArray[i].Methods[m] = methods[m];
-                }
-
-            }
-
-
-        }
-
-        public void SetComponentAndMethodData(object compIndex, object methIndex)
-        {
-            ComponentIndex = (int)compIndex;
-            MethodIndex = (int)methIndex;
-
-            path = ComponentAndMethodsArray[ComponentIndex].GetType().ToString() + "." + ComponentAndMethodsArray[ComponentIndex].Methods[MethodIndex];
-
-        }*/
 
         public void GetGameObjectComponents()
         {
@@ -137,40 +67,27 @@ namespace DaiMangou.BridgedData
         public void GetComponentMethods()
         {
 
-            Methods = Type.GetType(Components[ComponentIndex].GetType().Name)
+            cacheMethods = Type.GetType(Components[ComponentIndex].GetType().Name)
                         .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+            serializedMethods = new SerializableMethodInfo[cacheMethods.Count()];
+            for (int i = 0; i< cacheMethods.Count(); i++)
+            {
+                serializedMethods[i] = new SerializableMethodInfo(cacheMethods[i]);
+            }
 
         }
 
         public void SetMethod(object index)
         {
             MethodIndex = (int)index;
+
         }
 
 
-        /*  public void processMethods()
-        {
-           Components = TargetGameObject.GetComponents(typeof(Component));
-             for (int i = 0; i < Components.Count(); i++)
-                 //  Debug.Log(components[i].GetType().ToString());
-
-                 TargetComponentName = Components[1].GetType().ToString();
-
-             Methods = Type.GetType(TargetComponentName)
-                            .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-
-             TargetMethodName = Methods[0].Name;
-
-
-        }*/
 
         public void ProcessConditionData()
         {
-            /*  if (ObjectiveBool)//targetedBool == 
-              {
-                  if(!Invoked)
-                  targetEvent.Invoke();
-              }*/
 
             if (AutoStart)
             {
@@ -197,50 +114,19 @@ namespace DaiMangou.BridgedData
             }
 
 
-            /*  if (TargetMethodName != "")
-              {
-                  var typ = Type.GetType(TargetComponentName);
-                  var comp = TargetGameObject.GetComponent(TargetComponentName);
-                  if (Methods != null)
-                  {
-                     var bl =  (bool)Methods[0].Invoke(TargetGameObject.GetComponent(TargetComponentName), null);
-                      if(bl == ObjectiveBool)
-                      {
-                          if (!Invoked)
-                              targetEvent.Invoke();
-                      }
-                  }
 
-              }*/
-            /*  if (MethodIndex != -1)
-              {
-
-                  var comp = ComponentAndMethodsArray[ComponentIndex].Component;
-
-                      var bl = (bool)ComponentAndMethodsArray[ComponentIndex].Methods[MethodIndex].Invoke(comp, null);
-                      if (bl == ObjectiveBool)
-                      {
-                          if (!Invoked)
-                              targetEvent.Invoke();
-                      }
-
-
-              }*/
 
             if (TargetGameObject != null)
             {
 
                 var comp = Components[ComponentIndex];
 
-                // if(f == null)
-                //  f = (Func<bool>)Delegate.CreateDelegate(typeof(Func<bool>), Methods[MethodIndex])
-
                
                 if (theDelegate == null)
-                theDelegate = (Del)Delegate.CreateDelegate(typeof(Del),comp, Methods[MethodIndex].Name);
+                theDelegate = (Del)Delegate.CreateDelegate(typeof(Del),comp, serializedMethods[MethodIndex].methodName);
+                // theDelegate = (Del)Delegate.CreateDelegate(typeof(Del),comp, Methods[MethodIndex].Name);
 
-              // theDelegate();
-                if(theDelegate() == ObjectiveBool)
+                if (theDelegate() == ObjectiveBool)
                 {
                     if (!Invoked)
                         targetEvent.Invoke();

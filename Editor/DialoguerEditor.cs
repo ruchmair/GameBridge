@@ -554,7 +554,7 @@ namespace DaiMangou.GameBridgeEditor
 
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
-                var methodName = condition.Methods.Count() == 0 ? "None" : condition.Methods[condition.MethodIndex].Name;
+                var methodName = condition.serializedMethods.Count() == 0 ? "None" : condition.serializedMethods[condition.MethodIndex].methodName;
                 var disabledMethods = condition.TargetGameObject != null ? false : true;
                 EditorGUI.BeginDisabledGroup(disabledMethods);
 
@@ -564,9 +564,9 @@ namespace DaiMangou.GameBridgeEditor
 
                     condition.GetComponentMethods();
                     var menu = new GenericMenu();
-                    for (int i = 0; i < condition.Methods.Count(); i++)
+                    for (int i = 0; i < condition.serializedMethods.Count(); i++)
                     {
-                        menu.AddItem(new GUIContent(condition.Methods[i].Name), condition.MethodIndex.Equals(i), condition.SetMethod, i);
+                        menu.AddItem(new GUIContent(condition.serializedMethods[i].methodInfo.Name), condition.MethodIndex.Equals(i), condition.SetMethod, i);
                     }
                     menu.ShowAsContext();
                 }
