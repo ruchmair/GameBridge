@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEditor;
-using DaiMangou;
+using DaiMangou.GameBridge;
 using DaiMangou.Storyteller;
 using DaiMangou.Storyteller.Elements;
 using DaiMangou.BridgedData;
@@ -39,17 +39,6 @@ namespace DaiMangou.GameBridgeEditor
     [Serializable]
     public class GameBridgeEditorWindow : EditorWindow
     {
-        internal void VersionChck()
-        {
-            if (Idsys.Id != "2019")
-            {
-                M5_64_F1H = false;
-            }
-            else
-            {
-                M5_64_F1H = true;
-            }
-        }
 
 
         /* void Create(string name, Dialoguer dialoguer)
@@ -152,9 +141,8 @@ namespace DaiMangou.GameBridgeEditor
             titleContent.text = "Bridge";
             minSize = new Vector2(275, 400);
             titleContent.image = ImageLibrary.GameBridgeIconSmall;
-            VersionChck();
-
-
+            M5_64_F1H = EditorPrefs.GetBool("M5_64_F1H");
+            
             //  Debug.Log(typeof(GameBridgeEditor).AssemblyQualifiedName);
 
             _componentData = new List<ComponentData>();
@@ -567,6 +555,7 @@ namespace DaiMangou.GameBridgeEditor
                                         newReflectedDatagameObject.AddComponent<ReflectedData>();
                                         var theReflectedDataComponent = newReflectedDatagameObject.GetComponent<ReflectedData>();
                                         theReflectedDataComponent.DialoguerGameObject = SelectedDialoguer.gameObject;
+                                        theReflectedDataComponent.dialoguer = SelectedDialoguer;
                                         theReflectedDataComponent.self = newReflectedDatagameObject;
                                         SelectedDialoguer.reflectedDataSet[i] = theReflectedDataComponent;
                                         SelectedDialoguer.reflectedDataSet[i].Id = sortedList[i].Id;
@@ -578,6 +567,7 @@ namespace DaiMangou.GameBridgeEditor
                                         newCondition.AddComponent<Condition>();
                                         var _condition = newCondition.GetComponent<Condition>();
                                         _condition.DialoguerGameObject = SelectedDialoguer.gameObject;
+                                        _condition.dialoguer = SelectedDialoguer;
                                         _condition.Self = newCondition;
                                         newCondition.transform.SetParent(newReflectedDatagameObject.transform);
                                         // newCondition.hideFlags = HideFlags.HideInHierarchy;

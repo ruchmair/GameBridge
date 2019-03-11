@@ -17,6 +17,23 @@ namespace DaiMangou.BridgedData
     {
         public GameObject Self;
         public GameObject DialoguerGameObject;
+        public Dialoguer dialoguer;
+        public Dialoguer dialoguerComponent
+        {
+            get
+            {
+                if(dialoguer == null)
+                {
+                    dialoguer = DialoguerGameObject.GetComponent<Dialoguer>();
+                }
+
+                return dialoguer;
+            }
+            set
+            {
+                dialoguer = value;
+            }
+        }
         // public string Name = "No Name";
         public bool ObjectiveBool;
         public GameObject TargetGameObject;
@@ -43,6 +60,7 @@ namespace DaiMangou.BridgedData
         // this unity event only act as a proxy for an unity event in the ReflectedData
         public UnityEvent targetEvent = new UnityEvent();
 
+        private bool DelayTimerStarted;
 
         public void Awake()
         {
@@ -98,7 +116,11 @@ namespace DaiMangou.BridgedData
             if (UseTime)
             {
                 // setup the elapse timeer
-                targetEvent.Invoke();
+                if (!DelayTimerStarted)
+                {
+                    DelayTimerStarted = true;
+                    StartCoroutine(DelayTimer());
+                }
             }
 
             if (PlayVoiceClip)
@@ -159,6 +181,14 @@ namespace DaiMangou.BridgedData
 
         }
 
+
+       public IEnumerator DelayTimer()
+        {
+            yield return new WaitForSeconds(dialoguer.ActiveNodeData.Delay);
+            DelayTimerStarted = false;
+            targetEvent.Invoke();
+      
+        }
 
     }
 }

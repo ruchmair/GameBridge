@@ -63,6 +63,8 @@ namespace DaiMangou.BridgedData
 
         public RouteNodeData cashedRoute;
 
+        [NonSerialized]
+        public NodeData ActiveNodeData;
 
 
         int ival = 0;
@@ -244,9 +246,9 @@ namespace DaiMangou.BridgedData
             if (dialogueData.ActiveCharacterDialogueSet.Count == 0) return;
 
 
-            var data = dialogueData.ActiveCharacterDialogueSet[ActiveIndex];
+            ActiveNodeData = dialogueData.ActiveCharacterDialogueSet[ActiveIndex];
             // we call processData on the nodedata that is at ActiveInxex in the ActiveCharacterDialogueSet
-            data.ProcessData();
+            ActiveNodeData.ProcessData();
 
             // once there are no more routes processing events then we triger a refrsh
             if (ActiveEvents == 0)
@@ -257,18 +259,18 @@ namespace DaiMangou.BridgedData
 
             if (targetReflectedData == null || cashedActiveIndex != ActiveIndex)
             {
-                targetReflectedData = reflectedDataSet.Find(r => r.Id == data.DataID);
+                targetReflectedData = reflectedDataSet.Find(r => r.Id == ActiveNodeData.DataID);
                 cashedActiveIndex = ActiveIndex;
             }
 
-            Name.text = data.CharacterName;
+            Name.text = ActiveNodeData.CharacterName;
 
 
             // this wont run until we place routes in the ActiveCharacterDialogueSet. we wil do this by cheking each nodes connection at the end of generating the ActiveCharacterDialogueSet
             // and checkng if and connected nodes are routes, if they are , we just put them infront... of course after matching back the ID to make sure it is the correct node 
-            if (data.type == typeof(RouteNodeData))
+            if (ActiveNodeData.type == typeof(RouteNodeData))
             {
-                var route = (RouteNodeData)data;
+                var route = (RouteNodeData)ActiveNodeData;
 
                 // here we want to jump forward in the list by adding 1 to Active index if the RouteNodeData at ActiveIndex is from a character other than a player
                 // you can increase or reduce the flexibility of the system here 
@@ -334,9 +336,9 @@ namespace DaiMangou.BridgedData
 
             }
 
-            else if (data.type == typeof(LinkNodeData))
+            else if (ActiveNodeData.type == typeof(LinkNodeData))
             {
-                var link = (LinkNodeData)data;
+                var link = (LinkNodeData)ActiveNodeData;
 
                 // here we want to jump forward in the list by adding 1 to Active index if the RouteNodeData at ActiveIndex is from a character other than a player
                 // you can increase or reduce the flexibility of the system here 
@@ -362,9 +364,9 @@ namespace DaiMangou.BridgedData
                 }
 
             }
-            else if (data.type == typeof(EndNodeData))
+            else if (ActiveNodeData.type == typeof(EndNodeData))
             {
-                var end = (EndNodeData)data;
+                var end = (EndNodeData)ActiveNodeData;
 
                 if(!end.IsPlayer)
                 {
@@ -378,9 +380,9 @@ namespace DaiMangou.BridgedData
                 // do something . i dont know yet
 
             }
-            else if (data.type == typeof(ActionNodeData))
+            else if (ActiveNodeData.type == typeof(ActionNodeData))
             {
-                var action = (ActionNodeData)data;
+                var action = (ActionNodeData)ActiveNodeData;
                 text.text = action.Text;
                 foreach (var condition in targetReflectedData.Conditions)
                 {
@@ -392,7 +394,7 @@ namespace DaiMangou.BridgedData
             }
             else
             {
-                var dialogue = (DialogueNodeData)data;
+                var dialogue = (DialogueNodeData)ActiveNodeData;
                 text.text = dialogue.Text;
                 // TEST
                 foreach (var condition in targetReflectedData.Conditions)

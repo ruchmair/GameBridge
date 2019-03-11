@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using DaiMangou.BridgedData;
 using UnityEngine;
+using DaiMangou.GameBridge;
 using DaiMangou.Storyteller;
 using DaiMangou.Storyteller.Elements;
 using UnityEngine.Events;

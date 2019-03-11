@@ -14,4 +14,29 @@ Your test of game bridge and code inspection will help us find out if the founda
   
 <br>
 
- As you can see, the Trigger managet and Character are not started.
+ As you can see, the Trigger manager and Character are not started.
+
+ To use the example scene .
+
+ - Launch Storyteller
+
+- Open the Templates editor and import the new Dating Sim Template.
+
+- open the example scene
+
+-Delete the "Dating Sim Dialoguer" from the scene
+
+- Create a emprt gameobject
+
+- Launch Game Bridge.
+
+- Click Dialoguer
+
+- Select the current storyteller scene
+
+- click the little arrow in the upper left of the game bridge window
+
+- select the "Endou" character node in storyteller and  make sure the new "Dating Sim Dialoguer" gameobject i selected. 
+
+- look in the inspector for "Turn On Player" button and click it.
+

@@ -15,6 +15,23 @@ namespace DaiMangou.BridgedData
         public int Id = 0;
         public GameObject self;
         public GameObject DialoguerGameObject;
+        public Dialoguer dialoguer;
+        public Dialoguer dialoguerComponent
+        {
+            get
+            {
+                if (dialoguer == null)
+                {
+                    dialoguer = DialoguerGameObject.GetComponent<Dialoguer>();
+                }
+
+                return dialoguer;
+            }
+            set
+            {
+                dialoguer = value;
+            }
+        }
 
         public List<Condition> Conditions = new List<Condition>();
 
