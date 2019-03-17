@@ -18,7 +18,7 @@ namespace DaiMangou.BridgedData
 
         
 
-            dialoguer.cashedRoute = route;
+            dialoguer.CachedRoute = route;
 
 
 

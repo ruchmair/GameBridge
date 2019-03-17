@@ -10,18 +10,12 @@ public class ExampleCondition1 : MonoBehaviour
 
     public bool Healthy()
     {
-        if (health > 70)
-            return true;
-
-        return false;
+        return health > 70;
     }
 
     public bool HasLegendaryGloves()
     {
-        if (glove)
-            return true;
-
-        return false;
+        return glove;
     }
 
 

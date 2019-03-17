@@ -67,7 +67,7 @@ namespace DaiMangou.GameBridgeEditor
         {
             var selectedDialoguer = (Dialoguer)target;
 
-            DrawDefaultInspector();
+         
 
 
 
@@ -161,12 +161,74 @@ namespace DaiMangou.GameBridgeEditor
             GUILayout.EndHorizontal();
 
             #endregion
+            Separator();
+
+            GUILayout.Space(5);
+
+            DrawDefaultInspector();
 
             GUILayout.Space(5);
 
             Separator();
 
+            selectedDialoguer.dialogueData = (DialogueData)EditorGUILayout.ObjectField(selectedDialoguer.dialogueData, typeof(DialogueData), false);
 
+            #region General Settings
+
+            selectedDialoguer.DialoguerDisplaySettings.ShowGeneralSettings = EditorGUILayout.Foldout(selectedDialoguer.DialoguerDisplaySettings.ShowGeneralSettings, "General Settings");
+
+            if(selectedDialoguer.DialoguerDisplaySettings.ShowGeneralSettings)
+            {
+
+                GUILayout.Space(5);
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Text Display Mode");
+                selectedDialoguer.textDisplayMode = (TextDisplayMode)EditorGUILayout.EnumPopup(selectedDialoguer.textDisplayMode);
+                GUILayout.EndHorizontal();
+
+                switch (selectedDialoguer.textDisplayMode)
+                {
+                    case TextDisplayMode.Instant:
+
+                        break;
+                    case TextDisplayMode.Typed:
+                        GUILayout.BeginHorizontal();
+                       // GUILayout.FlexibleSpace();
+                        GUILayout.Label("Typing Speed");
+                        selectedDialoguer.TypingSpeed = EditorGUILayout.IntField(selectedDialoguer.TypingSpeed, GUILayout.Height(15),GUILayout.Width(150));
+                      //  GUILayout.FlexibleSpace();
+                        GUILayout.EndHorizontal();
+
+ 
+                        GUILayout.BeginHorizontal();
+                       // GUILayout.FlexibleSpace();
+                        GUILayout.Label("Delay");
+                        selectedDialoguer.Delay = EditorGUILayout.FloatField(selectedDialoguer.Delay,GUILayout.Height(15), GUILayout.Width(150));
+                      //  GUILayout.FlexibleSpace();
+                        GUILayout.EndHorizontal();
+
+                        GUILayout.BeginHorizontal();
+                        //GUILayout.FlexibleSpace();
+                        GUILayout.Label("Typing Sound");
+                        selectedDialoguer.TypingAudioCip = (AudioClip)EditorGUILayout.ObjectField(selectedDialoguer.TypingAudioCip, typeof(AudioClip),false, GUILayout.Height(15), GUILayout.Width(150));
+                       // GUILayout.FlexibleSpace();
+                        GUILayout.EndHorizontal();
+
+
+
+                        break;
+                    case TextDisplayMode.Custom:
+
+                        break;
+                }
+            }
+            GUILayout.Space(5);
+
+            #endregion
+
+
+            Separator();
 
             #region if there is no ActiveStory
             if (CurrentStory.ActiveStory == null)
@@ -181,13 +243,13 @@ namespace DaiMangou.GameBridgeEditor
             #endregion
 
             #region if scene id == default -1
-            if (selectedDialoguer.sceneID == -1)
+            if (selectedDialoguer.SceneID == -1)
             {
                 return;
             }
             #endregion
 
-            var scene = CurrentStory.ActiveStory.Scenes[selectedDialoguer.sceneID];
+            var scene = CurrentStory.ActiveStory.Scenes[selectedDialoguer.SceneID];
 
             #region if no nodes are in the scene
             if (scene.NodeElements.Count == 0)
@@ -210,7 +272,7 @@ namespace DaiMangou.GameBridgeEditor
             {
 
                 matchingSelectedNodeData = selectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(n => n.DataID == selectedNode.Id) as NodeData;
-                matchingReflectedData = selectedDialoguer.reflectedDataSet.Find(r => r.Id == selectedNode.Id);
+                matchingReflectedData = selectedDialoguer.ReflectedDataSet.Find(r => r.Id == selectedNode.Id);
 
                 ID = selectedNode.Id;
 
@@ -232,6 +294,13 @@ namespace DaiMangou.GameBridgeEditor
 
 
             #region Draw Selected Node name
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            GUILayout.Label(matchingSelectedNodeData.CharacterName,Theme.GameBridgeSkin.customStyles[5]);
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
             GUILayout.Label(matchingSelectedNodeData.Name, EditorStyles.boldLabel);
@@ -256,16 +325,16 @@ namespace DaiMangou.GameBridgeEditor
 
                 GUILayout.BeginHorizontal();
 
-                GUILayout.Label("Is Player");
                 GUILayout.FlexibleSpace();
-                var state = character.IsPlayer ? "Turn Off Player" : "Turn On Player";
-                if (GUILayout.Button(state))
+                var state = character.IsPlayer ? "Is Player,Turn Off Player ?" : "Is Not Player,Turn On Player ?";
+                if (GUILayout.Button(state,GUILayout.Height(15)))
                 {
                     character.IsPlayer = !character.IsPlayer;
                     foreach (var dataset in character.NodeDataInMyChain)
                         dataset.IsPlayer = character.IsPlayer;
 
                 }
+                GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
 
                 GUILayout.Space(5);
@@ -335,7 +404,7 @@ namespace DaiMangou.GameBridgeEditor
                     if (route.AlternativeRouteTitles.Count != route.DataIconnectedTo.Count)
                         route.AlternativeRouteTitles.Resize(route.DataIconnectedTo.Count);
 
-                    for (int i = 0; i < route.DataIconnectedTo.Count; i++)
+                    for (var i = 0; i < route.DataIconnectedTo.Count; i++)
                     {
                         route.AlternativeRouteTitles[i] = EditorGUILayout.DelayedTextField(route.AlternativeRouteTitles[i], GUILayout.Height(15));
                         GUILayout.Space(2);
@@ -376,49 +445,17 @@ namespace DaiMangou.GameBridgeEditor
 
         }
 
-        internal void DrawConditionCreator(Dialoguer dialoguer)
+        private void DrawConditionCreator(Dialoguer dialoguer)
         {
+
+
+            if (matchingReflectedData == null) return;
+            
             if (ConditionSpecificSpaceing.Count != matchingReflectedData.Conditions.Count)
                 ConditionSpecificSpaceing.Resize(matchingReflectedData.Conditions.Count);
 
-            if (matchingReflectedData == null) return;
 
-            /* if (matchingReflectedData.Conditions.Count == 0)
-             {
-                 #region add and delete conditions
-                 var area = EditorGUILayout.GetControlRect();
-                 var conditionBodyArea = area.ToUpperLeft(0, areaHeight);
-                 GUI.Box(conditionBodyArea, "", Theme.GameBridgeSkin.customStyles[2]);
-                 GUI.DrawTexture(area.ToUpperLeft(0, 3, 0, 15), Textures.DuskLighter);
-                 var conditionBodyFooter = conditionBodyArea.PlaceUnder(0, 5);
-                 GUI.Box(conditionBodyFooter, "", Theme.GameBridgeSkin.customStyles[3]);
-                 var buttonArea = conditionBodyFooter.ToLowerRight(55, 14, 0, 14);
-                 GUI.Box(buttonArea, "", Theme.GameBridgeSkin.customStyles[4]);
-
-                 var addConditionButtonArea = buttonArea.ToCenterLeft(8, 8, 10);
-                 if (ClickEvent.Click(4, addConditionButtonArea, ImageLibrary.addConditionIcon))
-                 {
-                     var newCondition = new GameObject(matchingSelectedNodeData.name + "Condition " + matchingReflectedData.Conditions.Count);
-                     newCondition.AddComponent<Condition>();
-                     var _condition = newCondition.GetComponent<Condition>();
-                     _condition.DialoguerGameObject = dialoguer.gameObject;
-                     _condition.self = newCondition;
-                     newCondition.transform.SetParent(matchingReflectedData.transform);
-                     // newCondition.hideFlags = HideFlags.HideInHierarchy;
-                     matchingReflectedData.Conditions.Add(newCondition.GetComponent<Condition>());
-
-
-                 }
-
-                 var deleteonditionButtonArea = buttonArea.ToCenterRight(8, 8, -10);
-                 if (ClickEvent.Click(4, deleteonditionButtonArea, ImageLibrary.deleteConditionIcon))
-                 { }
-
-                 GUILayout.Space(areaHeight - 10);
-                 #endregion
-             }*/
-
-            for (int c = 0; c < matchingReflectedData.Conditions.Count; c++)
+            for (var c = 0; c < matchingReflectedData.Conditions.Count; c++)
             {
                 var condition = matchingReflectedData.Conditions[c];
 
@@ -429,8 +466,8 @@ namespace DaiMangou.GameBridgeEditor
                 // GUI.DrawTexture(area.AddRect(0,0,0,60), Textures.Gray);
 
                 #region Backround UI
-                var eventcount = matchingReflectedData.Conditions[c].targetEvent.GetPersistentEventCount();
-                var countSpacing = eventcount < 2 ? 0 : ((eventcount - 1) * 43);
+                var eventCount = matchingReflectedData.Conditions[c].targetEvent.GetPersistentEventCount();
+                var countSpacing = eventCount < 2 ? 0 : ((eventCount - 1) * 43);
                 /* var conditionBodyArea = area.ToUpperLeft(0, areaHeight + countSpacing);*/
                 var conditionBodyArea = area.ToUpperLeft(0, 100 + ConditionSpecificSpaceing[c] + countSpacing);
                 GUI.Box(conditionBodyArea, "", Theme.GameBridgeSkin.customStyles[2]);
@@ -456,8 +493,9 @@ namespace DaiMangou.GameBridgeEditor
                     ConditionSpecificSpaceing.Add(0);
                 }
 
-                var deleteonditionButtonArea = buttonArea.ToCenterRight(8, 8, -10);
-                if (ClickEvent.Click(4, deleteonditionButtonArea, ImageLibrary.deleteConditionIcon))
+                var deleteConditionButtonArea = buttonArea.ToCenterRight(8, 8, -10);
+                if(c!=0)
+                if (ClickEvent.Click(4, deleteConditionButtonArea, ImageLibrary.deleteConditionIcon))
                 {
                     DestroyImmediate(matchingReflectedData.Conditions[c].gameObject);
                     matchingReflectedData.Conditions.RemoveAt(c);
@@ -468,8 +506,8 @@ namespace DaiMangou.GameBridgeEditor
 
 
 
-                var autostartInfo = condition.AutoStart ? "Auto Start Is On" : "Auto Start Is Off";
-                if (GUILayout.Button(autostartInfo, GUILayout.Height(15)))
+                var autoStartInfo = condition.AutoStart ? "Auto Start Is On" : "Auto Start Is Off";
+                if (GUILayout.Button(autoStartInfo, GUILayout.Height(15)))
                     condition.AutoStart = !condition.AutoStart;
 
                 /*  if (GUILayout.Button("get condtion methods", GUILayout.Height(15)))
@@ -491,7 +529,7 @@ namespace DaiMangou.GameBridgeEditor
 
                 #region  
 
-                // all the content inside here 2 added theiy y
+                // all the content inside here 2 added the y
                 GUILayout.BeginHorizontal();
 
                 GUILayout.FlexibleSpace();
@@ -527,8 +565,8 @@ namespace DaiMangou.GameBridgeEditor
 
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
-                var componentName = condition.Components.Count() == 0 ? "None" : condition.Components[condition.ComponentIndex].GetType().ToString();
-                var disabledComponents = condition.TargetGameObject != null ? false : true;
+                var componentName = !condition.Components.Any() ? "None" : condition.Components[condition.ComponentIndex].GetType().ToString();
+                var disabledComponents = condition.TargetGameObject == null;
                 EditorGUI.BeginDisabledGroup(disabledComponents);
 
 
@@ -537,7 +575,7 @@ namespace DaiMangou.GameBridgeEditor
 
                     condition.GetGameObjectComponents();
                     var menu = new GenericMenu();
-                    for (int i = 0; i < condition.Components.Count(); i++)
+                    for (var i = 0; i < condition.Components.Length; i++)
                     {
                         menu.AddItem(new GUIContent(condition.Components[i].GetType().ToString()), condition.ComponentIndex.Equals(i), condition.SetComponent, i);
                     }
@@ -555,8 +593,8 @@ namespace DaiMangou.GameBridgeEditor
 
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
-                var methodName = condition.serializedMethods.Count() == 0 ? "None" : condition.serializedMethods[condition.MethodIndex].methodName;
-                var disabledMethods = condition.TargetGameObject != null ? false : true;
+                var methodName = !condition.serializedMethods.Any() ? "None" : condition.serializedMethods[condition.MethodIndex].methodName;
+                var disabledMethods = condition.TargetGameObject == null;
                 EditorGUI.BeginDisabledGroup(disabledMethods);
 
 
@@ -565,7 +603,7 @@ namespace DaiMangou.GameBridgeEditor
 
                     condition.GetComponentMethods();
                     var menu = new GenericMenu();
-                    for (int i = 0; i < condition.serializedMethods.Count(); i++)
+                    for (var i = 0; i < condition.serializedMethods.Length; i++)
                     {
                         menu.AddItem(new GUIContent(condition.serializedMethods[i].methodInfo.Name), condition.MethodIndex.Equals(i), condition.SetMethod, i);
                     }

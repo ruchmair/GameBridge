@@ -91,7 +91,7 @@ namespace DaiMangou.BridgedData
 
         public void Aggregate()
         {
-            for (int i = 0; i < DataIconnectedTo.Count; i++)
+            for (var i = 0; i < DataIconnectedTo.Count; i++)
             {
                 var DataConnectedTo = DataIconnectedTo[i];
                 if (type == typeof(RouteNodeData))
@@ -104,27 +104,12 @@ namespace DaiMangou.BridgedData
                     }
                     else
                     {
-                        if (i == route.RouteID)
-                        {
-                            DataConnectedTo.Pass = false;
-                        }
-                        else
-                        {
-                            DataConnectedTo.Pass = true;
-                        }
+                        DataConnectedTo.Pass = i != route.RouteID;
                     }
                 }
                 else
                 {
-                    if (Pass)
-                    {
-
-                        DataConnectedTo.Pass = true;
-                    }
-                    else
-                    {
-                        DataConnectedTo.Pass = false;
-                    }
+                    DataConnectedTo.Pass = Pass;
                 }
                 DataConnectedTo.Aggregate();
 
@@ -159,12 +144,12 @@ namespace DaiMangou.BridgedData
             nodeDataList.Add(this);
             foreach (var data in DataIconnectedTo)
             {
-                if (!data.Pass)
-                    if (data.type != typeof(DialogueNodeData) && data.type != typeof(ActionNodeData))
-                    {
-                        data.AddMeToThisList(nodeDataList);
+                if (data.Pass) continue;
+                if (data.type != typeof(DialogueNodeData) && data.type != typeof(ActionNodeData))
+                {
+                    data.AddMeToThisList(nodeDataList);
 
-                    }
+                }
             }
 
         }

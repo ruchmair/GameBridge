@@ -57,7 +57,7 @@ namespace DaiMangou.GameBridgeEditor
              Selection.activeObject = null;
          }*/
 
-        public static string GetSelectedPathOrFallback()
+        private static string GetSelectedPathOrFallback()
         {
             var path = "Assets";
 
@@ -82,7 +82,7 @@ namespace DaiMangou.GameBridgeEditor
             AssetDatabase.Refresh();
         }
 
-        internal static void CreateDialogueData(string name, Dialoguer dialoguer)
+        private static void CreateDialogueData(string name, Dialoguer dialoguer)
         {
             if (!File.Exists(Application.dataPath + "/" + name + ".asset"))
             {
@@ -122,7 +122,7 @@ namespace DaiMangou.GameBridgeEditor
 
         }
 
-        internal static void ClearDialogueData(Dialoguer dialoguer)
+        private static void ClearDialogueData(Dialoguer dialoguer)
         {
             var data = AssetDatabase.LoadAssetAtPath(AssetDatabase.GetAssetPath(dialoguer.dialogueData), typeof(DialogueData)) as DialogueData;
             foreach (var d in data.FullCharacterDialogueSet)
@@ -152,7 +152,7 @@ namespace DaiMangou.GameBridgeEditor
                 new ComponentData(ImageLibrary.GBDialogueImage, "Dialoguer", "Processes and handles dialogue display"));
         }
 
-        internal void CheckSelection()
+        private void CheckSelection()
         {
             if (CurrentStory.ActiveStory == null)
             {
@@ -289,7 +289,7 @@ namespace DaiMangou.GameBridgeEditor
                     else
                     {
 
-                        if (SelectedCharacterData.sceneID > story.Scenes.Count() - 1)
+                        if (SelectedCharacterData.sceneID > story.Scenes.Count - 1)
                             SelectedCharacterData.sceneID -= 1;
 
                         var CharacterSelectionArea = new Rect(0, headerArea.height, Screen.width, Screen.height);
@@ -418,19 +418,19 @@ namespace DaiMangou.GameBridgeEditor
                     #region Dialoguer interface
 
                     #region if the dialogue scene id is not zero. meaning that the users has selected a scene. then we show a ui which they can use to go back to selct a new sce. this mean seting the dialogue sceneID to -1
-                    if (SelectedDialoguer.sceneID != -1)
+                    if (SelectedDialoguer.SceneID != -1)
                     {
                         var returnToScenSelectionArea = headerArea.ToCenterLeft(50, 30, 20);
                         GUI.Label(returnToScenSelectionArea, "SCENES", Theme.GameBridgeSkin.customStyles[0]);
                         if (ClickEvent.Click(1, returnToScenSelectionArea))
-                            SelectedDialoguer.sceneID = -1;
+                            SelectedDialoguer.SceneID = -1;
 
                     }
                     #endregion
 
 
 
-                    if (SelectedDialoguer.sceneID == -1)
+                    if (SelectedDialoguer.SceneID == -1)
                     {
                         #region we will prompt to uses to slect a scene , onve the scen is selected, we pass the scenes sceneid value to the dialogue scene id value.
 
@@ -458,7 +458,7 @@ namespace DaiMangou.GameBridgeEditor
                                 GUI.Label(textArea, story.Scenes[area.index].SceneName);
 
                                 if (ClickEvent.Click(3, area.value))
-                                    SelectedDialoguer.sceneID = area.index;
+                                    SelectedDialoguer.SceneID = area.index;
 
 
                             }
@@ -488,7 +488,7 @@ namespace DaiMangou.GameBridgeEditor
                                 {
 
                                     // rename the selectedgameObject with Dialoguer script on it
-                                    _Selection().name = story.Scenes[SelectedDialoguer.sceneID].SceneName + " Dialoguer";
+                                    _Selection().name = story.Scenes[SelectedDialoguer.SceneID].SceneName + " Dialoguer";
 
                                     #region Create the Dialogue Data Asset if none exists for the selected dialogue, else erase the preexisting node data insie the DialogueData and prepare it to get repopulated
 
@@ -499,7 +499,7 @@ namespace DaiMangou.GameBridgeEditor
                                     }
                                     else
                                     {
-                                        CreateDialogueData(story.Scenes[SelectedDialoguer.sceneID].SceneName, SelectedDialoguer);
+                                        CreateDialogueData(story.Scenes[SelectedDialoguer.SceneID].SceneName, SelectedDialoguer);
                                     }
 
                                     #endregion
@@ -507,7 +507,7 @@ namespace DaiMangou.GameBridgeEditor
 
 
                                     //find each character in the scene and aggregate the nodes in its chain. Rechaining 
-                                    foreach (var ch in story.Scenes[SelectedDialoguer.sceneID].Characters)
+                                    foreach (var ch in story.Scenes[SelectedDialoguer.SceneID].Characters)
                                     {
                                         ch.AggregateNodesInChain();
 
@@ -517,7 +517,7 @@ namespace DaiMangou.GameBridgeEditor
                                     var sortedList = new List<StoryElement>();
 
 
-                                    foreach (var el in story.Scenes[SelectedDialoguer.sceneID].NodeElements)
+                                    foreach (var el in story.Scenes[SelectedDialoguer.SceneID].NodeElements)
                                     {
                                         // we only want Route nodes, Dialogue nodes and Action Nodes Added to the list
                                         if (el.GetType() != typeof(MediaNode) || el.GetType() != typeof(AbstractNode))
@@ -532,14 +532,15 @@ namespace DaiMangou.GameBridgeEditor
                                     // increate the size of the list of node dataset to be the same as the sorted list
                                     SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Resize(sortedList.Count);
                                     // also resize the RefelectedData list size 
-                                    SelectedDialoguer.reflectedDataSet.Resize(sortedList.Count);
+                                    SelectedDialoguer.ReflectedDataSet.Resize(sortedList.Count);
 
-                                    var reflectedDataParent = new GameObject("ReflectedData");
+                                    var reflectedDataParent = new GameObject("Reflected Data");
                                     reflectedDataParent.transform.SetParent(SelectedDialoguer.transform);
-                                    // reflectedDataParent.hideFlags = HideFlags.HideInHierarchy;
+                                    reflectedDataParent.transform.localPosition = Vector3.zero;
+                                    reflectedDataParent.hideFlags = HideFlags.HideInHierarchy;
 
                                     // loop through the sorted list
-                                    for (int i = 0; i < sortedList.Count; i++)
+                                    for (var i = 0; i < sortedList.Count; i++)
                                     {
                                         // do a assignment of a new block of character data to the dialogue set at i so to avoid a null reference exception when we fetch data during pushing data to the scene
                                         // this is highly unlikely to be called
@@ -557,8 +558,8 @@ namespace DaiMangou.GameBridgeEditor
                                         theReflectedDataComponent.DialoguerGameObject = SelectedDialoguer.gameObject;
                                         theReflectedDataComponent.dialoguer = SelectedDialoguer;
                                         theReflectedDataComponent.self = newReflectedDatagameObject;
-                                        SelectedDialoguer.reflectedDataSet[i] = theReflectedDataComponent;
-                                        SelectedDialoguer.reflectedDataSet[i].Id = sortedList[i].Id;
+                                        SelectedDialoguer.ReflectedDataSet[i] = theReflectedDataComponent;
+                                        SelectedDialoguer.ReflectedDataSet[i].Id = sortedList[i].Id;
                                         //    newReflectedDatagameObject.hideFlags = HideFlags.HideInHierarchy;
                                         #endregion
 
@@ -697,7 +698,7 @@ namespace DaiMangou.GameBridgeEditor
 
                                         }
 
-                                        if (sortedList[i].GetType() == typeof(DialogueNode))
+                                        if (sortedList[i].GetType() != typeof(DialogueNode)) continue;
                                         {
                                             var dialogue = (DialogueNode)sortedList[i];
                                             SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(DialogueNodeData)) as NodeData;
@@ -730,9 +731,31 @@ namespace DaiMangou.GameBridgeEditor
 
                                     }
 
+                                    var AudioManager = new GameObject("Audio Manager");
+                                    AudioManager.transform.SetParent(SelectedDialoguer.transform);
+                                    AudioManager.transform.localPosition = Vector3.zero;
+
+                                    var TypingAudioManager = new GameObject("Typing");
+                                    TypingAudioManager.transform.SetParent(AudioManager.transform);
+                                    TypingAudioManager.transform.localPosition = Vector3.zero;
+                                    TypingAudioManager.AddComponent<AudioSource>();
+                                    SelectedDialoguer.TypingAudioSource = TypingAudioManager.GetComponent<AudioSource>();
+
+                                    var VoiceAudioManager = new GameObject("Voice");
+                                    VoiceAudioManager.transform.SetParent(AudioManager.transform);
+                                    VoiceAudioManager.transform.localPosition = Vector3.zero;
+                                    VoiceAudioManager.AddComponent<AudioSource>();
+                                    SelectedDialoguer.VoiceAudioSource = VoiceAudioManager.GetComponent<AudioSource>();
+
+                                    var SoundEffectsAudioManager = new GameObject("Sound Effects");
+                                    SoundEffectsAudioManager.transform.SetParent(AudioManager.transform);
+                                    SoundEffectsAudioManager.transform.localPosition = Vector3.zero;
+                                    SoundEffectsAudioManager.AddComponent<AudioSource>();
+                                    SelectedDialoguer.SoundEffectAudioSource = SoundEffectsAudioManager.GetComponent<AudioSource>();
+
                                     #region we do the loop yet again , this time to pass in specific data to nodes that have properties that take in node data values like character nodes Nodes in its hain, link nodes linked nodes and route nodes routed nodes
                                     // the process is quite efficient a node data in the sortedDataList and fullChracterDialogueSet have data with ID values that match.
-                                    for (int i = 0; i < sortedList.Count; i++)
+                                    for (var i = 0; i < sortedList.Count; i++)
                                     {
                                         if (sortedList[i].GetType() == typeof(CharacterNode))
                                         {
@@ -740,7 +763,7 @@ namespace DaiMangou.GameBridgeEditor
                                             var data = (CharacterNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
                                             SelectedDialoguer.Characters.Add(data);
 
-                                            for (int n = 0; n < sortedList.Count; n++)
+                                            for (var n = 0; n < sortedList.Count; n++)
                                             {
                                                 var node = sortedList[n];
                                                 if (node.CallingNode == character && node != character)
@@ -769,30 +792,24 @@ namespace DaiMangou.GameBridgeEditor
                                             }
                                         }
 
-                                        if (sortedList[i].GetType() == typeof(LinkNode))
+                                        if (sortedList[i].GetType() != typeof(LinkNode)) continue;
                                         {
                                             var link = (LinkNode)sortedList[i];
                                             var data = (LinkNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
 
 
-                                            if (link.LoopRoute != null)
-                                            {
-                                                var idOfLinkRoute = link.LoopRoute.Id;
-                                                data.loopRoute = SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(id => id.DataID == idOfLinkRoute) as RouteNodeData;
-
-
-                                            }
-
-
+                                            if (link.LoopRoute == null) continue;
+                                            var idOfLinkRoute = link.LoopRoute.Id;
+                                            data.loopRoute = SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(id => id.DataID == idOfLinkRoute) as RouteNodeData;
                                         }
                                     }
                                     #endregion
 
                                     #region now we use out matching IS's again to find out which nodes were connected in the SortedData list and we connect the nodes with matching IDs in the FullCharacterDataList with the same ID's
-                                    for (int i = 0; i < SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Count; i++)
+                                    for (var i = 0; i < SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Count; i++)
                                     {
                                         var data = SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                        var matchingStoryElement = story.Scenes[SelectedDialoguer.sceneID].NodeElements.Find(id => id.Id == data.DataID);
+                                        var matchingStoryElement = story.Scenes[SelectedDialoguer.SceneID].NodeElements.Find(id => id.Id == data.DataID);
                                         data.DataIconnectedTo.Resize(matchingStoryElement.NodesIMadeConnectionsTo.Count);
                                         data.DataConnectedToMe.Resize(matchingStoryElement.NodesThatMadeAConnectionToMe.Count);
 
@@ -806,7 +823,7 @@ namespace DaiMangou.GameBridgeEditor
 
                                         }
                                         // assign all the node data that are connected to the fullcharacterdataset element at i
-                                        for (int d = 0; d < data.DataConnectedToMe.Count; d++)
+                                        for (var d = 0; d < data.DataConnectedToMe.Count; d++)
                                         {
                                             data.DataConnectedToMe[d] = SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(v => v.DataID == matchingStoryElement.NodesThatMadeAConnectionToMe[d].Id);
 
@@ -833,7 +850,7 @@ namespace DaiMangou.GameBridgeEditor
 
                     Grid.BeginDynaicGuiGrid(headerArea.PlaceUnder(0, Screen.height - headerArea.height, 0, 30), 1, 3, _componentAreas, 0, 130, 0, 70);
 
-                    for (int a = 0; a < _componentAreas.Count; a++)
+                    for (var a = 0; a < _componentAreas.Count; a++)
                     {
                         var area = _componentAreas[a];
 

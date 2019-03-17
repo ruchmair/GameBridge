@@ -22,7 +22,7 @@ namespace DaiMangou.BridgedData
         {
             get
             {
-                if(dialoguer == null)
+                if (dialoguer == null)
                 {
                     dialoguer = DialoguerGameObject.GetComponent<Dialoguer>();
                 }
@@ -48,13 +48,13 @@ namespace DaiMangou.BridgedData
         public int ComponentIndex = 0;
         public int MethodIndex = 0;
 
-        public delegate bool Del();
+        private delegate bool Del();
         private static Del theDelegate;
 
         public bool Invoked;
         public bool AutoStart = false;
-        public bool PlaySoundEffect;
-        public bool PlayVoiceClip;
+        // public bool PlaySoundEffect;
+        //  public bool PlayVoiceClip;
         public bool UseTime;
 
         // this unity event only act as a proxy for an unity event in the ReflectedData
@@ -76,7 +76,7 @@ namespace DaiMangou.BridgedData
 
         }
 
-        public void SetComponent( object index)
+        public void SetComponent(object index)
         {
             ComponentIndex = (int)index;
         }
@@ -88,8 +88,8 @@ namespace DaiMangou.BridgedData
             cacheMethods = Type.GetType(Components[ComponentIndex].GetType().Name)
                         .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
-            serializedMethods = new SerializableMethodInfo[cacheMethods.Count()];
-            for (int i = 0; i< cacheMethods.Count(); i++)
+            serializedMethods = new SerializableMethodInfo[cacheMethods.Length];
+            for (var i = 0; i < cacheMethods.Length; i++)
             {
                 serializedMethods[i] = new SerializableMethodInfo(cacheMethods[i]);
             }
@@ -110,30 +110,39 @@ namespace DaiMangou.BridgedData
             if (AutoStart)
             {
                 if (!Invoked)
+                {
                     targetEvent.Invoke();
+                    Invoked = true;
+                }
             }
 
             if (UseTime)
             {
                 // setup the elapse timeer
-                if (!DelayTimerStarted)
+                if (!DelayTimerStarted && !Invoked)
                 {
                     DelayTimerStarted = true;
                     StartCoroutine(DelayTimer());
                 }
             }
 
-            if (PlayVoiceClip)
-            {
-                if (!Invoked)
-                    StartPlayingVoiceClip();
-            }
+            /*  if (PlayVoiceClip)
+              {
+                  if (!Invoked)
+                  {
+                      StartPlayingVoiceClip();
+                      Invoked = true;
+                  }
+              }
 
-            if (PlaySoundEffect)
-            {
-                if (!Invoked)
-                    StatyPlayingPlaySoundEffect();
-            }
+              if (PlaySoundEffect)
+              {
+                  if (!Invoked)
+                  {
+                      StatyPlayingPlaySoundEffect();
+                      Invoked = true;
+                  }
+              }*/
 
 
 
@@ -143,15 +152,16 @@ namespace DaiMangou.BridgedData
 
                 var comp = Components[ComponentIndex];
 
-               
+
                 if (theDelegate == null)
-                theDelegate = (Del)Delegate.CreateDelegate(typeof(Del),comp, serializedMethods[MethodIndex].methodName);
+                    theDelegate = (Del)Delegate.CreateDelegate(typeof(Del), comp, serializedMethods[MethodIndex].methodName);
                 // theDelegate = (Del)Delegate.CreateDelegate(typeof(Del),comp, Methods[MethodIndex].Name);
 
                 if (theDelegate() == ObjectiveBool)
                 {
                     if (!Invoked)
                         targetEvent.Invoke();
+                    Invoked = true;
                 }
 
                 /*   var bl = (bool)Methods[MethodIndex].Invoke(comp, null);
@@ -182,12 +192,12 @@ namespace DaiMangou.BridgedData
         }
 
 
-       public IEnumerator DelayTimer()
+        private IEnumerator DelayTimer()
         {
             yield return new WaitForSeconds(dialoguer.ActiveNodeData.Delay);
             DelayTimerStarted = false;
             targetEvent.Invoke();
-      
+            Invoked = true;
         }
 
     }
