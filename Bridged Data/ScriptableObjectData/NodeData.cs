@@ -35,7 +35,8 @@ namespace DaiMangou.BridgedData
         /// a specific ID number that matches the ID number of the node it represents in the storyteller
         /// </summary>
         [HideInInspector]
-        public int DataID;
+        //public int DataID;
+        public string UID = "";
         /// <summary>
         /// the  character who this node data belongs to
         /// </summary>

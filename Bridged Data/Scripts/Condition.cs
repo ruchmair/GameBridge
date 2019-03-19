@@ -39,7 +39,6 @@ namespace DaiMangou.BridgedData
         public GameObject TargetGameObject;
         // helps with setting first component data
         public GameObject cachedTargetObject;
-        private bool bl;
 
         public Component[] Components = new Component[0];
         public MethodInfo[] cacheMethods = new MethodInfo[0];

@@ -207,7 +207,7 @@ namespace DaiMangou.BridgedData
             if (TargetReflectedData == null || CachedActiveIndex != ActiveIndex)
             {
                 // needs to be optimized to not have to search thle list this way
-                TargetReflectedData = ReflectedDataSet.Find(r => r.Id == ActiveNodeData.DataID);
+                TargetReflectedData = ReflectedDataSet.Find(r => r.UID == ActiveNodeData.UID);
                 CachedActiveIndex = ActiveIndex;
             }
 
@@ -298,8 +298,8 @@ namespace DaiMangou.BridgedData
                 }
                 else // this will be check in the sime loop scene
                 {
-                    var idOfNodedLoopedTo = link.DataIconnectedTo[0].DataIconnectedTo[0].DataID;
-                    var loopedToNodeInTheActiveDialogueSet = dialogueData.ActiveCharacterDialogueSet.Find(rd => rd.DataID == idOfNodedLoopedTo);
+                    var idOfNodedLoopedTo = link.DataIconnectedTo[0].DataIconnectedTo[0].UID;
+                    var loopedToNodeInTheActiveDialogueSet = dialogueData.ActiveCharacterDialogueSet.Find(rd => rd.UID == idOfNodedLoopedTo);
 
                     ActiveIndex = dialogueData.ActiveCharacterDialogueSet.IndexOf(loopedToNodeInTheActiveDialogueSet);
 
@@ -402,7 +402,8 @@ namespace DaiMangou.BridgedData
         /// </summary>
         public void MoveNext()
         {
-
+            // make sureto set invoked back to false to false so that the events can be invoked again if we move back to it
+            TargetReflectedData.Conditions.All(inv => inv.Invoked == false);
 
             // we also deactivate the buttons BEFORE 
             foreach (var button in RouteButtons)
@@ -423,7 +424,8 @@ namespace DaiMangou.BridgedData
         /// </summary>
         public void MovePrevious()
         {
-
+            // make sureto set invoked back to false to false so that the events can be invoked again if we move back to it
+            TargetReflectedData.Conditions.All(inv => inv.Invoked == false);
 
             foreach (var button in RouteButtons)
                 button.gameObject.SetActive(false);
@@ -697,8 +699,11 @@ namespace DaiMangou.BridgedData
         /// <summary>
         /// 
         /// </summary>
-        [HideInInspector]
+       //[HideInInspector]
         public List<ReflectedData> ReflectedDataSet = new List<ReflectedData>();
+        public List<ReflectedData> TempReflectedDataSet = new List<ReflectedData>();
+        [HideInInspector]
+        public GameObject ReflectedDataParent;
 
         /// <summary>
         /// 

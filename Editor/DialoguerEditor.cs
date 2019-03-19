@@ -18,7 +18,7 @@ namespace DaiMangou.GameBridgeEditor
     {
         #region variables
         [SerializeField]
-        public int ID = 0;
+        public string UID = "";
         [SerializeField]
         private NodeData matchingSelectedNodeData;
         private ReflectedData matchingReflectedData;
@@ -268,13 +268,13 @@ namespace DaiMangou.GameBridgeEditor
             #endregion
 
             #region check if we made a selection of a diferent node
-            if (ID != selectedNode.Id)
+            if (UID != selectedNode.UID)
             {
 
-                matchingSelectedNodeData = selectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(n => n.DataID == selectedNode.Id) as NodeData;
-                matchingReflectedData = selectedDialoguer.ReflectedDataSet.Find(r => r.Id == selectedNode.Id);
+                matchingSelectedNodeData = selectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(n => n.UID == selectedNode.UID) as NodeData;
+                matchingReflectedData = selectedDialoguer.ReflectedDataSet.Find(r => r.UID == selectedNode.UID);
 
-                ID = selectedNode.Id;
+                UID = selectedNode.UID;
 
 
                 //  matchingNodeDataSerializedObject = null;

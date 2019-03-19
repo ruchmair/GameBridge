@@ -12,7 +12,8 @@ namespace DaiMangou.BridgedData
     [Serializable]
     public class ReflectedData : MonoBehaviour
     {
-        public int Id = 0;
+       // public int Id = 0;
+        public string UID = "";
         public GameObject self;
         public GameObject DialoguerGameObject;
         public Dialoguer dialoguer;

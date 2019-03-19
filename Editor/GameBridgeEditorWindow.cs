@@ -37,6 +37,53 @@ namespace DaiMangou.GameBridgeEditor
     }
 
     [Serializable]
+    public class PushSettings
+    {
+        public List<Rect> Areas = new List<Rect>();
+        public bool PushSoundEffects = true;
+        public bool PushVoiceOver = true;
+        public bool PushStoryboardImage = false;
+
+        public List<bool> pushOptions = new List<bool>();
+        public List<string> optionNames = new List<string>();
+
+        public bool OverrideAll;
+        public bool UpdateText= true;
+        public bool UpdateSoundEffects= true;
+        public bool UpdateVoiceover= true;
+        public bool UpdateCharacter= true;
+        public bool UpdateEnvironment= true;
+        public bool UpdateStoryboardImages= true;
+
+
+        public PushSettings()
+        {
+
+            pushOptions.AddMany(
+          OverrideAll,
+          UpdateText,
+          UpdateSoundEffects,
+          UpdateVoiceover,
+          UpdateCharacter,
+          UpdateEnvironment,
+          UpdateStoryboardImages);
+
+            optionNames.AddMany(
+          "Override All",
+          "Text",
+          "Sound Effects",
+          "Voiceover",
+          "Character",
+          "Environment",
+          "Storyboard ");
+
+
+        }
+
+
+    }
+
+    [Serializable]
     public class GameBridgeEditorWindow : EditorWindow
     {
 
@@ -141,8 +188,9 @@ namespace DaiMangou.GameBridgeEditor
             titleContent.text = "Bridge";
             minSize = new Vector2(275, 400);
             titleContent.image = ImageLibrary.GameBridgeIconSmall;
-            M5_64_F1H = EditorPrefs.GetBool("M5_64_F1H");
-            
+            M5_64_F1H = EditorPrefs.GetBool(i8.M5_64_F1H);
+
+
             //  Debug.Log(typeof(GameBridgeEditor).AssemblyQualifiedName);
 
             _componentData = new List<ComponentData>();
@@ -199,13 +247,11 @@ namespace DaiMangou.GameBridgeEditor
 
         }
 
-
-
         public void OnGUI()
         {
             ScreenRect.size = position.size;
 
-            Graphics.DrawTexture(ScreenRect, Textures.WebWhite);
+            Graphics.DrawTexture(ScreenRect, Textures.DuskLighter);
             GUI.skin = Theme.GameBridgeSkin;
             CheckSelection();
 
@@ -216,12 +262,12 @@ namespace DaiMangou.GameBridgeEditor
             }
 
             var windowArea = ScreenRect;
-            var headerArea = windowArea.ToUpperLeft(0, 60);
+            var headerArea = windowArea.ToUpperLeft(0, 50);
 
             if (EditID != 0)
             {
 
-                Graphics.DrawTexture(headerArea, Textures.White);
+                Graphics.DrawTexture(headerArea, Textures.DuskLight);
                 Graphics.DrawTexture(headerArea.ToLowerLeft(0, 2), Textures.Blue);
             }
 
@@ -246,7 +292,7 @@ namespace DaiMangou.GameBridgeEditor
                     if (SelectedCharacterData.sceneID != -1)
                     {
                         var returnToScenSelectionArea = headerArea.ToCenterLeft(50, 30, 20);
-                        GUI.Label(returnToScenSelectionArea, "SCENES", Theme.GameBridgeSkin.customStyles[0]);
+                        GUI.Label(returnToScenSelectionArea, "Scenes", Theme.GameBridgeSkin.customStyles[0]);
                         if (ClickEvent.Click(1, returnToScenSelectionArea))
                             SelectedCharacterData.sceneID = -1;
 
@@ -417,18 +463,11 @@ namespace DaiMangou.GameBridgeEditor
 
                     #region Dialoguer interface
 
-                    #region if the dialogue scene id is not zero. meaning that the users has selected a scene. then we show a ui which they can use to go back to selct a new sce. this mean seting the dialogue sceneID to -1
                     if (SelectedDialoguer.SceneID != -1)
                     {
-                        var returnToScenSelectionArea = headerArea.ToCenterLeft(50, 30, 20);
-                        GUI.Label(returnToScenSelectionArea, "SCENES", Theme.GameBridgeSkin.customStyles[0]);
-                        if (ClickEvent.Click(1, returnToScenSelectionArea))
-                            SelectedDialoguer.SceneID = -1;
+                        GUI.Label(headerArea, "Push Data To Game Scene", Theme.GameBridgeSkin.customStyles[0]);
 
                     }
-                    #endregion
-
-
 
                     if (SelectedDialoguer.SceneID == -1)
                     {
@@ -470,370 +509,488 @@ namespace DaiMangou.GameBridgeEditor
                         #endregion
                     }
 
-
                     else
                     {
-                        #region here we allow the uses to push their selected scenes data over into the game bridge. how this works is further broken down in this region
-                        var updateButtonArea = headerArea.PlaceUnder(20, 20, 10, 10);
-                        Graphics.DrawTexture(updateButtonArea, ImageLibrary.updateDataIcon);
+                        var activeDataPushArea = headerArea.PlaceUnder(0, ScreenRect.height - headerArea.height);
 
-                        Graphics.DrawTexture(updateButtonArea.PlaceUnder(Screen.width, 1, -10), Textures.Gray);
+
+                        #region if the dialogue scene id is not zero. meaning that the users has selected a scene. then we show a ui which they can use to go back to selct a new sce. this mean seting the dialogue sceneID to -1
+
+                        #endregion
+
+
+                        #region Push Data Settings
+
+                        #region Overview Export Settings
+                        var generalSettingsHeaderArea = activeDataPushArea.ToUpperLeft(0, 20);
+                        GUI.DrawTexture(generalSettingsHeaderArea, Textures.DuskLight);
+                        GUI.Label(generalSettingsHeaderArea, "General Settings");
+
+                        var pushSoundEfectToggleArea = generalSettingsHeaderArea.PlaceUnder(0, 0, 0, 10);
+                        pushSettings.PushSoundEffects = GUI.Toggle(pushSoundEfectToggleArea, pushSettings.PushSoundEffects, "Sound Effects");
+
+                        var pushVoiceOverToggleArea = pushSoundEfectToggleArea.PlaceUnder(0, 0, 0, 10);
+                        pushSettings.PushVoiceOver = GUI.Toggle(pushVoiceOverToggleArea, pushSettings.PushVoiceOver, "Voice Over");
+
+                        var pushStoryboardImageToggleArea = pushVoiceOverToggleArea.PlaceUnder(0, 0, 0, 10);
+                        pushSettings.PushStoryboardImage = GUI.Toggle(pushStoryboardImageToggleArea, pushSettings.PushStoryboardImage, "Storyboard Images");
+
+
+                        #endregion
+
+                        #region Push Data Update Setings
+
+                        var dataUpdateSettingsAreaHeader = pushStoryboardImageToggleArea.PlaceUnder(0, 20);
+                        GUI.DrawTexture(dataUpdateSettingsAreaHeader, Textures.DuskLight);
+                        GUI.Label(dataUpdateSettingsAreaHeader, "Pushed Data Update Settings");
+
+                        var dataUpdateSettingsArea = dataUpdateSettingsAreaHeader.PlaceUnder(0, 200);
+                        GUI.DrawTexture(dataUpdateSettingsArea.PlaceUnder(0, 1), Textures.Blue);
+
+                        Grid.BeginDynaicGuiGrid(dataUpdateSettingsArea, pushSettings.Areas, 5, 10, 100, 20, pushSettings.pushOptions.Count);
+
+                        for (var i = 0; i < pushSettings.pushOptions.Count; i++)
+                        {
+                            var updateSettingArea = pushSettings.Areas[i];
+                            pushSettings.pushOptions[i] = GUI.Toggle(updateSettingArea, pushSettings.pushOptions[i], pushSettings.optionNames[i]);
+                        }
+
+                        Grid.EndDynaicGuiGrid();
+
+                        #endregion
+                        #endregion
+
+
+
+                        #region here we allow the uses to push their selected scenes data over into the game bridge. how this works is further broken down in this region
+
+
+                        var pushDataButtonArea = activeDataPushArea.ToCenterBottom(50, 20);
 
                         #region begin pushing storyteller data over into dialoguer
-                        if (ClickEvent.Click(1, updateButtonArea))
+                        if (GUI.Button(pushDataButtonArea, "Push"))
                         {
-                            if (SelectedDialoguer.dialogueData != null)
-                                if (EditorUtility.DisplayDialog("Replace Data?",
-                "Are you sure you want to override the Current Dialoguers NodeData ?", "yes", "cancel"))
+                            if (SelectedDialoguer.dialogueData == null)
+                            {
+                                Debug.Log("please assign a Dialogue Data Object before pushing data");
+                                return;
+                            }
+
+                            #region rename the selectedgameObject with Dialoguer script on it
+                            _Selection().name = story.Scenes[SelectedDialoguer.SceneID].SceneName + " Dialoguer";
+                            #endregion
+
+                            #region find each character in the scene and aggregate the nodes in its chain. Rechaining 
+                            foreach (var ch in story.Scenes[SelectedDialoguer.SceneID].Characters)
+                            {
+                                ch.AggregateNodesInChain();
+
+                            }
+                            #endregion
+
+                            #region we create a new list which we will all nodes except Abstract and Media nodes in
+                            var sortedList = new List<StoryElement>();
+                            #endregion
+
+                            #region iterating through all the nodes in the current storyteller scene
+                            foreach (var el in story.Scenes[SelectedDialoguer.SceneID].NodeElements)
+                            {
+                                #region we only want Route nodes, Dialogue nodes and Action Nodes Added to the list
+                                if (el.GetType() != typeof(MediaNode) || el.GetType() != typeof(AbstractNode))
                                 {
-
-                                    // rename the selectedgameObject with Dialoguer script on it
-                                    _Selection().name = story.Scenes[SelectedDialoguer.SceneID].SceneName + " Dialoguer";
-
-                                    #region Create the Dialogue Data Asset if none exists for the selected dialogue, else erase the preexisting node data insie the DialogueData and prepare it to get repopulated
-
-                                    if (SelectedDialoguer.dialogueData != null)
-                                    {
-
-                                        ClearDialogueData(SelectedDialoguer);
-                                    }
-                                    else
-                                    {
-                                        CreateDialogueData(story.Scenes[SelectedDialoguer.SceneID].SceneName, SelectedDialoguer);
-                                    }
-
+                                    #region prevent nodes that are not connected to a character from being added to the list
+                                    if (el.CallingNode != null)
+                                        sortedList.Add(el);
                                     #endregion
 
-
-
-                                    //find each character in the scene and aggregate the nodes in its chain. Rechaining 
-                                    foreach (var ch in story.Scenes[SelectedDialoguer.SceneID].Characters)
-                                    {
-                                        ch.AggregateNodesInChain();
-
-                                    }
-
-                                    // we create a new list which we will all nodes except Abstract and Media nodes in
-                                    var sortedList = new List<StoryElement>();
-
-
-                                    foreach (var el in story.Scenes[SelectedDialoguer.SceneID].NodeElements)
-                                    {
-                                        // we only want Route nodes, Dialogue nodes and Action Nodes Added to the list
-                                        if (el.GetType() != typeof(MediaNode) || el.GetType() != typeof(AbstractNode))
-                                        {
-                                            // this would ensure that the node has a character calling node else it wont be added to the sortedList
-                                            if (el.CallingNode != null)
-                                                sortedList.Add(el);
-                                        }
-
-                                    }
-
-                                    // increate the size of the list of node dataset to be the same as the sorted list
-                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Resize(sortedList.Count);
-                                    // also resize the RefelectedData list size 
-                                    SelectedDialoguer.ReflectedDataSet.Resize(sortedList.Count);
-
-                                    var reflectedDataParent = new GameObject("Reflected Data");
-                                    reflectedDataParent.transform.SetParent(SelectedDialoguer.transform);
-                                    reflectedDataParent.transform.localPosition = Vector3.zero;
-                                    reflectedDataParent.hideFlags = HideFlags.HideInHierarchy;
-
-                                    // loop through the sorted list
-                                    for (var i = 0; i < sortedList.Count; i++)
-                                    {
-                                        // do a assignment of a new block of character data to the dialogue set at i so to avoid a null reference exception when we fetch data during pushing data to the scene
-                                        // this is highly unlikely to be called
-                                        if (sortedList[i].CallingNode == null)
-                                        {
-                                            Debug.LogWarning("please ensure that you have a character node starting each node chain");
-                                            return;
-                                        }
-
-                                        #region create a new instance of ReflectedData as a gameObject and then assign the sortedList value at i (NodeElement id) to the reflected data ID
-                                        var newReflectedDatagameObject = new GameObject(sortedList[i].Name + "Reflected");
-                                        newReflectedDatagameObject.transform.SetParent(reflectedDataParent.transform);
-                                        newReflectedDatagameObject.AddComponent<ReflectedData>();
-                                        var theReflectedDataComponent = newReflectedDatagameObject.GetComponent<ReflectedData>();
-                                        theReflectedDataComponent.DialoguerGameObject = SelectedDialoguer.gameObject;
-                                        theReflectedDataComponent.dialoguer = SelectedDialoguer;
-                                        theReflectedDataComponent.self = newReflectedDatagameObject;
-                                        SelectedDialoguer.ReflectedDataSet[i] = theReflectedDataComponent;
-                                        SelectedDialoguer.ReflectedDataSet[i].Id = sortedList[i].Id;
-                                        //    newReflectedDatagameObject.hideFlags = HideFlags.HideInHierarchy;
-                                        #endregion
-
-                                        #region Add the first conditin
-                                        var newCondition = new GameObject(newReflectedDatagameObject.name + "Condition " + theReflectedDataComponent.Conditions.Count);
-                                        newCondition.AddComponent<Condition>();
-                                        var _condition = newCondition.GetComponent<Condition>();
-                                        _condition.DialoguerGameObject = SelectedDialoguer.gameObject;
-                                        _condition.dialoguer = SelectedDialoguer;
-                                        _condition.Self = newCondition;
-                                        newCondition.transform.SetParent(newReflectedDatagameObject.transform);
-                                        // newCondition.hideFlags = HideFlags.HideInHierarchy;
-                                        theReflectedDataComponent.Conditions.Add(newCondition.GetComponent<Condition>());
-                                        #endregion
-
-
-
-
-                                        #region here we lookat each sorted list StoryElement and we pass their relevant data over into NodeData scriptable object data which had similar properties and names
-
-                                        if (sortedList[i].GetType() == typeof(CharacterNode))
-                                        {
-                                            var character = (CharacterNode)sortedList[i];
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(CharacterNodeData)) as NodeData;
-                                            AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
-                                            var imagePath = Application.dataPath;
-                                            // File.WriteAllBytes(imagePath+"/" + character.CharacterBios[character.BioID].CharacterName+ ".png", character.CharacterBios[character.BioID].CharacterImage.EncodeToPNG());
-                                            // var image = AssetDatabase.LoadAssetAtPath("Assets/" + character.CharacterBios[character.BioID].CharacterName+".png", typeof(Texture2D));
-                                            /// AssetDatabase.AddObjectToAsset(image, SelectedDialoguer.dialogueData);
-                                            // AssetDatabase.Refresh();
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
-                                            var data = (CharacterNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                            data.DataID = character.Id;
-                                            data.name = data.Name = character.CharacterBios[character.BioID].CharacterName;
-                                               data.CharacterName = character.CharacterBios[character.BioID].CharacterName;
-
-                                        }
-
-                                        if (sortedList[i].GetType() == typeof(EnvironmentNode))
-                                        {
-                                            var environment = (EnvironmentNode)sortedList[i];
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(EnvironmentNodeData)) as NodeData;
-                                            AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
-                                            var data = (EnvironmentNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-
-                                            data.DataID = environment.Id;
-                                            data.name = data.Name = environment.Name;
-                                            data.CharacterName = environment.CallingNode.Name;
-
-                                        }
-
-                                        if (sortedList[i].GetType() == typeof(RouteNode))
-                                        {
-                                            var route = (RouteNode)sortedList[i];
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(RouteNodeData)) as NodeData;
-                                            AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
-                                            var data = (RouteNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                            data.DataID = route.Id;
-                                            data.DurationSum = route.NodeDurationSum;
-                                            data.AutoSwitchValue = route.AutoSwitchValue;
-                                            data.Pass = route.Pass;
-                                            data.RouteID = route.RouteId;
-                                            data.name = data.Name = route.Name;
-                                            data.CharacterName = route.CallingNode.CharacterBios[route.CallingNode.BioID].CharacterName;
-                                            if (route.Environment)
-                                                data.EnvironmentName = route.Environment.Name;
-
-
-
-                                        }
-
-                                        if (sortedList[i].GetType() == typeof(LinkNode))
-                                        {
-                                            var link = (LinkNode)sortedList[i];
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(LinkNodeData)) as NodeData;
-                                            AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
-                                            var data = (LinkNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                            data.DataID = link.Id;
-                                            data.LoopValue = link.LoopValue;
-                                            data.name = data.Name = link.Name;
-                                            data.Pass = link.Pass;
-                                            data.Loop = link.Loop;
-                                            data.CharacterName = link.CallingNode.CharacterBios[link.CallingNode.BioID].CharacterName;
-                                            if (link.Environment)
-                                                data.EnvironmentName = link.Environment.Name;
-
-                                        }
-
-                                        if (sortedList[i].GetType() == typeof(EndNode))
-                                        {
-                                            var end = (EndNode)sortedList[i];
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(EndNodeData)) as NodeData;
-                                            AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
-                                            var data = (EndNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                            data.DataID = end.Id;
-                                            data.Pass = end.Pass;
-                                            data.name = data.Name = end.Name;
-                                            data.CharacterName = end.CallingNode.CharacterBios[end.CallingNode.BioID].CharacterName;
-                                            if (end.Environment)
-                                                data.EnvironmentName = end.Environment.Name;
-
-                                        }
-
-                                        if (sortedList[i].GetType() == typeof(ActionNode))
-                                        {
-                                            var action = (ActionNode)sortedList[i];
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(ActionNodeData)) as NodeData;
-                                            AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
-                                            var data = (ActionNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                            data.DataID = action.Id;
-                                            data.Delay = action.DelayTimeInSeconds;
-                                            data.Duration = action.TimeInSeconds;
-                                            data.StartTime = action.StartingTime;
-                                            data.DurationSum = action.NodeDurationSum;
-
-                                            if (action.StoryboardImage)
-                                                data.StoryboardImage = Sprite.Create(action.StoryboardImage, new Rect(0, 0, action.StoryboardImage.width, action.StoryboardImage.height), new Vector2(action.StoryboardImage.width / 2, action.StoryboardImage.height / 2));
-
-                                            data.SoundEffect = action.SoundEffect;
-
-                                            data.Pass = action.Pass;
-                                            data.ActionName = action.ActionName;
-                                            data.name = data.Name = action.Name;
-                                            data.Text = action.Text;
-                                            data.Tag = action.Tag;
-                                            data.CharacterName = action.CallingNode.CharacterBios[action.CallingNode.BioID].CharacterName;
-
-                                            if (action.Environment)
-                                                data.EnvironmentName = action.Environment.Name;
-                                            //  data.EnvironmentLocation = action.Environment.EnvironmentInfo.Location;
-
-                                        }
-
-                                        if (sortedList[i].GetType() != typeof(DialogueNode)) continue;
-                                        {
-                                            var dialogue = (DialogueNode)sortedList[i];
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(DialogueNodeData)) as NodeData;
-                                            AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
-                                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
-                                            var data = (DialogueNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                            data.DataID = dialogue.Id;
-                                            data.Delay = dialogue.DelayTimeInSeconds;
-                                            data.Duration = dialogue.TimeInSeconds;
-                                            data.StartTime = dialogue.StartingTime;
-                                            data.DurationSum = dialogue.NodeDurationSum;
-
-                                            if (dialogue.StoryboardImage)
-                                                data.StoryboardImage = Sprite.Create(dialogue.StoryboardImage, new Rect(0, 0, dialogue.StoryboardImage.width, dialogue.StoryboardImage.height), new Vector2(dialogue.StoryboardImage.width / 2, dialogue.StoryboardImage.height / 2));
-
-                                            data.SoundEffect = dialogue.SoundEffect;
-                                            data.VoicedDialogue = dialogue.VoiceRecording;
-                                            data.Pass = dialogue.Pass;
-                                            data.name = data.Name = dialogue.Name;
-                                            data.Text = dialogue.Text;
-                                            data.Tag = dialogue.Tag;
-
-                                            data.CharacterName = dialogue.CallingNode.CharacterBios[dialogue.CallingNode.BioID].CharacterName;
-                                            if (dialogue.Environment)
-                                                data.EnvironmentName = dialogue.Environment.Name;
-                                        }
-
-                                        #endregion
-
-
-                                    }
-
-                                    var AudioManager = new GameObject("Audio Manager");
-                                    AudioManager.transform.SetParent(SelectedDialoguer.transform);
-                                    AudioManager.transform.localPosition = Vector3.zero;
-
-                                    var TypingAudioManager = new GameObject("Typing");
-                                    TypingAudioManager.transform.SetParent(AudioManager.transform);
-                                    TypingAudioManager.transform.localPosition = Vector3.zero;
-                                    TypingAudioManager.AddComponent<AudioSource>();
-                                    SelectedDialoguer.TypingAudioSource = TypingAudioManager.GetComponent<AudioSource>();
-
-                                    var VoiceAudioManager = new GameObject("Voice");
-                                    VoiceAudioManager.transform.SetParent(AudioManager.transform);
-                                    VoiceAudioManager.transform.localPosition = Vector3.zero;
-                                    VoiceAudioManager.AddComponent<AudioSource>();
-                                    SelectedDialoguer.VoiceAudioSource = VoiceAudioManager.GetComponent<AudioSource>();
-
-                                    var SoundEffectsAudioManager = new GameObject("Sound Effects");
-                                    SoundEffectsAudioManager.transform.SetParent(AudioManager.transform);
-                                    SoundEffectsAudioManager.transform.localPosition = Vector3.zero;
-                                    SoundEffectsAudioManager.AddComponent<AudioSource>();
-                                    SelectedDialoguer.SoundEffectAudioSource = SoundEffectsAudioManager.GetComponent<AudioSource>();
-
-                                    #region we do the loop yet again , this time to pass in specific data to nodes that have properties that take in node data values like character nodes Nodes in its hain, link nodes linked nodes and route nodes routed nodes
-                                    // the process is quite efficient a node data in the sortedDataList and fullChracterDialogueSet have data with ID values that match.
-                                    for (var i = 0; i < sortedList.Count; i++)
-                                    {
-                                        if (sortedList[i].GetType() == typeof(CharacterNode))
-                                        {
-                                            var character = (CharacterNode)sortedList[i];
-                                            var data = (CharacterNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                            SelectedDialoguer.Characters.Add(data);
-
-                                            for (var n = 0; n < sortedList.Count; n++)
-                                            {
-                                                var node = sortedList[n];
-                                                if (node.CallingNode == character && node != character)
-                                                {
-
-                                                    data.NodeDataInMyChain.Add(SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(c => c.DataID == node.Id));
-                                                }
-                                            }
-                                         //   data.NodeDataInMyChain = data.NodeDataInMyChain.OrderBy(m => m.StartTime).ToList();
-                                            data.NodeDataInMyChain.All(a => a.CallingNodeData = data);
-
-
-                                        }
-
-                                        if (sortedList[i].GetType() == typeof(RouteNode))
-                                        {
-                                            var route = (RouteNode)sortedList[i];
-                                            var data = (RouteNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-
-                                            if (route.LinkedRout != null)
-                                            {
-                                                var idOfLinkRoute = route.LinkedRout.Id;
-                                                data.LinkedRoute = SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(id => id.DataID == idOfLinkRoute) as RouteNodeData;
-
-                                                data.LinkedRoute.RoutesLinkedToMe.Add(data);
-                                            }
-                                        }
-
-                                        if (sortedList[i].GetType() != typeof(LinkNode)) continue;
-                                        {
-                                            var link = (LinkNode)sortedList[i];
-                                            var data = (LinkNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-
-
-                                            if (link.LoopRoute == null) continue;
-                                            var idOfLinkRoute = link.LoopRoute.Id;
-                                            data.loopRoute = SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(id => id.DataID == idOfLinkRoute) as RouteNodeData;
-                                        }
-                                    }
-                                    #endregion
-
-                                    #region now we use out matching IS's again to find out which nodes were connected in the SortedData list and we connect the nodes with matching IDs in the FullCharacterDataList with the same ID's
-                                    for (var i = 0; i < SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Count; i++)
-                                    {
-                                        var data = SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                        var matchingStoryElement = story.Scenes[SelectedDialoguer.SceneID].NodeElements.Find(id => id.Id == data.DataID);
-                                        data.DataIconnectedTo.Resize(matchingStoryElement.NodesIMadeConnectionsTo.Count);
-                                        data.DataConnectedToMe.Resize(matchingStoryElement.NodesThatMadeAConnectionToMe.Count);
-
-                                        // assign all the node data that the fullcharacterdataset element at i connected to
-                                        for (int d = 0; d < data.DataIconnectedTo.Count; d++)
-                                        {
-                                            //   var iConnectedTo = matchingStoryElement.NodesIMadeConnectionsTo[d];
-                                            //   if (iConnectedTo.GetType() == typeof(DialogueNode)|| iConnectedTo.GetType() == typeof(ActionNode) || iConnectedTo.GetType() == typeof(RouteNode)|| iConnectedTo.GetType() == typeof(LinkNode))
-
-                                            data.DataIconnectedTo[d] = SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(v => v.DataID == matchingStoryElement.NodesIMadeConnectionsTo[d].Id);
-
-                                        }
-                                        // assign all the node data that are connected to the fullcharacterdataset element at i
-                                        for (var d = 0; d < data.DataConnectedToMe.Count; d++)
-                                        {
-                                            data.DataConnectedToMe[d] = SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(v => v.DataID == matchingStoryElement.NodesThatMadeAConnectionToMe[d].Id);
-
-                                        }
-                                    }
-                                    #endregion
-
-                                    // lastly we order the list of NodeData by their startStime value, this is  necessary for when we populate the  ActiveCharacterDialogueSet
-                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet = SelectedDialoguer.dialogueData.FullCharacterDialogueSet.OrderBy(r => r.StartTime).ToList();
                                 }
+                                #endregion
+
+                            }
+                            #endregion
+
+                            // increate the size of the list of node dataset to be the same as the sorted list
+                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Resize(sortedList.Count);
+                            // also resize the RefelectedData list size 
+
+                            //var updtereflectedData = 
+
+                            if (SelectedDialoguer.ReflectedDataSet.Count == 0)
+                            {
+                                SelectedDialoguer.ReflectedDataSet.Resize(sortedList.Count);
+
+                                SelectedDialoguer.ReflectedDataParent = new GameObject("Reflected Data");
+                                SelectedDialoguer.ReflectedDataParent.transform.SetParent(SelectedDialoguer.transform);
+                                SelectedDialoguer.ReflectedDataParent.transform.localPosition = Vector3.zero;
+                                // SelectedDialoguer.ReflectedDataParent.hideFlags = HideFlags.HideInHierarchy;
+
+
+                                var AudioManager = new GameObject("Audio Manager");
+                                AudioManager.transform.SetParent(SelectedDialoguer.transform);
+                                AudioManager.transform.localPosition = Vector3.zero;
+
+                                var TypingAudioManager = new GameObject("Typing");
+                                TypingAudioManager.transform.SetParent(AudioManager.transform);
+                                TypingAudioManager.transform.localPosition = Vector3.zero;
+                                TypingAudioManager.AddComponent<AudioSource>();
+                                SelectedDialoguer.TypingAudioSource = TypingAudioManager.GetComponent<AudioSource>();
+
+                                var VoiceAudioManager = new GameObject("Voice");
+                                VoiceAudioManager.transform.SetParent(AudioManager.transform);
+                                VoiceAudioManager.transform.localPosition = Vector3.zero;
+                                VoiceAudioManager.AddComponent<AudioSource>();
+                                SelectedDialoguer.VoiceAudioSource = VoiceAudioManager.GetComponent<AudioSource>();
+
+                                var SoundEffectsAudioManager = new GameObject("Sound Effects");
+                                SoundEffectsAudioManager.transform.SetParent(AudioManager.transform);
+                                SoundEffectsAudioManager.transform.localPosition = Vector3.zero;
+                                SoundEffectsAudioManager.AddComponent<AudioSource>();
+                                SelectedDialoguer.SoundEffectAudioSource = SoundEffectsAudioManager.GetComponent<AudioSource>();
+
+                            }
+                            else
+                            {
+                                SelectedDialoguer.TempReflectedDataSet = new List<ReflectedData>(); ;
+                                foreach (var capturedData in SelectedDialoguer.ReflectedDataSet)
+                                    SelectedDialoguer.TempReflectedDataSet.Add(capturedData);
+
+                                SelectedDialoguer.ReflectedDataSet = new List<ReflectedData>();
+                                SelectedDialoguer.ReflectedDataSet.Resize(sortedList.Count);
+
+                            }
+
+
+
+                            // loop through the sorted list
+                            for (var i = 0; i < sortedList.Count; i++)
+                            {
+                                // do a assignment of a new block of character data to the dialogue set at i so to avoid a null reference exception when we fetch data during pushing data to the scene
+                                // this is highly unlikely to be called
+                                if (sortedList[i].CallingNode == null)
+                                {
+                                    Debug.LogWarning("please ensure that you have a character node starting each node chain");
+                                    return;
+                                }
+
+                                #region create a new instance of ReflectedData as a gameObject and then assign the sortedList value at i (NodeElement id) to the reflected data ID
+                                var newReflectedDatagameObject = new GameObject(sortedList[i].Name + "Reflected");
+                                newReflectedDatagameObject.transform.SetParent(SelectedDialoguer.ReflectedDataParent.transform);
+                                newReflectedDatagameObject.AddComponent<ReflectedData>();
+                                var theReflectedDataComponent = newReflectedDatagameObject.GetComponent<ReflectedData>();
+                                theReflectedDataComponent.DialoguerGameObject = SelectedDialoguer.gameObject;
+                                theReflectedDataComponent.dialoguer = SelectedDialoguer;
+                                theReflectedDataComponent.self = newReflectedDatagameObject;
+                                SelectedDialoguer.ReflectedDataSet[i] = theReflectedDataComponent;
+                              //  SelectedDialoguer.ReflectedDataSet[i].Id = sortedList[i].Id;
+                                SelectedDialoguer.ReflectedDataSet[i].UID = sortedList[i].UID;
+                                //    newReflectedDatagameObject.hideFlags = HideFlags.HideInHierarchy;
+                                #endregion
+
+                                #region Add the first conditin
+                                var newCondition = new GameObject(newReflectedDatagameObject.name + "Condition " + theReflectedDataComponent.Conditions.Count);
+                                newCondition.AddComponent<Condition>();
+                                var _condition = newCondition.GetComponent<Condition>();
+                                _condition.DialoguerGameObject = SelectedDialoguer.gameObject;
+                                _condition.dialoguer = SelectedDialoguer;
+                                _condition.Self = newCondition;
+                                newCondition.transform.SetParent(newReflectedDatagameObject.transform);
+                                // newCondition.hideFlags = HideFlags.HideInHierarchy;
+                                theReflectedDataComponent.Conditions.Add(newCondition.GetComponent<Condition>());
+                                #endregion
+
+
+
+
+                                #region here we lookat each sorted list StoryElement and we pass their relevant data over into NodeData scriptable object data which had similar properties and names
+
+                                if (sortedList[i].GetType() == typeof(CharacterNode))
+                                {
+                                    var character = (CharacterNode)sortedList[i];
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(CharacterNodeData)) as NodeData;
+                                    AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
+                                    var imagePath = Application.dataPath;
+                                    // File.WriteAllBytes(imagePath+"/" + character.CharacterBios[character.BioID].CharacterName+ ".png", character.CharacterBios[character.BioID].CharacterImage.EncodeToPNG());
+                                    // var image = AssetDatabase.LoadAssetAtPath("Assets/" + character.CharacterBios[character.BioID].CharacterName+".png", typeof(Texture2D));
+                                    /// AssetDatabase.AddObjectToAsset(image, SelectedDialoguer.dialogueData);
+                                    // AssetDatabase.Refresh();
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
+                                    var data = (CharacterNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
+                                 //   data.DataID = character.Id;
+                                    data.UID = character.UID;
+                                    data.name = data.Name = character.CharacterBios[character.BioID].CharacterName;
+                                    data.CharacterName = character.CharacterBios[character.BioID].CharacterName;
+
+                                }
+
+                                if (sortedList[i].GetType() == typeof(EnvironmentNode))
+                                {
+                                    var environment = (EnvironmentNode)sortedList[i];
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(EnvironmentNodeData)) as NodeData;
+                                    AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
+                                    var data = (EnvironmentNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
+
+                                   // data.DataID = environment.Id;
+                                    data.UID = environment.UID;
+                                    data.name = data.Name = environment.Name;
+                                    data.CharacterName = environment.CallingNode.Name;
+
+                                }
+
+                                if (sortedList[i].GetType() == typeof(RouteNode))
+                                {
+                                    var route = (RouteNode)sortedList[i];
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(RouteNodeData)) as NodeData;
+                                    AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
+                                    var data = (RouteNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
+                                   // data.DataID = route.Id;
+                                    data.UID = route.UID;
+                                    data.DurationSum = route.NodeDurationSum;
+                                    data.AutoSwitchValue = route.AutoSwitchValue;
+                                    data.Pass = route.Pass;
+                                    data.RouteID = route.RouteId;
+                                    data.name = data.Name = route.Name;
+                                    data.CharacterName = route.CallingNode.CharacterBios[route.CallingNode.BioID].CharacterName;
+                                    if (route.Environment)
+                                        data.EnvironmentName = route.Environment.Name;
+
+
+
+                                }
+
+                                if (sortedList[i].GetType() == typeof(LinkNode))
+                                {
+                                    var link = (LinkNode)sortedList[i];
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(LinkNodeData)) as NodeData;
+                                    AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
+                                    var data = (LinkNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
+                                  //  data.DataID = link.Id;
+                                    data.UID = link.UID;
+                                    data.LoopValue = link.LoopValue;
+                                    data.name = data.Name = link.Name;
+                                    data.Pass = link.Pass;
+                                    data.Loop = link.Loop;
+                                    data.CharacterName = link.CallingNode.CharacterBios[link.CallingNode.BioID].CharacterName;
+                                    if (link.Environment)
+                                        data.EnvironmentName = link.Environment.Name;
+
+                                }
+
+                                if (sortedList[i].GetType() == typeof(EndNode))
+                                {
+                                    var end = (EndNode)sortedList[i];
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(EndNodeData)) as NodeData;
+                                    AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
+                                    var data = (EndNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
+                                   // data.DataID = end.Id;
+                                    data.UID = end.UID;
+                                    data.Pass = end.Pass;
+                                    data.name = data.Name = end.Name;
+                                    data.CharacterName = end.CallingNode.CharacterBios[end.CallingNode.BioID].CharacterName;
+                                    if (end.Environment)
+                                        data.EnvironmentName = end.Environment.Name;
+
+                                }
+
+                                if (sortedList[i].GetType() == typeof(ActionNode))
+                                {
+                                    var action = (ActionNode)sortedList[i];
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(ActionNodeData)) as NodeData;
+                                    AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
+                                    var data = (ActionNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
+                                   // data.DataID = action.Id;
+                                    data.UID = action.UID;
+                                    data.Delay = action.DelayTimeInSeconds;
+                                    data.Duration = action.TimeInSeconds;
+                                    data.StartTime = action.StartingTime;
+                                    data.DurationSum = action.NodeDurationSum;
+
+                                    if (action.StoryboardImage)
+                                        data.StoryboardImage = Sprite.Create(action.StoryboardImage, new Rect(0, 0, action.StoryboardImage.width, action.StoryboardImage.height), new Vector2(action.StoryboardImage.width / 2, action.StoryboardImage.height / 2));
+
+                                    if (pushSettings.PushSoundEffects)
+                                        data.SoundEffect = action.SoundEffect;
+
+                                    data.Pass = action.Pass;
+                                    data.ActionName = action.ActionName;
+                                    data.name = data.Name = action.Name;
+                                    data.Text = action.Text;
+                                    data.Tag = action.Tag;
+                                    data.CharacterName = action.CallingNode.CharacterBios[action.CallingNode.BioID].CharacterName;
+
+                                    if (action.Environment)
+                                        data.EnvironmentName = action.Environment.Name;
+                                    //  data.EnvironmentLocation = action.Environment.EnvironmentInfo.Location;
+
+                                }
+
+                                if (sortedList[i].GetType() == typeof(DialogueNode))
+                                {
+                                    var dialogue = (DialogueNode)sortedList[i];
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i] = ScriptableObject.CreateInstance(typeof(DialogueNodeData)) as NodeData;
+                                    AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
+                                    SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
+                                    var data = (DialogueNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
+                                  //  data.DataID = dialogue.Id;
+                                    data.UID = dialogue.UID;
+                                    data.Delay = dialogue.DelayTimeInSeconds;
+                                    data.Duration = dialogue.TimeInSeconds;
+                                    data.StartTime = dialogue.StartingTime;
+                                    data.DurationSum = dialogue.NodeDurationSum;
+
+                                    if (dialogue.StoryboardImage)
+                                        data.StoryboardImage = Sprite.Create(dialogue.StoryboardImage, new Rect(0, 0, dialogue.StoryboardImage.width, dialogue.StoryboardImage.height), new Vector2(dialogue.StoryboardImage.width / 2, dialogue.StoryboardImage.height / 2));
+
+                                    if(pushSettings.PushSoundEffects)
+                                    data.SoundEffect = dialogue.SoundEffect;
+
+                                    if (pushSettings.UpdateVoiceover)
+                                        data.VoicedDialogue = dialogue.VoiceRecording;
+
+                                  //  if (pushSettings.PushStoryboardImage)
+                                      //  data.StoryboardImage = dialogue.StoryboardImage;
+
+                                    data.Pass = dialogue.Pass;
+                                    data.name = data.Name = dialogue.Name;
+                                    data.Text = dialogue.Text;
+                                    data.Tag = dialogue.Tag;
+
+                                    data.CharacterName = dialogue.CallingNode.CharacterBios[dialogue.CallingNode.BioID].CharacterName;
+                                    if (dialogue.Environment)
+                                        data.EnvironmentName = dialogue.Environment.Name;
+                                }
+
+                                #endregion
+
+                                if (SelectedDialoguer.TempReflectedDataSet.Count != 0)
+                                {
+                                    foreach (var tempData in SelectedDialoguer.TempReflectedDataSet)
+                                    {
+                                        var data = SelectedDialoguer.ReflectedDataSet[i];
+                                        if (sortedList[i].UID == tempData.UID) 
+                                        {
+                                            if (tempData.UID == data.UID)
+                                            {
+                                                data.DialoguerGameObject = tempData.DialoguerGameObject;
+                                                data.dialoguer = tempData.dialoguer;
+                                                data.dialoguerComponent = tempData.dialoguerComponent;
+
+
+                                                for (var c = 0; c < data.Conditions.Count; c++)
+                                                {
+                                                    var conditionToDelete = data.Conditions[c];
+                                                    DestroyImmediate(conditionToDelete.Self);
+                                                    data.Conditions.RemoveAt(c);
+                                                }
+
+                                                foreach (var condition in tempData.Conditions)
+                                                {
+                                                    condition.Self.transform.SetParent(data.self.transform);
+                                                    data.Conditions.Add(condition);
+                                                }
+
+
+                                            }
+                                        }
+                                    }
+
+
+                                }
+
+                            }
+                            foreach (var item in SelectedDialoguer.TempReflectedDataSet)
+                            {
+                                DestroyImmediate(item.self);
+                            }
+                            SelectedDialoguer.TempReflectedDataSet.RemoveAll(n => n == null);
+
+
+
+                            #region we do the loop yet again , this time to pass in specific data to nodes that have properties that take in node data values like character nodes Nodes in its hain, link nodes linked nodes and route nodes routed nodes
+                            // the process is quite efficient a node data in the sortedDataList and fullChracterDialogueSet have data with ID values that match.
+                            for (var i = 0; i < sortedList.Count; i++)
+                            {
+                                if (sortedList[i].GetType() == typeof(CharacterNode))
+                                {
+                                    var character = (CharacterNode)sortedList[i];
+                                    var data = (CharacterNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
+                                    SelectedDialoguer.Characters.Add(data);
+
+                                    for (var n = 0; n < sortedList.Count; n++)
+                                    {
+                                        var node = sortedList[n];
+                                        if (node.CallingNode == character && node != character)
+                                        {
+
+                                            data.NodeDataInMyChain.Add(SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(c => c.UID == node.UID));
+                                        }
+                                    }
+                                    //   data.NodeDataInMyChain = data.NodeDataInMyChain.OrderBy(m => m.StartTime).ToList();
+                                    data.NodeDataInMyChain.All(a => a.CallingNodeData = data);
+
+
+                                }
+
+                                if (sortedList[i].GetType() == typeof(RouteNode))
+                                {
+                                    var route = (RouteNode)sortedList[i];
+                                    var data = (RouteNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
+
+                                    if (route.LinkedRout != null)
+                                    {
+                                        var idOfLinkRoute = route.LinkedRout.UID;
+                                        data.LinkedRoute = SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(id => id.UID == idOfLinkRoute) as RouteNodeData;
+
+                                        data.LinkedRoute.RoutesLinkedToMe.Add(data);
+                                    }
+                                }
+
+                                if (sortedList[i].GetType() != typeof(LinkNode)) continue;
+                                {
+                                    var link = (LinkNode)sortedList[i];
+                                    var data = (LinkNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
+
+
+                                    if (link.LoopRoute == null) continue;
+                                    var idOfLinkRoute = link.LoopRoute.UID;
+                                    data.loopRoute = SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(id => id.UID == idOfLinkRoute) as RouteNodeData;
+                                }
+                            }
+                            #endregion
+
+                            #region now we use out matching IS's again to find out which nodes were connected in the SortedData list and we connect the nodes with matching IDs in the FullCharacterDataList with the same ID's
+                            for (var i = 0; i < SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Count; i++)
+                            {
+                                var data = SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
+                                var matchingStoryElement = story.Scenes[SelectedDialoguer.SceneID].NodeElements.Find(id => id.UID == data.UID);
+                                data.DataIconnectedTo.Resize(matchingStoryElement.NodesIMadeConnectionsTo.Count);
+                                data.DataConnectedToMe.Resize(matchingStoryElement.NodesThatMadeAConnectionToMe.Count);
+
+                                // assign all the node data that the fullcharacterdataset element at i connected to
+                                for (int d = 0; d < data.DataIconnectedTo.Count; d++)
+                                {
+                                    //   var iConnectedTo = matchingStoryElement.NodesIMadeConnectionsTo[d];
+                                    //   if (iConnectedTo.GetType() == typeof(DialogueNode)|| iConnectedTo.GetType() == typeof(ActionNode) || iConnectedTo.GetType() == typeof(RouteNode)|| iConnectedTo.GetType() == typeof(LinkNode))
+
+                                    data.DataIconnectedTo[d] = SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(v => v.UID == matchingStoryElement.NodesIMadeConnectionsTo[d].UID);
+
+                                }
+                                // assign all the node data that are connected to the fullcharacterdataset element at i
+                                for (var d = 0; d < data.DataConnectedToMe.Count; d++)
+                                {
+                                    data.DataConnectedToMe[d] = SelectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(v => v.UID == matchingStoryElement.NodesThatMadeAConnectionToMe[d].UID);
+
+                                }
+                            }
+                            #endregion
+
+                            // lastly we order the list of NodeData by their startStime value, this is  necessary for when we populate the  ActiveCharacterDialogueSet
+                            SelectedDialoguer.dialogueData.FullCharacterDialogueSet = SelectedDialoguer.dialogueData.FullCharacterDialogueSet.OrderBy(r => r.StartTime).ToList();
+
                         }
                         #endregion
                         #endregion
@@ -854,7 +1011,7 @@ namespace DaiMangou.GameBridgeEditor
                     {
                         var area = _componentAreas[a];
 
-                        GUI.DrawTexture(area, Textures.White);
+                        GUI.DrawTexture(area, Textures.DuskLight);
                         if (InfoBlock.Click(1, area, _componentData[a].Icons, SnapPosition.TopMiddle, Color.clear, InfoBlock.HoverEvent.None, Theme.GameBridgeSkin.customStyles[0], Theme.GameBridgeSkin.customStyles[1], _componentData[a].Name, _componentData[a].Description, 0, 0, 180, 60))
                             AttachComponen(a);
                     }
@@ -871,12 +1028,12 @@ namespace DaiMangou.GameBridgeEditor
 
         }
 
-
         public void OnInspectorUpdate()
         {
             Repaint();
 
         }
+
         void AttachComponen(int a)
         {
             switch (a)
@@ -902,10 +1059,44 @@ namespace DaiMangou.GameBridgeEditor
 
         }
 
+        protected void OverrideAll()
+        {
+            if (EditorUtility.DisplayDialog("Replace Data?",
+"Are you sure you want to override the Current Dialoguers NodeData ?", "yes", "cancel"))
+            {
+
+            }
+        }
+
+        protected void UpdateText()
+        {
+
+        }
+        protected void UpdateSoundEffects()
+        {
+
+        }
+        protected void UpdateVoiceover()
+        {
+
+        }
         protected void UpdateChatacter()
         {
 
         }
+        protected void UpdateEnvironment()
+        {
+
+        }
+        protected void UpdateStoryboardImage()
+        {
+
+        }
+        protected void UpdateNoeData()
+        {
+
+        }
+
 
 
         #region variables
@@ -942,5 +1133,7 @@ namespace DaiMangou.GameBridgeEditor
 
         #endregion
 
+        public PushSettings pushSettings = new PushSettings();
     }
+
 }
