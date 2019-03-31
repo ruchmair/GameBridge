@@ -159,6 +159,8 @@ namespace DaiMangou.BridgedData
                             link.StartTime = link.DataIconnectedTo[0].StartTime;
 
                         }
+                        // end nodes are connected to nothing , so we must look at the entire list again and find the node data with the largest start time in the current chain and use that value as the 
+                        // an nodes start time
                         if (character.NodeDataInMyChain[i].type == typeof(EndNodeData))
                         {
                             var end = (EndNodeData)character.NodeDataInMyChain[i];
@@ -176,7 +178,6 @@ namespace DaiMangou.BridgedData
                     }
                 }
             }
-
 
             dialogueData.ActiveCharacterDialogueSet = dialogueData.ActiveCharacterDialogueSet.OrderBy(t => t.StartTime).ToList();
             #endregion
@@ -331,9 +332,9 @@ namespace DaiMangou.BridgedData
             {
                 var action = (ActionNodeData)ActiveNodeData;
                 DisplayedTextUI.text = action.Text;
-                
-                if(action.SoundEffect != null)
-                SoundEffectAudioSource.clip = action.SoundEffect;
+
+                if (action.SoundEffect != null)
+                    SoundEffectAudioSource.clip = action.SoundEffect;
 
                 foreach (var condition in TargetReflectedData.Conditions)
                 {
@@ -354,11 +355,11 @@ namespace DaiMangou.BridgedData
                 if (textDisplayMode == TextDisplayMode.Instant)
                     DisplayedTextUI.text = dialogue.Text;
 
-                if(dialogue.VoicedDialogue != null)
-                VoiceAudioSource.clip = dialogue.VoicedDialogue;
+                if (dialogue.VoicedDialogue != null)
+                    VoiceAudioSource.clip = dialogue.VoicedDialogue;
 
-                if(dialogue.SoundEffect != null)
-                SoundEffectAudioSource.clip = dialogue.SoundEffect;
+                if (dialogue.SoundEffect != null)
+                    SoundEffectAudioSource.clip = dialogue.SoundEffect;
 
                 // TEST
                 foreach (var condition in TargetReflectedData.Conditions)
@@ -769,9 +770,9 @@ namespace DaiMangou.BridgedData
         public AudioSource TypingAudioSource;
         [HideInInspector]
         public AudioClip TypingAudioCip = null;
-      //  [HideInInspector]
+        //  [HideInInspector]
         public AudioSource VoiceAudioSource;
-       // [HideInInspector]
+        // [HideInInspector]
         public AudioSource SoundEffectAudioSource;
         #endregion
 

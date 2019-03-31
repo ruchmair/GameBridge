@@ -61,6 +61,8 @@ namespace DaiMangou.BridgedData
         public float Duration;
         [HideInInspector]
         public float Delay;
+        [HideInInspector]
+        public float RealtimeDelay;
         // [HideInInspector]
         public float StartTime;
         [HideInInspector]

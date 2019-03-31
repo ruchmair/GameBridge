@@ -361,7 +361,7 @@ namespace DaiMangou.GameBridgeEditor
                 EditorGUILayout.LabelField("Start Time", action.StartTime.ToString());
                 EditorGUILayout.LabelField("Duration", action.Duration.ToString());
                 EditorGUILayout.LabelField("Delay", action.Delay.ToString());
-
+               // EditorGUILayout.LabelField("Realtime Delay", action.RealtimeDelay.ToString());
                 DrawConditionCreator(selectedDialoguer);
             }
 
@@ -384,7 +384,7 @@ namespace DaiMangou.GameBridgeEditor
                 EditorGUILayout.LabelField("Start Time", dialogue.StartTime.ToString());
                 EditorGUILayout.LabelField("Duration", dialogue.Duration.ToString());
                 EditorGUILayout.LabelField("Delay", dialogue.Delay.ToString());
-
+               // EditorGUILayout.LabelField("Realtime Delay", dialogue.RealtimeDelay.ToString());
                 DrawConditionCreator(selectedDialoguer);
 
             }

@@ -48,12 +48,12 @@ namespace DaiMangou.GameBridgeEditor
         public List<string> optionNames = new List<string>();
 
         public bool OverrideAll;
-        public bool UpdateText= true;
-        public bool UpdateSoundEffects= true;
-        public bool UpdateVoiceover= true;
-        public bool UpdateCharacter= true;
-        public bool UpdateEnvironment= true;
-        public bool UpdateStoryboardImages= true;
+        public bool UpdateText = true;
+        public bool UpdateSoundEffects = true;
+        public bool UpdateVoiceover = true;
+        public bool UpdateCharacter = true;
+        public bool UpdateEnvironment = true;
+        public bool UpdateStoryboardImages = true;
 
 
         public PushSettings()
@@ -196,7 +196,6 @@ namespace DaiMangou.GameBridgeEditor
             _componentData = new List<ComponentData>();
             _componentData.AddMany(
                 new ComponentData(ImageLibrary.GBCharacterImage, "Character", "takes your character story into scene"),
-                new ComponentData(ImageLibrary.GBTriggerImage, "Trigger Manager", " Managers event triggers"),
                 new ComponentData(ImageLibrary.GBDialogueImage, "Dialoguer", "Processes and handles dialogue display"));
         }
 
@@ -227,20 +226,14 @@ namespace DaiMangou.GameBridgeEditor
                     SelectedCharacterData = _Selection().GetComponent<Character>();
                     EditID = 1;
                 }
-
-                else if (_Selection().GetComponent<TriggerManager>() != null)
-                {
-                    SelectedTriggerManager = _Selection().GetComponent<TriggerManager>();
-                    EditID = 2;
-                }
                 else if (_Selection().GetComponent<Dialoguer>() != null)
                 {
                     SelectedDialoguer = _Selection().GetComponent<Dialoguer>();
-                    EditID = 3;
+                    EditID = 2;
                 }
                 else
                 {
-                    EditID = 4;
+                    EditID = 3;
                 }
             }
 
@@ -282,8 +275,8 @@ namespace DaiMangou.GameBridgeEditor
             {
                 case 0:
 
-
-                    Graphics.DrawTexture(ScreenRect.ToCenter(100, 100), ImageLibrary.GameBridgeIcon);
+                    //GUI.color = new Color(1, 1, 1,Mathf.Lerp(0,1,));
+                    GUI.DrawTexture(ScreenRect.ToCenter(100, 100), ImageLibrary.GameBridgeIcon);
 
                     break;
 
@@ -450,16 +443,7 @@ namespace DaiMangou.GameBridgeEditor
                     #endregion
 
                     break;
-
                 case 2:
-
-                    #region Trigger Manager
-
-
-                    #endregion;
-
-                    break;
-                case 3:
 
                     #region Dialoguer interface
 
@@ -622,7 +606,7 @@ namespace DaiMangou.GameBridgeEditor
                                 SelectedDialoguer.ReflectedDataParent = new GameObject("Reflected Data");
                                 SelectedDialoguer.ReflectedDataParent.transform.SetParent(SelectedDialoguer.transform);
                                 SelectedDialoguer.ReflectedDataParent.transform.localPosition = Vector3.zero;
-                                // SelectedDialoguer.ReflectedDataParent.hideFlags = HideFlags.HideInHierarchy;
+                                SelectedDialoguer.ReflectedDataParent.hideFlags = HideFlags.HideInHierarchy;
 
 
                                 var AudioManager = new GameObject("Audio Manager");
@@ -681,7 +665,7 @@ namespace DaiMangou.GameBridgeEditor
                                 theReflectedDataComponent.dialoguer = SelectedDialoguer;
                                 theReflectedDataComponent.self = newReflectedDatagameObject;
                                 SelectedDialoguer.ReflectedDataSet[i] = theReflectedDataComponent;
-                              //  SelectedDialoguer.ReflectedDataSet[i].Id = sortedList[i].Id;
+                                //  SelectedDialoguer.ReflectedDataSet[i].Id = sortedList[i].Id;
                                 SelectedDialoguer.ReflectedDataSet[i].UID = sortedList[i].UID;
                                 //    newReflectedDatagameObject.hideFlags = HideFlags.HideInHierarchy;
                                 #endregion
@@ -715,7 +699,7 @@ namespace DaiMangou.GameBridgeEditor
                                     // AssetDatabase.Refresh();
                                     SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
                                     var data = (CharacterNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                 //   data.DataID = character.Id;
+                                    //   data.DataID = character.Id;
                                     data.UID = character.UID;
                                     data.name = data.Name = character.CharacterBios[character.BioID].CharacterName;
                                     data.CharacterName = character.CharacterBios[character.BioID].CharacterName;
@@ -730,7 +714,7 @@ namespace DaiMangou.GameBridgeEditor
                                     SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
                                     var data = (EnvironmentNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
 
-                                   // data.DataID = environment.Id;
+                                    // data.DataID = environment.Id;
                                     data.UID = environment.UID;
                                     data.name = data.Name = environment.Name;
                                     data.CharacterName = environment.CallingNode.Name;
@@ -744,7 +728,7 @@ namespace DaiMangou.GameBridgeEditor
                                     AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
                                     SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
                                     var data = (RouteNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                   // data.DataID = route.Id;
+                                    // data.DataID = route.Id;
                                     data.UID = route.UID;
                                     data.DurationSum = route.NodeDurationSum;
                                     data.AutoSwitchValue = route.AutoSwitchValue;
@@ -766,7 +750,7 @@ namespace DaiMangou.GameBridgeEditor
                                     AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
                                     SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
                                     var data = (LinkNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                  //  data.DataID = link.Id;
+                                    //  data.DataID = link.Id;
                                     data.UID = link.UID;
                                     data.LoopValue = link.LoopValue;
                                     data.name = data.Name = link.Name;
@@ -785,7 +769,7 @@ namespace DaiMangou.GameBridgeEditor
                                     AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
                                     SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
                                     var data = (EndNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                   // data.DataID = end.Id;
+                                    // data.DataID = end.Id;
                                     data.UID = end.UID;
                                     data.Pass = end.Pass;
                                     data.name = data.Name = end.Name;
@@ -802,7 +786,7 @@ namespace DaiMangou.GameBridgeEditor
                                     AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
                                     SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
                                     var data = (ActionNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                   // data.DataID = action.Id;
+                                    // data.DataID = action.Id;
                                     data.UID = action.UID;
                                     data.Delay = action.DelayTimeInSeconds;
                                     data.Duration = action.TimeInSeconds;
@@ -835,7 +819,7 @@ namespace DaiMangou.GameBridgeEditor
                                     AssetDatabase.AddObjectToAsset(SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i], SelectedDialoguer.dialogueData);
                                     SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i].hideFlags = HideFlags.HideInHierarchy;
                                     var data = (DialogueNodeData)SelectedDialoguer.dialogueData.FullCharacterDialogueSet[i];
-                                  //  data.DataID = dialogue.Id;
+                                    //  data.DataID = dialogue.Id;
                                     data.UID = dialogue.UID;
                                     data.Delay = dialogue.DelayTimeInSeconds;
                                     data.Duration = dialogue.TimeInSeconds;
@@ -845,14 +829,14 @@ namespace DaiMangou.GameBridgeEditor
                                     if (dialogue.StoryboardImage)
                                         data.StoryboardImage = Sprite.Create(dialogue.StoryboardImage, new Rect(0, 0, dialogue.StoryboardImage.width, dialogue.StoryboardImage.height), new Vector2(dialogue.StoryboardImage.width / 2, dialogue.StoryboardImage.height / 2));
 
-                                    if(pushSettings.PushSoundEffects)
-                                    data.SoundEffect = dialogue.SoundEffect;
+                                    if (pushSettings.PushSoundEffects)
+                                        data.SoundEffect = dialogue.SoundEffect;
 
                                     if (pushSettings.UpdateVoiceover)
                                         data.VoicedDialogue = dialogue.VoiceRecording;
 
-                                  //  if (pushSettings.PushStoryboardImage)
-                                      //  data.StoryboardImage = dialogue.StoryboardImage;
+                                    //  if (pushSettings.PushStoryboardImage)
+                                    //  data.StoryboardImage = dialogue.StoryboardImage;
 
                                     data.Pass = dialogue.Pass;
                                     data.name = data.Name = dialogue.Name;
@@ -871,7 +855,7 @@ namespace DaiMangou.GameBridgeEditor
                                     foreach (var tempData in SelectedDialoguer.TempReflectedDataSet)
                                     {
                                         var data = SelectedDialoguer.ReflectedDataSet[i];
-                                        if (sortedList[i].UID == tempData.UID) 
+                                        if (sortedList[i].UID == tempData.UID)
                                         {
                                             if (tempData.UID == data.UID)
                                             {
@@ -999,13 +983,13 @@ namespace DaiMangou.GameBridgeEditor
                     #endregion
 
                     break;
-                case 4:
+                case 3:
 
                     #region Component addition  
 
                     GUI.Label(headerArea.ToCenter(0, 30), story.name, Theme.GameBridgeSkin.customStyles[0]);
 
-                    Grid.BeginDynaicGuiGrid(headerArea.PlaceUnder(0, Screen.height - headerArea.height, 0, 30), 1, 3, _componentAreas, 0, 130, 0, 70);
+                    Grid.BeginDynaicGuiGrid(headerArea.PlaceUnder(0, Screen.height - headerArea.height, 0, 30), 1, 2, _componentAreas, 0, 130, 0, 70);
 
                     for (var a = 0; a < _componentAreas.Count; a++)
                     {
@@ -1015,7 +999,7 @@ namespace DaiMangou.GameBridgeEditor
                         if (InfoBlock.Click(1, area, _componentData[a].Icons, SnapPosition.TopMiddle, Color.clear, InfoBlock.HoverEvent.None, Theme.GameBridgeSkin.customStyles[0], Theme.GameBridgeSkin.customStyles[1], _componentData[a].Name, _componentData[a].Description, 0, 0, 180, 60))
                             AttachComponen(a);
                     }
-
+                    
                     Grid.EndDynaicGuiGrid();
 
 
@@ -1042,9 +1026,6 @@ namespace DaiMangou.GameBridgeEditor
                     _Selection().AddComponent<Character>();
                     break;
                 case 1:
-                    _Selection().AddComponent<TriggerManager>();
-                    break;
-                case 2:
                     _Selection().AddComponent<Dialoguer>();
                     break;
 
@@ -1072,26 +1053,32 @@ namespace DaiMangou.GameBridgeEditor
         {
 
         }
+
         protected void UpdateSoundEffects()
         {
 
         }
+
         protected void UpdateVoiceover()
         {
 
         }
+
         protected void UpdateChatacter()
         {
 
         }
+
         protected void UpdateEnvironment()
         {
 
         }
+
         protected void UpdateStoryboardImage()
         {
 
         }
+
         protected void UpdateNoeData()
         {
 
@@ -1102,10 +1089,8 @@ namespace DaiMangou.GameBridgeEditor
         #region variables
 
         public Character SelectedCharacterData;
-        public TriggerManager SelectedTriggerManager;
         public Dialoguer SelectedDialoguer;
         internal bool M5_64_F1H = false;
-        // internal Texture2D ImageLibrary.GameBridgeIcon = 
         private int EditID;
         public List<Rect> scenesAreas = new List<Rect>();
         private List<Rect> _componentAreas = new List<Rect>();
@@ -1131,9 +1116,10 @@ namespace DaiMangou.GameBridgeEditor
             }
         }
 
+        public PushSettings pushSettings = new PushSettings();
         #endregion
 
-        public PushSettings pushSettings = new PushSettings();
+
     }
 
 }
