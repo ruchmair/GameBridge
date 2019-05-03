@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace DaiMangou.BridgedData
 {
+  
     //[Serializable]
     //public class EvTrigger : UnityEvent<UnityEngine.Object> { }
 
@@ -34,7 +35,7 @@ namespace DaiMangou.BridgedData
         /// <summary>
         /// a specific ID number that matches the ID number of the node it represents in the storyteller
         /// </summary>
-        [HideInInspector]
+      //  [HideInInspector]
         //public int DataID;
         public string UID = "";
         /// <summary>
@@ -52,12 +53,20 @@ namespace DaiMangou.BridgedData
         //   [HideInInspector]
         public bool Pass;
         // [HideInInspector]
+        /// <summary>
+        /// the data which is connected to this node data
+        /// </summary>
         public List<NodeData> DataConnectedToMe = new List<NodeData>();
         // [HideInInspector]
+        /// <summary>
+        /// the node data which this data is connected to
+        /// </summary>
         public List<NodeData> DataIconnectedTo = new List<NodeData>();
         [HideInInspector]
+        ///the type of node data 
         public Type type;
         [HideInInspector]
+        // the duration of the node "playback"
         public float Duration;
         [HideInInspector]
         public float Delay;
@@ -72,11 +81,9 @@ namespace DaiMangou.BridgedData
 
         public bool IsPlayer;
 
-        #region EditorSpecific variables
+        public bool OverrideStartTime;
 
-        [HideInInspector]
-        public bool ExpandFoldout;
-        #endregion
+
 
         public virtual void OnEnable()
         {
@@ -91,30 +98,37 @@ namespace DaiMangou.BridgedData
              }*/
         }
 
-
+        /// <summary>
+        ///  here we generate a new chain of events based on choices made in the story
+        /// </summary>
         public void Aggregate()
         {
+            // look at each node data that we have connected to and tell it to aggrigate 
             for (var i = 0; i < DataIconnectedTo.Count; i++)
             {
-                var DataConnectedTo = DataIconnectedTo[i];
+                var dataIConnectedTo = DataIconnectedTo[i];
+                // if this is a route , then 
                 if (type == typeof(RouteNodeData))
                 {
 
                     var route = (RouteNodeData)this;
                     if (Pass)
                     {
-                        DataConnectedTo.Pass = true;
+                        //we assign its pass value of what we are connected to , to true of pass is true
+                        dataIConnectedTo.Pass = true;
                     }
                     else
                     {
-                        DataConnectedTo.Pass = i != route.RouteID;
+                        // this means that the data we conneced to at i weill have a pass value equal to false if the route id does not match
+                        dataIConnectedTo.Pass = i != route.RouteID;
                     }
                 }
                 else
                 {
-                    DataConnectedTo.Pass = Pass;
+                    // set the pass value of what we are connected to , to be our pass value
+                    dataIConnectedTo.Pass = Pass;
                 }
-                DataConnectedTo.Aggregate();
+                dataIConnectedTo.Aggregate();
 
 
             }

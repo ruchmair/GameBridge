@@ -16,6 +16,7 @@ namespace DaiMangou.BridgedData
     public class Condition : MonoBehaviour
     {
         public GameObject Self;
+        #region Dialoguer Specific
         public GameObject DialoguerGameObject;
         public Dialoguer dialoguer;
         public Dialoguer dialoguerComponent
@@ -34,6 +35,28 @@ namespace DaiMangou.BridgedData
                 dialoguer = value;
             }
         }
+        #endregion
+
+        #region Character Specific 
+        public GameObject CharacterGameObject;
+        public Character character;
+        public Character characterComponent
+        {
+            get
+            {
+                if (character == null)
+                {
+                    character = CharacterGameObject.GetComponent<Character>();
+                }
+
+                return character;
+            }
+            set
+            {
+                character = value;
+            }
+        }
+        #endregion
         // public string Name = "No Name";
         public bool ObjectiveBool;
         public GameObject TargetGameObject;
@@ -48,8 +71,9 @@ namespace DaiMangou.BridgedData
         public int MethodIndex = 0;
 
         private delegate bool Del();
-        private static Del theDelegate;
+        private  Del theDelegate;
 
+       // [NonSerialized]
         public bool Invoked;
         public bool AutoStart = false;
         // public bool PlaySoundEffect;
@@ -105,7 +129,6 @@ namespace DaiMangou.BridgedData
 
         public void ProcessConditionData()
         {
-
             if (AutoStart)
             {
                 if (!Invoked)
@@ -193,10 +216,20 @@ namespace DaiMangou.BridgedData
 
         private IEnumerator DelayTimer()
         {
-            yield return new WaitForSeconds(dialoguer.ActiveNodeData.Delay);
-            DelayTimerStarted = false;
-            targetEvent.Invoke();
-            Invoked = true;
+            if (dialoguer)
+            {
+                yield return new WaitForSeconds(dialoguer.ActiveNodeData.Delay);
+                DelayTimerStarted = false;
+                targetEvent.Invoke();
+                Invoked = true;
+            }
+            else
+            {
+                yield return new WaitForSeconds(character.ActiveNodeData.Delay);
+                DelayTimerStarted = false;
+                targetEvent.Invoke();
+                Invoked = true;
+            }
         }
 
     }

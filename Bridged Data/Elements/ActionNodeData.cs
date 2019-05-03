@@ -33,9 +33,6 @@ namespace DaiMangou.BridgedData
 
         }
 
-        public void PlaySoundEffect()
-        {
-            Debug.Log("played sound effect");
-        }
+
     }
 }

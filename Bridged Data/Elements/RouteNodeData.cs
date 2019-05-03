@@ -10,18 +10,32 @@ namespace DaiMangou.BridgedData
     [Serializable]
     public class RouteNodeData : NodeData
     {
-
+        /// <summary>
+        /// value representing the path which will b taken by the route
+        /// </summary>
         public int RouteID = 0;
+        /// <summary>
+        /// we check against this value to see if the Route has beem changed
+        /// </summary>
         public int TempRouteID = 0;
+        /// <summary>
+        /// this is the route node data that is linked to this route and controls this RouteID
+        /// </summary>
         public RouteNodeData LinkedRoute;
+        /// <summary>
+        /// this is path the route node will default to
+        /// </summary>
         public int AutoSwitchValue;
-
+        /// <summary>
+        /// all the route nodes connected to this route node, if any are conected then thrir route ID will be controlled by ths Route
+        /// </summary>
         public List<RouteNodeData> RoutesLinkedToMe = new List<RouteNodeData>();
-        // a linked route will be in control of this Route
+       
 
             // an alternative list of titles you can use insted of the default texts read from the route path text
         public List<string> AlternativeRouteTitles = new List<string>();
         public bool UseAlternativeRouteTitles;
+
         public override void OnEnable()
         {
             type = GetType(); 
@@ -47,25 +61,31 @@ namespace DaiMangou.BridgedData
 
             }
 
+            // here we do a somple check to see if a route value is changed (a choice is made) so that we can trigger an Aggregation function
             if (TempRouteID != RouteID)
             {
-                if (Dialoguer.ActiveEvents == -1)
-                    Dialoguer.ActiveEvents = 0;
+                // set the static activevents value to 0 
+                if (BridgeData.ActiveEvents == -1)
+                    BridgeData.ActiveEvents = 0;
 
-                Dialoguer.ActiveEvents += 1;
+                // and now add one to the value
+                BridgeData.ActiveEvents += 1;
 
+                // now we must set the  TemprouteID to be the same asthe RouteID
                 TempRouteID = RouteID;
+                // trigger Aggregation
                 Aggregate();
                 
 
-
+                /// and now , if there are any routes which are linked to this route then theor routes are also change d to match this route
                 foreach (var route in RoutesLinkedToMe)
                 {
                     route.RouteID = RouteID;
                     route.ProcessData();
                 }
 
-                Dialoguer.ActiveEvents -= 1;
+                // now that all the checks and setting are completed we then reset the ActiveEvents valiue to -1
+                BridgeData.ActiveEvents -= 1;
             }
 
             

@@ -67,93 +67,15 @@ namespace DaiMangou.GameBridgeEditor
         {
             var selectedDialoguer = (Dialoguer)target;
 
-         
+
 
 
 
             serializedObject.Update();
 
-            #region GUI
-            /*   var area = EditorGUILayout.GetControlRect();
-               GUILayout.Space(500);
-              // scrollView = GUI.BeginScrollView
-               var activeArea = area.AddRect(-10, 0, 10, 500);
-               GUI.DrawTexture(activeArea, Textures.DuskLighter); // just to visualise the active area
-               var dialoguerPictureArea = activeArea.ToCenterTop(180, 60);
-               GUI.DrawTexture(dialoguerPictureArea,ImageLibrary.GBDialogueImage);
-               var separatorLine = activeArea.ToCenterTop(0, 1, 0, 60);
-               GUI.DrawTexture(separatorLine, Textures.Blue);
 
 
-               #region if there is no ActiveStory
-               if (CurrentStory.ActiveStory == null)
-                   return;
-               #endregion
-
-               #region if no scenes are in the project
-               if (CurrentStory.ActiveStory.Scenes.Count == 0)
-               {
-                   return;
-               }
-               #endregion
-
-               #region If scene ID is -1 , if is default
-               if (selectedDialoguer.sceneID == -1)
-               {
-                   return;
-               }
-               #endregion
-
-               var scene = CurrentStory.ActiveStory.Scenes[selectedDialoguer.sceneID];
-
-               #region if no nodes are in the scene
-               if (scene.NodeElements.Count == 0)
-               {
-                   return;
-               }
-               #endregion
-
-               var selectedNode = scene.NodeElements.Last();
-
-               #region if DialogueData property is null
-               if (selectedDialoguer.dialogueData == null)
-               {
-                   return;
-               }
-               #endregion
-
-               #region check if we made a selection of a diferent node
-               if (ID != selectedNode.Id)
-               {
-
-                   matchingSelectedNodeData = selectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(n => n.DataID == selectedNode.Id) as NodeData;
-                   matchingReflectedData = selectedDialoguer.reflectedDataSet.Find(r => r.Id == selectedNode.Id);
-
-                   ID = selectedNode.Id;
-
-               }
-               #endregion
-
-               #region if there is no matchingSelectedNodeData
-               if (matchingSelectedNodeData == null)
-               {
-                   return;
-               }
-               #endregion
-
-               #region IMGUI
-               var disloguerObjectFieldArea = separatorLine.ToCenterBottom(0, 20, 0, 20);
-               selectedDialoguer.dialogueData = (DialogueData)EditorGUI.ObjectField(disloguerObjectFieldArea, selectedDialoguer.dialogueData,typeof(DialogueData),false);
-               var selectedNodeDataNameArea = disloguerObjectFieldArea.PlaceUnder();
-               GUI.Label(selectedNodeDataNameArea, matchingSelectedNodeData.Name);
-
-               #endregion
-               */
-
-            #endregion
-
-
-            #region dialoguer image
+            #region dialoguer cover image
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
             GUILayout.Box(ImageLibrary.GBDialogueImage, EditorStyles.inspectorDefaultMargins);
@@ -171,54 +93,217 @@ namespace DaiMangou.GameBridgeEditor
 
             Separator();
 
-            selectedDialoguer.dialogueData = (DialogueData)EditorGUILayout.ObjectField(selectedDialoguer.dialogueData, typeof(DialogueData), false);
+            selectedDialoguer.sceneData = (SceneData)EditorGUILayout.ObjectField(selectedDialoguer.sceneData, typeof(SceneData), false);
+
+
+            if (selectedDialoguer.sceneData == null)
+                return;
+
+            if (GUILayout.Button("Setup/ Re-setup"))
+            {
+
+                #region we create a new list which we will all nodes except Abstract and Media nodes in
+                var sortedList = new List<StoryElement>();
+                #endregion
+
+                #region iterating through all the nodes in the current storyteller scene
+                foreach (var el in CurrentStory.ActiveStory.Scenes[selectedDialoguer.sceneData.SceneID].NodeElements)
+                {
+                    #region we only want Character nodes, Link nodes, Route nodes, Dialogue nodes and Action Nodes Added to the list
+                    if (el.GetType() != typeof(MediaNode) || el.GetType() != typeof(AbstractNode))
+                    {
+                        #region prevent nodes that are not connected to a character from being added to the list
+                        if (el.CallingNode != null)
+                            sortedList.Add(el);
+                        #endregion
+
+                    }
+                    #endregion
+
+                }
+                #endregion
+
+                // now we update or crreate the Reflected data gameobject if necessary
+                if (selectedDialoguer.ReflectedDataSet.Count == 0)
+                {
+                    selectedDialoguer.ReflectedDataSet.Resize(selectedDialoguer.sceneData.FullCharacterDialogueSet.Count);
+
+                    selectedDialoguer.ReflectedDataParent = new GameObject("Reflected Data");
+                    selectedDialoguer.ReflectedDataParent.transform.SetParent(selectedDialoguer.transform);
+                    selectedDialoguer.ReflectedDataParent.transform.localPosition = Vector3.zero;
+                    selectedDialoguer.ReflectedDataParent.hideFlags = HideFlags.HideInHierarchy;
+
+
+                    var AudioManager = new GameObject("Audio Manager");
+                    AudioManager.transform.SetParent(selectedDialoguer.transform);
+                    AudioManager.transform.localPosition = Vector3.zero;
+
+                    var TypingAudioManager = new GameObject("Typing");
+                    TypingAudioManager.transform.SetParent(AudioManager.transform);
+                    TypingAudioManager.transform.localPosition = Vector3.zero;
+                    TypingAudioManager.AddComponent<AudioSource>();
+                    selectedDialoguer.TypingAudioSource = TypingAudioManager.GetComponent<AudioSource>();
+
+                    var VoiceAudioManager = new GameObject("Voice");
+                    VoiceAudioManager.transform.SetParent(AudioManager.transform);
+                    VoiceAudioManager.transform.localPosition = Vector3.zero;
+                    VoiceAudioManager.AddComponent<AudioSource>();
+                    selectedDialoguer.VoiceAudioSource = VoiceAudioManager.GetComponent<AudioSource>();
+
+                    var SoundEffectsAudioManager = new GameObject("Sound Effects");
+                    SoundEffectsAudioManager.transform.SetParent(AudioManager.transform);
+                    SoundEffectsAudioManager.transform.localPosition = Vector3.zero;
+                    SoundEffectsAudioManager.AddComponent<AudioSource>();
+                    selectedDialoguer.SoundEffectAudioSource = SoundEffectsAudioManager.GetComponent<AudioSource>();
+
+                }
+                else
+                {
+                    // we cache the current set of reflected data in a temporary list and then empry and resize the reflecteddataset list
+                    selectedDialoguer.TempReflectedDataSet = new List<ReflectedData>(); ;
+                    foreach (var capturedData in selectedDialoguer.ReflectedDataSet)
+                        selectedDialoguer.TempReflectedDataSet.Add(capturedData);
+
+                    selectedDialoguer.ReflectedDataSet = new List<ReflectedData>();
+                    selectedDialoguer.ReflectedDataSet.Resize(selectedDialoguer.sceneData.FullCharacterDialogueSet.Count);
+
+                }
+
+
+                selectedDialoguer.Characters = new List<CharacterNodeData>();
+                // loop through the sorted list
+                for (var i = 0; i < selectedDialoguer.sceneData.FullCharacterDialogueSet.Count; i++)
+                {
+
+                    var nodeDataAti = selectedDialoguer.sceneData.FullCharacterDialogueSet[i];
+                    if (nodeDataAti.type == typeof(CharacterNodeData))
+                    {
+                        selectedDialoguer.Characters.Add((CharacterNodeData)nodeDataAti);
+                    }
+
+                    #region create a new instance of ReflectedData as a gameObject and then assign the sortedList value at i to the reflected data ID
+                    var newReflectedDatagameObject = new GameObject(selectedDialoguer.sceneData.FullCharacterDialogueSet[i].Name + "Reflected");
+                    newReflectedDatagameObject.transform.SetParent(selectedDialoguer.ReflectedDataParent.transform);
+                    newReflectedDatagameObject.AddComponent<ReflectedData>();
+                    var theReflectedDataComponent = newReflectedDatagameObject.GetComponent<ReflectedData>();
+                    theReflectedDataComponent.DialoguerGameObject = selectedDialoguer.gameObject;
+                    theReflectedDataComponent.dialoguer = selectedDialoguer;
+                    theReflectedDataComponent.self = newReflectedDatagameObject;
+                    // we already resized the ReflectedDataSet list to be the same size as the SortedList so we dont use .Add
+                    selectedDialoguer.ReflectedDataSet[i] = theReflectedDataComponent;
+                    // it is VERY important that the UIDs match.
+                    selectedDialoguer.ReflectedDataSet[i].UID = selectedDialoguer.sceneData.FullCharacterDialogueSet[i].UID;
+                    #endregion
+
+                    #region Add the first conditin
+                    var newCondition = new GameObject(newReflectedDatagameObject.name + "Condition " + theReflectedDataComponent.Conditions.Count);
+                    newCondition.AddComponent<Condition>();
+                    var _condition = newCondition.GetComponent<Condition>();
+                    _condition.DialoguerGameObject = selectedDialoguer.gameObject;
+                    _condition.dialoguer = selectedDialoguer;
+                    _condition.Self = newCondition;
+                    newCondition.transform.SetParent(newReflectedDatagameObject.transform);
+                    // newCondition.hideFlags = HideFlags.HideInHierarchy;
+                    theReflectedDataComponent.Conditions.Add(newCondition.GetComponent<Condition>());
+                    #endregion
+
+                    #region here we begin checking to see if any UID values we have for reflected data in the temp reflected data. if so , we destroy their conditions and replace the m with the conditions in the TempReflectedDataSet
+                    if (selectedDialoguer.TempReflectedDataSet.Count != 0)
+                    {
+                        foreach (var tempData in selectedDialoguer.TempReflectedDataSet)
+                        {
+                            //we can use ReflectedDataSet[i] because the sorted list count and ReflectedDataSet ount are the same
+                            var data = selectedDialoguer.ReflectedDataSet[i];
+                            if (selectedDialoguer.sceneData.FullCharacterDialogueSet[i].UID == tempData.UID)
+                            {
+
+                                data.DialoguerGameObject = tempData.DialoguerGameObject;
+                                data.dialoguer = tempData.dialoguer;
+                                data.dialoguerComponent = tempData.dialoguerComponent;
+
+                                for (var c = 0; c < data.Conditions.Count; c++)
+                                {
+                                    var conditionToDelete = data.Conditions[c];
+                                    DestroyImmediate(conditionToDelete.Self);
+                                    data.Conditions.RemoveAt(c);
+                                }
+
+                                // finally we move the condition from TempReflectedDataSet[i] conditions to the datas condition list
+                                foreach (var condition in tempData.Conditions)
+                                {
+                                    condition.Self.transform.SetParent(data.self.transform);
+                                    data.Conditions.Add(condition);
+                                }
+
+
+
+                            }
+                        }
+
+
+                    }
+                    #endregion
+
+
+
+                }
+
+                // now destroy all the data in TempReflectedDataSet
+                foreach (var item in selectedDialoguer.TempReflectedDataSet)
+                {
+                    DestroyImmediate(item.self);
+                }
+                selectedDialoguer.TempReflectedDataSet.RemoveAll(n => n == null);
+
+            }
+
 
             #region General Settings
 
             selectedDialoguer.DialoguerDisplaySettings.ShowGeneralSettings = EditorGUILayout.Foldout(selectedDialoguer.DialoguerDisplaySettings.ShowGeneralSettings, "General Settings");
 
-            if(selectedDialoguer.DialoguerDisplaySettings.ShowGeneralSettings)
+            if (selectedDialoguer.DialoguerDisplaySettings.ShowGeneralSettings)
             {
 
                 GUILayout.Space(5);
 
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Text Display Mode");
-                selectedDialoguer.textDisplayMode = (TextDisplayMode)EditorGUILayout.EnumPopup(selectedDialoguer.textDisplayMode);
+                selectedDialoguer.textDisplayMode = (DialoguerTextDisplayMode)EditorGUILayout.EnumPopup(selectedDialoguer.textDisplayMode);
                 GUILayout.EndHorizontal();
 
                 switch (selectedDialoguer.textDisplayMode)
                 {
-                    case TextDisplayMode.Instant:
+                    case DialoguerTextDisplayMode.Instant:
 
                         break;
-                    case TextDisplayMode.Typed:
+                    case DialoguerTextDisplayMode.Typed:
                         GUILayout.BeginHorizontal();
-                       // GUILayout.FlexibleSpace();
+                        // GUILayout.FlexibleSpace();
                         GUILayout.Label("Typing Speed");
-                        selectedDialoguer.TypingSpeed = EditorGUILayout.IntField(selectedDialoguer.TypingSpeed, GUILayout.Height(15),GUILayout.Width(150));
-                      //  GUILayout.FlexibleSpace();
+                        selectedDialoguer.TypingSpeed = EditorGUILayout.IntField(selectedDialoguer.TypingSpeed, GUILayout.Height(15), GUILayout.Width(150));
+                        //  GUILayout.FlexibleSpace();
                         GUILayout.EndHorizontal();
 
- 
+
                         GUILayout.BeginHorizontal();
-                       // GUILayout.FlexibleSpace();
+                        // GUILayout.FlexibleSpace();
                         GUILayout.Label("Delay");
-                        selectedDialoguer.Delay = EditorGUILayout.FloatField(selectedDialoguer.Delay,GUILayout.Height(15), GUILayout.Width(150));
-                      //  GUILayout.FlexibleSpace();
+                        selectedDialoguer.Delay = EditorGUILayout.FloatField(selectedDialoguer.Delay, GUILayout.Height(15), GUILayout.Width(150));
+                        //  GUILayout.FlexibleSpace();
                         GUILayout.EndHorizontal();
 
                         GUILayout.BeginHorizontal();
                         //GUILayout.FlexibleSpace();
                         GUILayout.Label("Typing Sound");
-                        selectedDialoguer.TypingAudioCip = (AudioClip)EditorGUILayout.ObjectField(selectedDialoguer.TypingAudioCip, typeof(AudioClip),false, GUILayout.Height(15), GUILayout.Width(150));
-                       // GUILayout.FlexibleSpace();
+                        selectedDialoguer.TypingAudioCip = (AudioClip)EditorGUILayout.ObjectField(selectedDialoguer.TypingAudioCip, typeof(AudioClip), false, GUILayout.Height(15), GUILayout.Width(150));
+                        // GUILayout.FlexibleSpace();
                         GUILayout.EndHorizontal();
 
 
 
                         break;
-                    case TextDisplayMode.Custom:
+                    case DialoguerTextDisplayMode.Custom:
 
                         break;
                 }
@@ -242,14 +327,7 @@ namespace DaiMangou.GameBridgeEditor
             }
             #endregion
 
-            #region if scene id == default -1
-            if (selectedDialoguer.SceneID == -1)
-            {
-                return;
-            }
-            #endregion
-
-            var scene = CurrentStory.ActiveStory.Scenes[selectedDialoguer.SceneID];
+            var scene = CurrentStory.ActiveStory.Scenes[selectedDialoguer.sceneData.SceneID];
 
             #region if no nodes are in the scene
             if (scene.NodeElements.Count == 0)
@@ -261,7 +339,7 @@ namespace DaiMangou.GameBridgeEditor
             var selectedNode = scene.NodeElements.Last();
 
             #region if dialoguer DialogueData property is null
-            if (selectedDialoguer.dialogueData == null)
+            if (selectedDialoguer.sceneData == null)
             {
                 return;
             }
@@ -271,7 +349,7 @@ namespace DaiMangou.GameBridgeEditor
             if (UID != selectedNode.UID)
             {
 
-                matchingSelectedNodeData = selectedDialoguer.dialogueData.FullCharacterDialogueSet.Find(n => n.UID == selectedNode.UID) as NodeData;
+                matchingSelectedNodeData = selectedDialoguer.sceneData.FullCharacterDialogueSet.Find(n => n.UID == selectedNode.UID) as NodeData;
                 matchingReflectedData = selectedDialoguer.ReflectedDataSet.Find(r => r.UID == selectedNode.UID);
 
                 UID = selectedNode.UID;
@@ -297,7 +375,7 @@ namespace DaiMangou.GameBridgeEditor
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            GUILayout.Label(matchingSelectedNodeData.CharacterName,Theme.GameBridgeSkin.customStyles[5]);
+            GUILayout.Label(matchingSelectedNodeData.CharacterName, Theme.GameBridgeSkin.customStyles[5]);
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
 
@@ -327,7 +405,7 @@ namespace DaiMangou.GameBridgeEditor
 
                 GUILayout.FlexibleSpace();
                 var state = character.IsPlayer ? "Is Player,Turn Off Player ?" : "Is Not Player,Turn On Player ?";
-                if (GUILayout.Button(state,GUILayout.Height(15)))
+                if (GUILayout.Button(state, GUILayout.Height(15)))
                 {
                     character.IsPlayer = !character.IsPlayer;
                     foreach (var dataset in character.NodeDataInMyChain)
@@ -361,7 +439,7 @@ namespace DaiMangou.GameBridgeEditor
                 EditorGUILayout.LabelField("Start Time", action.StartTime.ToString());
                 EditorGUILayout.LabelField("Duration", action.Duration.ToString());
                 EditorGUILayout.LabelField("Delay", action.Delay.ToString());
-               // EditorGUILayout.LabelField("Realtime Delay", action.RealtimeDelay.ToString());
+                // EditorGUILayout.LabelField("Realtime Delay", action.RealtimeDelay.ToString());
                 DrawConditionCreator(selectedDialoguer);
             }
 
@@ -384,7 +462,7 @@ namespace DaiMangou.GameBridgeEditor
                 EditorGUILayout.LabelField("Start Time", dialogue.StartTime.ToString());
                 EditorGUILayout.LabelField("Duration", dialogue.Duration.ToString());
                 EditorGUILayout.LabelField("Delay", dialogue.Delay.ToString());
-               // EditorGUILayout.LabelField("Realtime Delay", dialogue.RealtimeDelay.ToString());
+                // EditorGUILayout.LabelField("Realtime Delay", dialogue.RealtimeDelay.ToString());
                 DrawConditionCreator(selectedDialoguer);
 
             }
@@ -438,8 +516,12 @@ namespace DaiMangou.GameBridgeEditor
 
             #endregion
 
+
+
             //  matchingNodeDataSerializedObject.ApplyModifiedProperties();
             serializedObject.ApplyModifiedProperties();
+
+
 
 
 
@@ -450,7 +532,7 @@ namespace DaiMangou.GameBridgeEditor
 
 
             if (matchingReflectedData == null) return;
-            
+
             if (ConditionSpecificSpaceing.Count != matchingReflectedData.Conditions.Count)
                 ConditionSpecificSpaceing.Resize(matchingReflectedData.Conditions.Count);
 
@@ -494,14 +576,14 @@ namespace DaiMangou.GameBridgeEditor
                 }
 
                 var deleteConditionButtonArea = buttonArea.ToCenterRight(8, 8, -10);
-                if(c!=0)
-                if (ClickEvent.Click(4, deleteConditionButtonArea, ImageLibrary.deleteConditionIcon))
-                {
-                    DestroyImmediate(matchingReflectedData.Conditions[c].gameObject);
-                    matchingReflectedData.Conditions.RemoveAt(c);
-                    return;
+                if (c != 0)
+                    if (ClickEvent.Click(4, deleteConditionButtonArea, ImageLibrary.deleteConditionIcon))
+                    {
+                        DestroyImmediate(matchingReflectedData.Conditions[c].gameObject);
+                        matchingReflectedData.Conditions.RemoveAt(c);
+                        return;
 
-                }
+                    }
                 #endregion
 
 

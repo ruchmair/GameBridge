@@ -9,17 +9,25 @@ namespace DaiMangou.BridgedData
     {
 
         public int indexInList;
-        public Dialoguer dialoguer;
+        [UnityEngine.Serialization.FormerlySerializedAs("dialoguer")]
+        public Dialoguer dialoguerComponent;
+        public Character characterComponent;
 
         public void SwitchRoute()
         {
-            var route = (RouteNodeData)dialoguer.dialogueData.ActiveCharacterDialogueSet[dialoguer.ActiveIndex];
-            route.RouteID = indexInList;
+            if (dialoguerComponent)
+            {
+                var route = (RouteNodeData)dialoguerComponent.sceneData.ActiveCharacterDialogueSet[dialoguerComponent.ActiveIndex];
+                route.RouteID = indexInList;
+                dialoguerComponent.CachedRoute = route;
+            }
 
-        
-
-            dialoguer.CachedRoute = route;
-
+            if (characterComponent)
+            {
+                var route = (RouteNodeData)characterComponent.sceneData.ActiveCharacterDialogueSet[characterComponent.ActiveIndex];
+                route.RouteID = indexInList;
+                characterComponent.CachedRoute = route;
+            }
 
 
         }

@@ -7,13 +7,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.Serialization;
 
 namespace DaiMangou.BridgedData
 {
     /// <summary>
-    /// 
+    ///  choice between typed or instant text
     /// </summary>
-    public enum TextDisplayMode
+    public enum DialoguerTextDisplayMode
     {
         Instant = 0,
         Typed = 1,
@@ -25,7 +26,7 @@ namespace DaiMangou.BridgedData
     /// 
     /// </summary>
     [Serializable]
-    public class DisplaySettings
+    public class DialoguerDisplaySettings
     {
         public bool ShowGeneralSettings;
     }
@@ -38,6 +39,7 @@ namespace DaiMangou.BridgedData
         /// </summary>
         private void Awake()
         {
+
             if (moveNextButton)
                 moveNextButton.onClick.AddListener(MoveNext);
 
@@ -53,7 +55,7 @@ namespace DaiMangou.BridgedData
         public void OnEnable()
         {
 
-            doRefresh += Refresh;
+            doRefresh += GenerateActiveDialogueSet;
 
         }
 
@@ -62,7 +64,7 @@ namespace DaiMangou.BridgedData
         /// </summary>
         public void OnDisable()
         {
-            doRefresh -= Refresh;
+            doRefresh -= GenerateActiveDialogueSet;
         }
 
         /// <summary>
@@ -86,15 +88,6 @@ namespace DaiMangou.BridgedData
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        void Refresh()
-        {
-            GenerateActiveDialogueSet();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         void GenerateActiveDialogueSet()
         {
 
@@ -102,38 +95,21 @@ namespace DaiMangou.BridgedData
             //  countlist = new List<int>();
             #region here we will populate the  ActiveChracterDalogueSet at runtime, unlike the FullCharacterDialogueSet list, this list will have all nodes ordered correctly for execution at runtime
             // firstly make ActiveCharacterDialogueSet a new list
-            dialogueData.ActiveCharacterDialogueSet = new List<NodeData>();
-            for (var i = 0; i < dialogueData.FullCharacterDialogueSet.Count; i++)
+            sceneData.ActiveCharacterDialogueSet = new List<NodeData>();
+            for (var i = 0; i < sceneData.FullCharacterDialogueSet.Count; i++)
             {
-                var data = dialogueData.FullCharacterDialogueSet[i];
+                var data = sceneData.FullCharacterDialogueSet[i];
 
-                // each n=NodeData in the FullCharacterDialogueSet already has their has value set when the data was first pushed to the Dialoguers DialogueData scriptableObject so we just check the values
+
+                // each n=NodeData in the combi already has their has value set when the data was first pushed to the Dialoguers SceneData scriptableObject so we just check the values
                 if (!data.Pass)
                 {
+
                     //   countlist.Add(i);
                     // we want to ignore all character and environment nodes
                     if (data.type != typeof(CharacterNodeData) && data.type != typeof(EnvironmentNodeData))
                     {
-                        //since the ActionNodeData and the DialogeNodeData are odered in the FullCharacterDialogueSet by time , using the for loop gives us acces to each in order
-                        if (data.type == typeof(ActionNodeData) || data.type == typeof(DialogueNodeData))
-                        {
-                            // this gives us the first nodedata added to the ActiveCharacterDialogueSet with its actionNodeData or DialogueNodeData added to it
-                            dialogueData.ActiveCharacterDialogueSet.Add(data);
-                            // RIGHT AFTER we do another for loop, this loop breaks the first loop and will continue it one this loop completes
-                            // in this loop we are going to execute a function which will check what data is connected to  and will tell if to run the function AddMeToThisList();
-                            // if the nodedata it is conned to is not set to pass. this function is executed in NodeData so it will ad itself t to the list, this node must also NOT be an 
-                            // ActionNodeData or a DoialogueNodeData since those are already going to be adde to the list in the above function^
-                            foreach (var node in data.DataIconnectedTo)
-                            {
-                                if (node.type != typeof(ActionNodeData) && node.type != typeof(DialogueNodeData))
-                                    if (!node.Pass)
-                                    {
-                                        node.AddMeToThisList(dialogueData.ActiveCharacterDialogueSet);
-
-                                    }
-                            }
-                        }
-
+                        sceneData.ActiveCharacterDialogueSet.Add(data);
                     }
                 }
             }
@@ -151,12 +127,15 @@ namespace DaiMangou.BridgedData
                         {
                             var route = (RouteNodeData)character.NodeDataInMyChain[i];
 
-                            route.StartTime = route.DataIconnectedTo[route.RouteID].StartTime;
+                            if (!route.OverrideStartTime)
+                                route.StartTime = route.DataIconnectedTo[route.RouteID].StartTime - 0.0001f;
                         }
                         if (character.NodeDataInMyChain[i].type == typeof(LinkNodeData))
                         {
                             var link = (LinkNodeData)character.NodeDataInMyChain[i];
-                            link.StartTime = link.DataIconnectedTo[0].StartTime;
+
+                            if (!link.OverrideStartTime)
+                                link.StartTime = link.DataIconnectedTo[0].StartTime - 0.0001f;
 
                         }
                         // end nodes are connected to nothing , so we must look at the entire list again and find the node data with the largest start time in the current chain and use that value as the 
@@ -179,7 +158,7 @@ namespace DaiMangou.BridgedData
                 }
             }
 
-            dialogueData.ActiveCharacterDialogueSet = dialogueData.ActiveCharacterDialogueSet.OrderBy(t => t.StartTime).ToList();
+            sceneData.ActiveCharacterDialogueSet = sceneData.ActiveCharacterDialogueSet.OrderBy(t => t.StartTime).ToList();
             #endregion
 
         }
@@ -189,19 +168,21 @@ namespace DaiMangou.BridgedData
         /// </summary>
         void FixedUpdate()
         {
-            if (dialogueData.ActiveCharacterDialogueSet.Count == 0) return;
+            if (sceneData.ActiveCharacterDialogueSet.Count == 0) return;
 
-            if (ActiveEvents > 0) return;
 
-            ActiveNodeData = dialogueData.ActiveCharacterDialogueSet[ActiveIndex];
+
+            if (BridgeData.ActiveEvents > 0) return;
+
+            ActiveNodeData = sceneData.ActiveCharacterDialogueSet[ActiveIndex];
             // we call processData on the nodedata that is at ActiveInxex in the ActiveCharacterDialogueSet
             ActiveNodeData.ProcessData();
 
             // once there are no more routes processing events then we triger a refrsh
-            if (ActiveEvents == 0)
+            if (BridgeData.ActiveEvents == 0)
             {
                 doRefresh();
-                ActiveEvents = -1;
+                BridgeData.ActiveEvents = -1;
                 return;
             }
 
@@ -274,7 +255,7 @@ namespace DaiMangou.BridgedData
                         button.gameObject.SetActive(false);
 
 
-                    ActiveIndex = dialogueData.ActiveCharacterDialogueSet.IndexOf(CachedRoute) + 1;
+                    ActiveIndex = sceneData.ActiveCharacterDialogueSet.IndexOf(CachedRoute) + 1;
                     CachedRoute = null;
                     moveNextButton.gameObject.SetActive(true);
                     movePreviousButton.gameObject.SetActive(true);
@@ -300,9 +281,9 @@ namespace DaiMangou.BridgedData
                 else // this will be check in the sime loop scene
                 {
                     var idOfNodedLoopedTo = link.DataIconnectedTo[0].DataIconnectedTo[0].UID;
-                    var loopedToNodeInTheActiveDialogueSet = dialogueData.ActiveCharacterDialogueSet.Find(rd => rd.UID == idOfNodedLoopedTo);
+                    var loopedToNodeInTheActiveDialogueSet = sceneData.ActiveCharacterDialogueSet.Find(rd => rd.UID == idOfNodedLoopedTo);
 
-                    ActiveIndex = dialogueData.ActiveCharacterDialogueSet.IndexOf(loopedToNodeInTheActiveDialogueSet);
+                    ActiveIndex = sceneData.ActiveCharacterDialogueSet.IndexOf(loopedToNodeInTheActiveDialogueSet);
 
                 }
                 foreach (var condition in TargetReflectedData.Conditions)
@@ -348,11 +329,11 @@ namespace DaiMangou.BridgedData
             {
                 var dialogue = (DialogueNodeData)ActiveNodeData;
 
-                if (textDisplayMode == TextDisplayMode.Typed)
+                if (textDisplayMode == DialoguerTextDisplayMode.Typed)
                     if (TextLength < ActiveNodeData.Text.Length)
                         TypeText();
 
-                if (textDisplayMode == TextDisplayMode.Instant)
+                if (textDisplayMode == DialoguerTextDisplayMode.Instant)
                     DisplayedTextUI.text = dialogue.Text;
 
                 if (dialogue.VoicedDialogue != null)
@@ -377,7 +358,7 @@ namespace DaiMangou.BridgedData
         /// </summary>
         void TypeText()
         {
-            if (TypingAudioCip != null) ;
+            if (TypingAudioCip != null)
             TypingAudioSource.clip = TypingAudioCip;
 
             if (Timer == 0)
@@ -404,15 +385,15 @@ namespace DaiMangou.BridgedData
         public void MoveNext()
         {
             // make sureto set invoked back to false to false so that the events can be invoked again if we move back to it
-            TargetReflectedData.Conditions.All(inv => inv.Invoked == false);
-
+            TargetReflectedData.Conditions.All(inv => inv.Invoked = false);
+           
             // we also deactivate the buttons BEFORE 
             foreach (var button in RouteButtons)
                 button.gameObject.SetActive(false);
 
 
 
-            if (ActiveIndex + 1 < dialogueData.ActiveCharacterDialogueSet.Count)
+            if (ActiveIndex + 1 < sceneData.ActiveCharacterDialogueSet.Count)
             {
                 // reset out text length so that typed text can type itself
                 TextLength = 0;
@@ -426,7 +407,7 @@ namespace DaiMangou.BridgedData
         public void MovePrevious()
         {
             // make sureto set invoked back to false to false so that the events can be invoked again if we move back to it
-            TargetReflectedData.Conditions.All(inv => inv.Invoked == false);
+            TargetReflectedData.Conditions.All(inv => inv.Invoked = false);
 
             foreach (var button in RouteButtons)
                 button.gameObject.SetActive(false);
@@ -440,198 +421,24 @@ namespace DaiMangou.BridgedData
             }
         }
 
-        private void SetupStageCanvas()
+        public void ContinueOnRoute()
         {
-            /*  #region setup main canvas
-              var newStageCanvas = new GameObject("Stage Canvas");
-              newStageCanvas.AddComponent<Canvas>();
+            // make sureto set invoked back to false to false so that the events can be invoked again if we move back to it
+            TargetReflectedData.Conditions.All(inv => inv.Invoked = false);
 
-              newStageCanvas.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-
-              newStageCanvas.AddComponent<CanvasScaler>();
-              var canvasScaler = newStageCanvas.GetComponent<CanvasScaler>();
-              canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
-
-              newStageCanvas.AddComponent<GraphicRaycaster>();
-              newStageCanvas.transform.position = Vector3.zero;
-              #endregion
-
-              #region Dialogue Panel
-              var newDialoguePanel = new GameObject("Dialogue Panel");
-              newDialoguePanel.AddComponent<CanvasRenderer>();
-
-              newDialoguePanel.transform.SetParent(newStageCanvas.transform);
-              newDialoguePanel.transform.localPosition = new Vector3(0,10,0);
-
-              newDialoguePanel.AddComponent<Image>();
-              var newDialoguePanelImage = newDialoguePanel.GetComponent<Image>();
-              newDialoguePanelImage.sprite = Resources.Load<Sprite>("DefaultBackground");
-             // newDialoguePanelImage.material = new Material(Shader.Find("Sprites/Default"));
-              newDialoguePanelImage.type = Image.Type.Sliced;
-              newDialoguePanelImage.fillCenter = true;
-              newDialoguePanelImage.color = new Color(60, 60, 60, 0.35f);
-
-              var paneldata = newDialoguePanel.GetComponent<RectTransform>();
-              paneldata.anchorMin = new Vector2(0, 0);
-              paneldata.anchorMax = new Vector2(1, 0);
-              paneldata.pivot = new Vector2(0.5f, 0);
-              paneldata.sizeDelta = new Vector2(-40, 230);
-
-              #endregion
-
-              #region Name And Dialogue UI
-              var nameAndDialoguDisplay = new GameObject("Name and Dialogue Display");
-              nameAndDialoguDisplay.transform.SetParent(newDialoguePanel.transform);
-              nameAndDialoguDisplay.AddComponent<VerticalLayoutGroup>();
-              var verticalLayoutGroup = nameAndDialoguDisplay.GetComponent<VerticalLayoutGroup>();
-              verticalLayoutGroup.spacing = 0;
-              verticalLayoutGroup.childAlignment = TextAnchor.UpperLeft;
-              verticalLayoutGroup.childControlWidth = true;
-              verticalLayoutGroup.childControlHeight = false;
-              verticalLayoutGroup.childForceExpandHeight = true;
-              verticalLayoutGroup.childForceExpandWidth = false;
-              nameAndDialoguDisplay.transform.localPosition = new Vector3(0,115,0);
-
-
-
-              var DialoguePanelTransform = nameAndDialoguDisplay.GetComponent<RectTransform>();
-              DialoguePanelTransform.anchorMin = new Vector2(0, 1);
-              DialoguePanelTransform.anchorMax = new Vector2(1, 1);
-              DialoguePanelTransform.pivot = new Vector2(0.5f, 1);
-              DialoguePanelTransform.sizeDelta = new Vector2(0, 100);
-              #region Name 
-
-              var nameUI = new GameObject("Name");
-             nameUI.transform.SetParent(nameAndDialoguDisplay.transform);          
-              nameUI.AddComponent<CanvasRenderer>();
-              nameUI.AddComponent<Text>();
-              var nameUIText = nameUI.GetComponent<Text>();
-              nameUIText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-              nameUIText.fontStyle = FontStyle.Bold;
-              nameUIText.fontSize = 16;
-              nameUIText.supportRichText = true;
-
-              var nameUITransform = nameUI.GetComponent<RectTransform>();
-              nameUITransform.pivot = new Vector2(0.5f, 0.5f);
-              nameUITransform.sizeDelta = new Vector2(0, 16);
-
-              #endregion
-
-              #region Dialogue 
-              var dialogueUI = new GameObject("Dioalogue");
-              dialogueUI.transform.SetParent(nameAndDialoguDisplay.transform);
-              var dialogueUITransform = dialogueUI.GetComponent<RectTransform>();
-
-              dialogueUI.AddComponent<CanvasRenderer>();
-              dialogueUI.AddComponent<Text>();
-              var dialogueUIText = dialogueUI.GetComponent<Text>();
-              dialogueUIText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-              dialogueUIText.fontSize = 14;
-              dialogueUIText.supportRichText = true;
-
-
-              dialogueUITransform.pivot = new Vector2(0.5f, 0.5f);
-              dialogueUITransform.sizeDelta = new Vector2(0, 80);
-
-              #endregion
-
-
-
-              #endregion
-
-
-              #region Route Buttons
-
-              var routeButtonsUI = new GameObject("Route Buttons");
-              routeButtonsUI.transform.SetParent(newDialoguePanel.transform);
-              routeButtonsUI.AddComponent<GridLayoutGroup>();
-              var gridLayout = routeButtonsUI.GetComponent<GridLayoutGroup>();
-              routeButtonsUI.transform.localPosition = new Vector3(0,100,0);
-
-              gridLayout.cellSize = new Vector2(186,29);
-              gridLayout.spacing = new Vector2(86,0);
-              gridLayout.startCorner = GridLayoutGroup.Corner.UpperLeft;
-              gridLayout.startAxis = GridLayoutGroup.Axis.Horizontal;
-              gridLayout.childAlignment = TextAnchor.UpperLeft;
-              gridLayout.constraint = GridLayoutGroup.Constraint.Flexible;
-
-              var routeButtonsUITransform = routeButtonsUI.GetComponent<RectTransform>();
-              routeButtonsUITransform.anchorMin = new Vector2(0, 1);
-              routeButtonsUITransform.anchorMax = new Vector2(1, 1);
-              routeButtonsUITransform.pivot = new Vector2(0.5f, 0.5f);
-              routeButtonsUITransform.sizeDelta = new Vector2(0, 32);
-
-              #region buttons
-              for (var i = 0; i < tempcount; i++)
-              {
-                  var buttonsUI = new GameObject("Buttons"+i);
-                  buttonsUI.transform.SetParent(routeButtonsUI.transform);
-                  buttonsUI.AddComponent<CanvasRenderer>();
-                  buttonsUI.AddComponent<Image>();
-                  buttonsUI.AddComponent<Button>();
-                  buttonsUI.AddComponent<ClickListener>();
-                  var buttonImage = buttonsUI.GetComponent<Image>();
-                  buttonImage.sprite = Resources.Load<Sprite>("DefaultBackground");
-                  // newDialoguePanelImage.material = new Material(Shader.Find("Sprites/Default"));
-                  buttonImage.type = Image.Type.Sliced;
-                  buttonImage.fillCenter = true;
-                  buttonImage.color = new Color(60, 60, 60, 0.35f);
-
-                  var button = buttonsUI.GetComponent<Button>();
-                  button.transition = Selectable.Transition.ColorTint;
-                  button.targetGraphic = buttonImage;
-                  var colblock = new ColorBlock();
-                  colblock.normalColor = new Color(255, 255, 255);
-                  colblock.normalColor = new Color(245, 245, 245);
-                  colblock.normalColor = new Color(200, 200, 200);
-                  colblock.disabledColor = new Color(200, 200, 200);
-                  colblock.fadeDuration = 0.1f;
-
-                  button.colors = colblock;
-                  var buttonTransform = button.GetComponent<RectTransform>();
-                  buttonTransform.anchorMin = new Vector2(0, 1);
-                  buttonTransform.anchorMax = new Vector2(0, 1);
-                  buttonTransform.pivot = new Vector2(0.5f, 0.5f);
-                  buttonTransform.sizeDelta = new Vector2(0, 29);
-
-
-                  var buttonClickListener = buttonsUI.GetComponent<ClickListener>();
-                  buttonClickListener.dialoguer = this; // temp
-                  button.onClick.AddListener(buttonClickListener.SwitchRoute);
-
-
-                  var buttonsText = new GameObject("ButtonText");
-                  buttonsText.transform.SetParent(buttonsUI.transform);
-                  buttonsText.AddComponent<Text>();
-                  var buttonTextObject = buttonsText.GetComponent<Text>();
-                  buttonTextObject.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-                  buttonTextObject.text = "Buton" + i;
-
-                  var buttonsTextTransform = buttonsText.GetComponent<RectTransform>();
-                  buttonsTextTransform.anchorMin = new Vector2(0, 0);
-                  buttonsTextTransform.anchorMax = new Vector2(1, 1);
-                  buttonsTextTransform.pivot = new Vector2(0.5f, 0.5f);
-                  buttonsTextTransform.sizeDelta = new Vector2(0, 0);
-
-                  buttonsUI.layer = 5;
-                  buttonsText.layer = 5;
-
-              }
-
-              #endregion
-
-              #endregion
-
-
-
-              newStageCanvas.layer = 5;
-              newDialoguePanel.layer = 5;
-              nameAndDialoguDisplay.layer = 5;
-              nameUI.layer = 5;
-              dialogueUI.layer = 5;
-              routeButtonsUI.layer = 5;
-              */
+            var route = (RouteNodeData)sceneData.ActiveCharacterDialogueSet[ActiveIndex];
+            CachedRoute = route;
         }
+        public void GoToRoute(int routeID)
+        {
+            // make sureto set invoked back to false to false so that the events can be invoked again if we move back to it
+            TargetReflectedData.Conditions.All(inv => inv.Invoked = false);
+
+            var route = (RouteNodeData)sceneData.ActiveCharacterDialogueSet[ActiveIndex];
+            route.RouteID = routeID;
+            CachedRoute = route;
+        }
+       
 
         #region variables 
         //  public UnityEvent m_MyEvent;
@@ -640,37 +447,32 @@ namespace DaiMangou.BridgedData
         /// 
         /// </summary>
         [HideInInspector]
-        public DisplaySettings DialoguerDisplaySettings;
+        public DialoguerDisplaySettings DialoguerDisplaySettings;
 
         /// <summary>
         /// 
         /// </summary>
         [HideInInspector]
-        public DialogueData dialogueData;
+        [UnityEngine.Serialization.FormerlySerializedAs("dialogueData")]
+        public SceneData sceneData;
 
         /// <summary>
         /// the value here is set to -1 to start , so that we can select a scene value which will then pass its scene id to this scene id value which will then be serialized
         /// </summary>
-        [HideInInspector]
-        public int SceneID = -1;
+       // [HideInInspector]
+       // public int SceneID = -1;
 
         /// <summary>
         /// 
         /// </summary>
         [HideInInspector]
-        public delegate void DoRefresh();
+        public delegate void RefreshDialoguerDialogue();
 
         /// <summary>
         /// used to re-generate the ActiveCharacterDialogueSet
         /// </summary>
         [HideInInspector]
-        public static DoRefresh doRefresh;
-
-        /// <summary>
-        ///  flag to check if any nodes are still processing data
-        /// </summary>
-        [HideInInspector]
-        public static int ActiveEvents = -1;
+        public static RefreshDialoguerDialogue doRefresh;
 
         /// <summary>
         /// static int flag used to check how many charactrs are speaking at once, if the number inceases the aUI for dialogue will be added
@@ -702,6 +504,9 @@ namespace DaiMangou.BridgedData
         /// </summary>
        //[HideInInspector]
         public List<ReflectedData> ReflectedDataSet = new List<ReflectedData>();
+        /// <summary>
+        /// 
+        /// </summary>
         public List<ReflectedData> TempReflectedDataSet = new List<ReflectedData>();
         [HideInInspector]
         public GameObject ReflectedDataParent;
@@ -737,7 +542,7 @@ namespace DaiMangou.BridgedData
         /// 
         /// </summary>
         [HideInInspector]
-        public TextDisplayMode textDisplayMode = TextDisplayMode.Instant;
+        public DialoguerTextDisplayMode textDisplayMode = DialoguerTextDisplayMode.Instant;
 
         /// <summary>
         /// 

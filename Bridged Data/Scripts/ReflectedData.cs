@@ -34,6 +34,27 @@ namespace DaiMangou.BridgedData
             }
         }
 
+        #region Character Specific 
+        public GameObject CharacterGameObject;
+        public Character character;
+        public Character characterComponent
+        {
+            get
+            {
+                if (character == null)
+                {
+                    character = CharacterGameObject.GetComponent<Character>();
+                }
+
+                return character;
+            }
+            set
+            {
+                character = value;
+            }
+        }
+        #endregion
+
         public List<Condition> Conditions = new List<Condition>();
 
 

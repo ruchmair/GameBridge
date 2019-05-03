@@ -28,6 +28,9 @@ namespace DaiMangou.GameBridgeEditor
             if (go != null && (go.GetComponent<Dialoguer>()))
                 GUI.DrawTexture(rect.ToCenterLeft(16, 16,-30), ImageLibrary.chatIcon);
 
+            if (go != null && (go.GetComponent<Character>()))
+                GUI.DrawTexture(rect.ToCenterLeft(16, 16, -30), ImageLibrary.defaultFemaleCharacterImage);
+
 
 
         }
