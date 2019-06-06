@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace DaiMangou.BridgedData
 {
+    /// <summary>
+    /// representation of Environment Node Data (Not Fully Setup)
+    /// </summary>
     [Serializable]
     public class EnvironmentNodeData : NodeData
     {

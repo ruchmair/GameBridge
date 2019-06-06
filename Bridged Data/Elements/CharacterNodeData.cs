@@ -6,11 +6,20 @@ using UnityEngine;
 
 namespace DaiMangou.BridgedData
 {
+    /// <summary>
+    /// Character Node Data Representation (this class structure will greatly change in future updates to support Histry and Evolution like storyteller does)
+    /// </summary>
     [Serializable]
     public class CharacterNodeData:NodeData
     {
+        /// <summary>
+        /// characters have a list of all their actions , dialogue and other node data as shown in storyteller
+        /// </summary>
         public List<NodeData> NodeDataInMyChain = new List<NodeData>();
-        public Texture2D CharacterImage;
+        /// <summary>
+        /// copty of the character image as seen in Storyteller 
+        /// </summary>
+        public Sprite CharacterImage;
 
         #region Personality traits
 

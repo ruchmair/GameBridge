@@ -5,8 +5,10 @@ using System.Text;
 using UnityEngine;
 
 namespace DaiMangou.BridgedData
-
 {
+    /// <summary>
+    /// Representation Of Link Node Data
+    /// </summary>
     [Serializable]
     public class LinkNodeData: NodeData
     {
@@ -26,6 +28,7 @@ namespace DaiMangou.BridgedData
         {
             base.ProcessData();
 
+            // here we begin setting up the time loop system which wll hangle character moventment through the past and future
          /*   if (Loop)
             {
 

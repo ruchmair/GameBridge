@@ -7,14 +7,28 @@ using UnityEngine;
 
 
 namespace DaiMangou.BridgedData
-
 {
+    /// <summary>
+    /// representation of Dialogue Node data
+    /// </summary>
     [Serializable]
     public class DialogueNodeData : NodeData
     {
+        /// <summary>
+        /// This is the voiceover clip copied from the Dialogue Node
+        /// </summary>
         public AudioClip VoicedDialogue = null;
+        /// <summary>
+        /// Soun effect copied from the dialogue node
+        /// </summary>
         public AudioClip SoundEffect = null;
+        /// <summary>
+        /// Storyboard image copied from the Dialogue Node
+        /// </summary>
         public Sprite StoryboardImage = null;
+        /// <summary>
+        /// your string tag 
+        /// </summary>
         public string Tag = "";
 
 

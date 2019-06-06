@@ -12,13 +12,29 @@ using Object = UnityEngine.Object;
 
 namespace DaiMangou.BridgedData
 {
+    /// <summary>
+    ///  the condition system allows foe any  accessible function to be called once a condition is met
+    /// </summary>
     [Serializable]
     public class Condition : MonoBehaviour
     {
+        /// <summary>
+        /// This is the gameobject which this Condition Component is atached to
+        /// </summary>
         public GameObject Self;
+
         #region Dialoguer Specific
+        /// <summary>
+        /// If the refelected data is generated under a gameboject with a Dialoguer Component then the gameobjects is set here
+        /// </summary>
         public GameObject DialoguerGameObject;
+        /// <summary>
+        /// value is set by get set 
+        /// </summary>
         public Dialoguer dialoguer;
+        /// <summary>
+        ///  If the refelected data is generated under a gameboject with a Dialoguer then the dialogue scriptreference is set here
+        /// </summary>
         public Dialoguer dialoguerComponent
         {
             get
@@ -38,8 +54,17 @@ namespace DaiMangou.BridgedData
         #endregion
 
         #region Character Specific 
+        /// <summary>
+        /// If the refelected data is generated under a gameboject with a Character Component then the gameobjects is set here
+        /// </summary>
         public GameObject CharacterGameObject;
+        /// <summary>
+        /// value is set by get set
+        /// </summary>
         public Character character;
+        /// <summary>
+        /// If the refelected data is generated under a gameboject with a Character Component then the dialogue scriptreference is set here
+        /// </summary>
         public Character characterComponent
         {
             get
@@ -57,33 +82,70 @@ namespace DaiMangou.BridgedData
             }
         }
         #endregion
-        // public string Name = "No Name";
+        /// <summary>
+        /// once this bool is equal to a bool value you decide upon the condition system will be activated
+        /// </summary>
         public bool ObjectiveBool;
+        /// <summary>
+        /// This is the gameobject whose mono scrits we wish to analuze for public methods
+        /// </summary>
         public GameObject TargetGameObject;
-        // helps with setting first component data
+        /// <summary>
+        /// helps to determine the state of the Condition editor (do not edit)
+        /// </summary>
         public GameObject cachedTargetObject;
-
+        /// <summary>
+        /// this is an array of all the components on a TargetGameObject
+        /// </summary>
         public Component[] Components = new Component[0];
+        /// <summary>
+        /// This is an array of all the public methods of a Component 
+        /// </summary>
         public MethodInfo[] cacheMethods = new MethodInfo[0];
+        /// <summary>
+        /// here we use a speial class which allows us to Serialize methodInfo
+        /// </summary>
         public SerializableMethodInfo[] serializedMethods = new SerializableMethodInfo[0];
-
+        /// <summary>
+        /// this is the index value of the component in the Components array
+        /// </summary>
         public int ComponentIndex = 0;
+        /// <summary>
+        /// this is the index value of the target Method in the serializedMethods array
+        /// </summary>
         public int MethodIndex = 0;
-
+        /// <summary>
+        /// delegate that we will use to create a delegate method
+        /// </summary>
+        /// <returns></returns>
         private delegate bool Del();
+        /// <summary>
+        /// he delegate method
+        /// </summary>
         private  Del theDelegate;
-
+        /// <summary>
+        /// flag to check i the target event is invoked 
+        /// </summary>
        // [NonSerialized]
         public bool Invoked;
+        /// <summary>
+        /// a flag to check if the target ent is to be invoked automatically onve a condition is met or if the nodedata is being processed
+        /// </summary>
         public bool AutoStart = false;
         // public bool PlaySoundEffect;
         //  public bool PlayVoiceClip;
+        /// <summary>
+        /// if the node data uses time then the 
+        /// </summary>
         public bool UseTime;
-
-        // this unity event only act as a proxy for an unity event in the ReflectedData
+        /// <summary>
+        /// this unity event only act as a proxy for an unity event in the ReflectedData
+        /// </summary>
         public UnityEvent targetEvent = new UnityEvent();
-
-        private bool DelayTimerStarted;
+        /// <summary>
+        /// 
+        /// </summary>
+        private bool DelayTimerStarted;// not fully setup
 
         public void Awake()
         {
@@ -91,20 +153,27 @@ namespace DaiMangou.BridgedData
         }
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void GetGameObjectComponents()
         {
             Components = TargetGameObject.GetComponents(typeof(MonoBehaviour));// Component
 
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="index"></param>
         public void SetComponent(object index)
         {
             ComponentIndex = (int)index;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void GetComponentMethods()
         {
 
@@ -118,7 +187,10 @@ namespace DaiMangou.BridgedData
             }
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="index"></param>
         public void SetMethod(object index)
         {
             MethodIndex = (int)index;
@@ -126,7 +198,9 @@ namespace DaiMangou.BridgedData
         }
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void ProcessConditionData()
         {
             if (AutoStart)
@@ -197,23 +271,32 @@ namespace DaiMangou.BridgedData
             }
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void StartPlayingVoiceClip()
         {
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void StatyPlayingPlaySoundEffect()
         {
 
         }
-        // will be drawn out to show types of images to use and how to transition them, or have then sit in the scene and wait for triger (prefab sprite...)
+        /// <summary>
+        /// will be drawn out to show types of images to use and how to transition them, or have then sit in the scene and wait for triger (prefab sprite...)
+        /// </summary>
         public void Displayimage()
         {
 
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator DelayTimer()
         {
             if (dialoguer)

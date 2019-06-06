@@ -550,7 +550,6 @@ namespace DaiMangou.GameBridgeEditor
                                         data.SoundEffect = action.SoundEffect;
 
                                     data.Pass = action.Pass;
-                                    data.ActionName = action.ActionName;
                                     data.name = data.Name = action.Name;
                                     data.Text = action.Text;
                                     data.Tag = action.Tag;

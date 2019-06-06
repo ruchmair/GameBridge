@@ -1,0 +1,2404 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 898e24b5475626c4e801ae0a3c8a1e90, type: 3}
+  m_Name: NPCs
+  m_EditorClassIdentifier: 
+  SceneID: 4
+  FullCharacterDialogueSet:
+  - {fileID: 114156549573840928}
+  - {fileID: 114848196261194716}
+  - {fileID: 114882067989828320}
+  - {fileID: 114259125675803646}
+  - {fileID: 114363717951416370}
+  - {fileID: 114491649697734862}
+  - {fileID: 114918251042600018}
+  - {fileID: 114394597818660324}
+  - {fileID: 114698898737290762}
+  - {fileID: 114580044048799886}
+  - {fileID: 114495604420990614}
+  - {fileID: 114931276159335332}
+  - {fileID: 114557344617387848}
+  - {fileID: 114598526335434246}
+  - {fileID: 114723206700001338}
+  - {fileID: 114519706662432862}
+  - {fileID: 114731382288893390}
+  - {fileID: 114345964904879368}
+  - {fileID: 114609590577764570}
+  - {fileID: 114131023586335592}
+  - {fileID: 114730691215335766}
+  - {fileID: 114918168047121858}
+  - {fileID: 114162837933287292}
+  - {fileID: 114777011688867350}
+  - {fileID: 114567812343068652}
+  - {fileID: 114454061244250058}
+  - {fileID: 114815544691476182}
+  - {fileID: 114289018501387026}
+  - {fileID: 114567421953640358}
+  - {fileID: 114551209681519314}
+  - {fileID: 114288432886940510}
+  - {fileID: 114154208853091636}
+  - {fileID: 114437477080851836}
+  - {fileID: 114536816127278286}
+  - {fileID: 114921223921821052}
+  - {fileID: 114424824299397132}
+  - {fileID: 114119596915019474}
+  - {fileID: 114483268056566664}
+  - {fileID: 114030439423380738}
+  - {fileID: 114342406280541818}
+  - {fileID: 114407452439584152}
+  - {fileID: 114797043918907696}
+  - {fileID: 114323313281394890}
+  - {fileID: 114798611925012922}
+  - {fileID: 114044079569228586}
+  - {fileID: 114728617368608146}
+  - {fileID: 114110616331358532}
+  - {fileID: 114628377720299292}
+  - {fileID: 114737929337905804}
+  - {fileID: 114642932959009284}
+  - {fileID: 114418443510504356}
+  - {fileID: 114750165044232858}
+  - {fileID: 114754964549675944}
+  - {fileID: 114051060677355438}
+  - {fileID: 114960640237830610}
+  - {fileID: 114698310041046166}
+  - {fileID: 114204130114630714}
+  - {fileID: 114705290600540810}
+  - {fileID: 114356744855325268}
+  - {fileID: 114329784982730678}
+  - {fileID: 114229183897692184}
+  - {fileID: 114363203209142390}
+  - {fileID: 114282897148251314}
+  - {fileID: 114620115998050188}
+  - {fileID: 114590060406950896}
+  ActiveCharacterDialogueSet:
+  - {fileID: 114567812343068652}
+  - {fileID: 114815544691476182}
+  - {fileID: 114551209681519314}
+  - {fileID: 114921223921821052}
+  - {fileID: 114777011688867350}
+  - {fileID: 114030439423380738}
+  - {fileID: 114519706662432862}
+  - {fileID: 114323313281394890}
+  - {fileID: 114628377720299292}
+  - {fileID: 114642932959009284}
+  - {fileID: 114750165044232858}
+  - {fileID: 114598526335434246}
+  - {fileID: 114754964549675944}
+  - {fileID: 114848196261194716}
+  - {fileID: 114698310041046166}
+  - {fileID: 114356744855325268}
+  - {fileID: 114329784982730678}
+  - {fileID: 114723206700001338}
+  - {fileID: 114229183897692184}
+  - {fileID: 114363717951416370}
+  - {fileID: 114363203209142390}
+  - {fileID: 114282897148251314}
+  - {fileID: 114620115998050188}
+  - {fileID: 114590060406950896}
+  - {fileID: 114580044048799886}
+  Characters:
+  - {fileID: 114156549573840928}
+  - {fileID: 114918251042600018}
+  - {fileID: 114698898737290762}
+  - {fileID: 114731382288893390}
+  - {fileID: 114730691215335766}
+--- !u!114 &114030439423380738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 9_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 9_Dialogue
+  Text: I need all your magic potions
+  UID: 9f1722f7-fefd-4208-9b66-51aac68796c4
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114777011688867350}
+  DataIconnectedTo:
+  - {fileID: 114628377720299292}
+  Duration: 1
+  Delay: 2.7715101
+  RealtimeDelay: 0
+  StartTime: 2.7715101
+  DurationSum: 3.7715101
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114044079569228586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 14_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 14_Dialogue
+  Text: okay , have a nice day
+  UID: d8b90a24-4f93-4052-a658-96a350e04648
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114519706662432862}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 2.4017851
+  RealtimeDelay: 0
+  StartTime: 4.556286
+  DurationSum: 5.556286
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114051060677355438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 21_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 21_Dialogue
+  Text: 'All of them '
+  UID: 159b22cc-322e-405b-ad2b-f76aa403f525
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114598526335434246}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 1.9523282
+  RealtimeDelay: 0
+  StartTime: 8.287094
+  DurationSum: 9.287094
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114110616331358532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c8dd975dbe0cf1489594b86179f85ba, type: 3}
+  m_Name: 15_Action
+  m_EditorClassIdentifier: 
+  Name: 15_Action
+  Text: give healing potion to customer
+  UID: fb480499-474e-4266-9faa-06f269d7af69
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114798611925012922}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 5.3140497
+  DurationSum: 6.3140497
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  ActionName: 
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114119596915019474
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 10_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 10_Dialogue
+  Text: healing potion please
+  UID: d6e861e5-f2b4-4106-8fb6-dde14e9adcc0
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114777011688867350}
+  DataIconnectedTo:
+  - {fileID: 114418443510504356}
+  Duration: 1
+  Delay: 2.6591458
+  RealtimeDelay: 0
+  StartTime: 2.6591458
+  DurationSum: 3.6591458
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114131023586335592
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86362742d6c0d284f9349e0245004411, type: 3}
+  m_Name: NPC 2 first route
+  m_EditorClassIdentifier: 
+  Name: NPC 2 first route
+  Text: 
+  UID: 714708e9-bb13-4eb2-9761-21c4af45ed54
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114557344617387848}
+  DataIconnectedTo:
+  - {fileID: 114536816127278286}
+  - {fileID: 114437477080851836}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 1
+  OverrideStartTime: 0
+  RouteID: 0
+  TempRouteID: 0
+  LinkedRoute: {fileID: 0}
+  AutoSwitchValue: 0
+  RoutesLinkedToMe:
+  - {fileID: 114491649697734862}
+  AlternativeRouteTitles: []
+  UseAlternativeRouteTitles: 0
+--- !u!114 &114154208853091636
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 55_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 55_Dialogue
+  Text: 'One Cold glass of water '
+  UID: 04870673-48d8-4e4c-bffc-e2045b1af6ea
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114345964904879368}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 1.5730989
+  RealtimeDelay: 0
+  StartTime: 1.5730989
+  DurationSum: 2.573099
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114156549573840928
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f62fd303fe32d84d939ad01a51f9fdb, type: 3}
+  m_Name: NPC 1
+  m_EditorClassIdentifier: 
+  Name: NPC 1
+  Text: 
+  UID: 82cbe6d9-9f4f-4d2e-ace9-19a58e6581ed
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe: []
+  DataIconnectedTo:
+  - {fileID: 114815544691476182}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 0
+  OverrideStartTime: 0
+  NodeDataInMyChain:
+  - {fileID: 114156549573840928}
+  - {fileID: 114848196261194716}
+  - {fileID: 114259125675803646}
+  - {fileID: 114698310041046166}
+  - {fileID: 114356744855325268}
+  - {fileID: 114363203209142390}
+  - {fileID: 114282897148251314}
+  - {fileID: 114620115998050188}
+  - {fileID: 114363717951416370}
+  - {fileID: 114798611925012922}
+  - {fileID: 114110616331358532}
+  - {fileID: 114044079569228586}
+  - {fileID: 114204130114630714}
+  - {fileID: 114705290600540810}
+  - {fileID: 114323313281394890}
+  - {fileID: 114551209681519314}
+  - {fileID: 114750165044232858}
+  - {fileID: 114815544691476182}
+  - {fileID: 114519706662432862}
+  CharacterImage: {fileID: 0}
+--- !u!114 &114162837933287292
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9f62813ceb95dd48802f541722e4a38, type: 3}
+  m_Name: NPC 3 Route
+  m_EditorClassIdentifier: 
+  Name: NPC 3 Route
+  Text: 
+  UID: c07215e0-b057-4741-8636-92c2514b64f0
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114567812343068652}
+  DataIconnectedTo:
+  - {fileID: 114609590577764570}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 1.5727988
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 1
+  OverrideStartTime: 0
+  Loop: 0
+  LoopValue: 0
+  loopRoute: {fileID: 0}
+  _iterationCount: 0
+--- !u!114 &114204130114630714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 24_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 24_Dialogue
+  Text: wow, okay son
+  UID: cfbe105e-4bbc-4ad2-b9aa-24a57c0f1b28
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114848196261194716}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 1.8961462
+  RealtimeDelay: 0
+  StartTime: 9.729462
+  DurationSum: 10.729462
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 'surprised '
+--- !u!114 &114229183897692184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 28_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 28_Dialogue
+  Text: thats for me to know
+  UID: 40a1950b-9617-427a-9ea9-6302f73a84c6
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114723206700001338}
+  DataIconnectedTo:
+  - {fileID: 114590060406950896}
+  Duration: 1
+  Delay: 2.2472844
+  RealtimeDelay: 0
+  StartTime: 11.141104
+  DurationSum: 12.141104
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114259125675803646
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 32_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 32_Dialogue
+  Text: 
+  UID: ca8b5def-1703-4a61-a9ca-a3fb119bef4e
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114363717951416370}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114282897148251314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 33_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 33_Dialogue
+  Text: well , here you go.  all 85 of my God tier potions
+  UID: 05474a26-01c7-4fa6-95cf-23ba596d5bde
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114363203209142390}
+  DataIconnectedTo:
+  - {fileID: 114620115998050188}
+  Duration: 1
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 13.600285
+  DurationSum: 14.600285
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114288432886940510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 56_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 56_Dialogue
+  Text: Some strong  rum
+  UID: 88bed661-d330-409f-bb30-ce814db5711b
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114345964904879368}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 1.3624161
+  RealtimeDelay: 0
+  StartTime: 1.3624161
+  DurationSum: 2.3624163
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114289018501387026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 41_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 41_Dialogue
+  Text: greetings ma boy
+  UID: 098430e5-4266-459b-aebe-11e8da1f8d31
+  CharacterName: NPC 2
+  CallingNodeData: {fileID: 114918251042600018}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114918251042600018}
+  DataIconnectedTo:
+  - {fileID: 114567421953640358}
+  Duration: 1
+  Delay: 0.14045528
+  RealtimeDelay: 0
+  StartTime: 0.14045528
+  DurationSum: 1.1404552
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114323313281394890
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 5_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 5_Dialogue
+  Text: well i'll be darned, looks like i'll be selling ut quickly today
+  UID: 07a3ff9f-f667-4838-b540-2bc92f5990a5
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114519706662432862}
+  DataIconnectedTo:
+  - {fileID: 114750165044232858}
+  Duration: 1
+  Delay: 1.7545773
+  RealtimeDelay: 0
+  StartTime: 3.9090781
+  DurationSum: 4.909078
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114329784982730678
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 63_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 63_Dialogue
+  Text: still hereeeee
+  UID: 7ad5504f-6102-41bf-8daf-1722c23f7fb2
+  CharacterName: NPC 4
+  CallingNodeData: {fileID: 114698898737290762}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114642932959009284}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 3.7642012
+  RealtimeDelay: 0
+  StartTime: 11.059364
+  DurationSum: 12.059364
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114342406280541818
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 58_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 58_Dialogue
+  Text: coming right up
+  UID: 28a05a92-8911-45f0-9cd6-698e2316ea81
+  CharacterName: NPC 3
+  CallingNodeData: {fileID: 114731382288893390}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114495604420990614}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 1.6995087
+  RealtimeDelay: 0
+  StartTime: 2.8259184
+  DurationSum: 3.8259184
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114345964904879368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86362742d6c0d284f9349e0245004411, type: 3}
+  m_Name: NPC 3 First Route
+  m_EditorClassIdentifier: 
+  Name: NPC 3 First Route
+  Text: 
+  UID: 8970dd9f-1b30-478e-9386-c95a5010251a
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114609590577764570}
+  DataIconnectedTo:
+  - {fileID: 114154208853091636}
+  - {fileID: 114288432886940510}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 1.5729989
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 1
+  OverrideStartTime: 0
+  RouteID: 0
+  TempRouteID: 0
+  LinkedRoute: {fileID: 0}
+  AutoSwitchValue: 0
+  RoutesLinkedToMe:
+  - {fileID: 114495604420990614}
+  AlternativeRouteTitles: []
+  UseAlternativeRouteTitles: 0
+--- !u!114 &114356744855325268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 26_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 26_Dialogue
+  Text: what you plan on hunting, the gods that live up on them there mountains ?
+  UID: 6fb06b9d-10ba-4771-86a8-52fe26121f46
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114698310041046166}
+  DataIconnectedTo:
+  - {fileID: 114363717951416370}
+  Duration: 1
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 10.01314
+  DurationSum: 11.01314
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114363203209142390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 31_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 31_Dialogue
+  Text: okay, okay
+  UID: 9bd2819e-818e-4a70-a1b0-df20ed3711f1
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114363717951416370}
+  DataIconnectedTo:
+  - {fileID: 114282897148251314}
+  Duration: 1
+  Delay: 1.5871446
+  RealtimeDelay: 0
+  StartTime: 12.600285
+  DurationSum: 13.600285
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114363717951416370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86362742d6c0d284f9349e0245004411, type: 3}
+  m_Name: 30_Route
+  m_EditorClassIdentifier: 
+  Name: 30_Route
+  Text: 
+  UID: 86d743a4-6a6a-46a1-a584-0747177efc9e
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114356744855325268}
+  DataIconnectedTo:
+  - {fileID: 114363203209142390}
+  - {fileID: 114259125675803646}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 12.600184
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 0
+  OverrideStartTime: 0
+  RouteID: 0
+  TempRouteID: 0
+  LinkedRoute: {fileID: 114723206700001338}
+  AutoSwitchValue: 0
+  RoutesLinkedToMe: []
+  AlternativeRouteTitles: []
+  UseAlternativeRouteTitles: 0
+--- !u!114 &114394597818660324
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 51_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 51_Dialogue
+  Text: sorry, you dont appear to be at the righ level to purchase any of my products.
+  UID: 4f3f392b-b6fb-44db-b2d7-13161f92c8dc
+  CharacterName: NPC 3
+  CallingNodeData: {fileID: 114731382288893390}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114931276159335332}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 1
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114407452439584152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 44_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 44_Dialogue
+  Text: coming right up
+  UID: 57744596-e19e-4f1b-a80c-5a12d0ec6652
+  CharacterName: NPC 2
+  CallingNodeData: {fileID: 114918251042600018}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114491649697734862}
+  DataIconnectedTo:
+  - {fileID: 114728617368608146}
+  Duration: 1
+  Delay: 1.4466892
+  RealtimeDelay: 0
+  StartTime: 3.5871444
+  DurationSum: 4.5871444
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114418443510504356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 14_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 14_Dialogue
+  Text: thank you, bye
+  UID: 4bf8da3d-bb5a-4566-af51-eabd9c7b8a22
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114119596915019474}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 2.9008865
+  RealtimeDelay: 0
+  StartTime: 6.5600324
+  DurationSum: 7.5600324
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114424824299397132
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 59_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 59_Dialogue
+  Text: want ice with that ?
+  UID: 4776429b-39a4-4d1e-8e93-f5de9378a5a3
+  CharacterName: NPC 3
+  CallingNodeData: {fileID: 114731382288893390}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114495604420990614}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 1.4607348
+  RealtimeDelay: 0
+  StartTime: 2.5871446
+  DurationSum: 3.5871446
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114437477080851836
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 40_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 40_Dialogue
+  Text: nevermind , i will come back later
+  UID: 3a7a3ab6-1f5a-4d67-ac32-ff2f44394364
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114131023586335592}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 2.317512
+  RealtimeDelay: 0
+  StartTime: 2.317512
+  DurationSum: 3.317512
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114454061244250058
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 50_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 50_Dialogue
+  Text: welcome , what would you like
+  UID: 331e60e4-4b71-4d7b-a946-4b4ea215758f
+  CharacterName: NPC 3
+  CallingNodeData: {fileID: 114731382288893390}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114931276159335332}
+  DataIconnectedTo:
+  - {fileID: 114495604420990614}
+  Duration: 1
+  Delay: 0.12640974
+  RealtimeDelay: 0
+  StartTime: 0.12640974
+  DurationSum: 1.1264098
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114483268056566664
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 11_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 11_Dialogue
+  Text: nevermind i'll come back later
+  UID: a2b03555-20db-4d28-9abc-97b6bfcdeb91
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114777011688867350}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 2.7388778
+  RealtimeDelay: 0
+  StartTime: 2.7388778
+  DurationSum: 3.7388778
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114491649697734862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86362742d6c0d284f9349e0245004411, type: 3}
+  m_Name: 43_Route
+  m_EditorClassIdentifier: 
+  Name: 43_Route
+  Text: 
+  UID: 3f8157c1-5ccc-4698-a3d6-991566921d7a
+  CharacterName: NPC 2
+  CallingNodeData: {fileID: 114918251042600018}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114567421953640358}
+  DataIconnectedTo:
+  - {fileID: 114407452439584152}
+  - {fileID: 114797043918907696}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 0
+  OverrideStartTime: 0
+  RouteID: 0
+  TempRouteID: 0
+  LinkedRoute: {fileID: 114131023586335592}
+  AutoSwitchValue: 0
+  RoutesLinkedToMe: []
+  AlternativeRouteTitles: []
+  UseAlternativeRouteTitles: 0
+--- !u!114 &114495604420990614
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86362742d6c0d284f9349e0245004411, type: 3}
+  m_Name: 57_Route
+  m_EditorClassIdentifier: 
+  Name: 57_Route
+  Text: 
+  UID: f6549e06-5657-4fb9-a6f9-91c83be26291
+  CharacterName: NPC 3
+  CallingNodeData: {fileID: 114731382288893390}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114454061244250058}
+  DataIconnectedTo:
+  - {fileID: 114342406280541818}
+  - {fileID: 114424824299397132}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 0
+  OverrideStartTime: 0
+  RouteID: 0
+  TempRouteID: 0
+  LinkedRoute: {fileID: 114345964904879368}
+  AutoSwitchValue: 0
+  RoutesLinkedToMe: []
+  AlternativeRouteTitles: []
+  UseAlternativeRouteTitles: 0
+--- !u!114 &114519706662432862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86362742d6c0d284f9349e0245004411, type: 3}
+  m_Name: 12_Route
+  m_EditorClassIdentifier: 
+  Name: 12_Route
+  Text: 
+  UID: 45f1608f-2e08-4e49-a580-cb9939bb9f30
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114551209681519314}
+  DataIconnectedTo:
+  - {fileID: 114323313281394890}
+  - {fileID: 114798611925012922}
+  - {fileID: 114044079569228586}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 3.9089782
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 0
+  OverrideStartTime: 0
+  RouteID: 0
+  TempRouteID: 0
+  LinkedRoute: {fileID: 114777011688867350}
+  AutoSwitchValue: 0
+  RoutesLinkedToMe: []
+  AlternativeRouteTitles: []
+  UseAlternativeRouteTitles: 0
+--- !u!114 &114536816127278286
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 39_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 39_Dialogue
+  Text: the standard class A dagger please
+  UID: 81d901cb-7585-4dd4-8a9f-26c8cae4576f
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114131023586335592}
+  DataIconnectedTo:
+  - {fileID: 114737929337905804}
+  Duration: 1
+  Delay: 2.345603
+  RealtimeDelay: 0
+  StartTime: 2.345603
+  DurationSum: 3.345603
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114551209681519314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 4_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 4_Dialogue
+  Text: hi , what can i do you for
+  UID: e7e0d24d-7113-46f3-92e2-838092ba3f9f
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114815544691476182}
+  DataIconnectedTo:
+  - {fileID: 114519706662432862}
+  Duration: 1
+  Delay: 0.014045527
+  RealtimeDelay: 0
+  StartTime: 1.1545007
+  DurationSum: 2.1545007
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114557344617387848
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9f62813ceb95dd48802f541722e4a38, type: 3}
+  m_Name: NPC2 Forwarding Link
+  m_EditorClassIdentifier: 
+  Name: NPC2 Forwarding Link
+  Text: 
+  UID: c018dbaf-6aeb-4159-a654-629c3c57b442
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114918168047121858}
+  DataIconnectedTo:
+  - {fileID: 114131023586335592}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 1
+  OverrideStartTime: 0
+  Loop: 0
+  LoopValue: 0
+  loopRoute: {fileID: 0}
+  _iterationCount: 0
+--- !u!114 &114567421953640358
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 42_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 42_Dialogue
+  Text: 'what would you like '
+  UID: 50d94a59-5131-43e1-8d40-984d5cb0d8bf
+  CharacterName: NPC 2
+  CallingNodeData: {fileID: 114918251042600018}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114289018501387026}
+  DataIconnectedTo:
+  - {fileID: 114491649697734862}
+  Duration: 1
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 1.1404552
+  DurationSum: 2.1404552
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114567812343068652
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86362742d6c0d284f9349e0245004411, type: 3}
+  m_Name: PathCheck
+  m_EditorClassIdentifier: 
+  Name: PathCheck
+  Text: 
+  UID: 4be96dbe-6fdf-484f-b053-c85a3c8d4107
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114730691215335766}
+  DataIconnectedTo:
+  - {fileID: 114777011688867350}
+  - {fileID: 114918168047121858}
+  - {fileID: 114162837933287292}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 1
+  OverrideStartTime: 1
+  RouteID: 0
+  TempRouteID: 0
+  LinkedRoute: {fileID: 0}
+  AutoSwitchValue: 0
+  RoutesLinkedToMe: []
+  AlternativeRouteTitles: []
+  UseAlternativeRouteTitles: 0
+--- !u!114 &114580044048799886
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c74f5891de31f5248a76eef5fbfae5e3, type: 3}
+  m_Name: 64_End
+  m_EditorClassIdentifier: 
+  Name: 64_End
+  Text: 
+  UID: 8d24e7ee-e643-47c1-b671-32eb0903dc52
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114590060406950896}
+  DataIconnectedTo: []
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 15.750804
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 1
+  OverrideStartTime: 0
+--- !u!114 &114590060406950896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 35_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 35_Dialogue
+  Text: 'here you go. '
+  UID: d07e7c67-f367-4d0b-8918-acedd5f547f4
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114229183897692184}
+  DataIconnectedTo:
+  - {fileID: 114580044048799886}
+  Duration: 1
+  Delay: 3.6097004
+  RealtimeDelay: 0
+  StartTime: 15.750804
+  DurationSum: 16.750805
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114598526335434246
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86362742d6c0d284f9349e0245004411, type: 3}
+  m_Name: NPC 1 second Route
+  m_EditorClassIdentifier: 
+  Name: NPC 1 second Route
+  Text: 
+  UID: 750261ef-3dde-4218-b797-457fae873a9c
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114628377720299292}
+  DataIconnectedTo:
+  - {fileID: 114754964549675944}
+  - {fileID: 114051060677355438}
+  - {fileID: 114960640237830610}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 7.8937187
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 1
+  OverrideStartTime: 0
+  RouteID: 0
+  TempRouteID: 0
+  LinkedRoute: {fileID: 0}
+  AutoSwitchValue: 0
+  RoutesLinkedToMe:
+  - {fileID: 114848196261194716}
+  AlternativeRouteTitles: []
+  UseAlternativeRouteTitles: 0
+--- !u!114 &114609590577764570
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9f62813ceb95dd48802f541722e4a38, type: 3}
+  m_Name: NPC 3 Forwarding Link
+  m_EditorClassIdentifier: 
+  Name: NPC 3 Forwarding Link
+  Text: 
+  UID: 1b8cf548-1270-4003-b124-bc2254d9afb1
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114162837933287292}
+  DataIconnectedTo:
+  - {fileID: 114345964904879368}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 1.5728989
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 1
+  OverrideStartTime: 0
+  Loop: 0
+  LoopValue: 0
+  loopRoute: {fileID: 0}
+  _iterationCount: 0
+--- !u!114 &114620115998050188
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 34_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 34_Dialogue
+  Text: that will be 590 gold.
+  UID: 4cbd1a62-e034-4c2c-89ea-af0d3167334f
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114282897148251314}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 14.600285
+  DurationSum: 15.600285
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114628377720299292
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 16_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 16_Dialogue
+  Text: you sure as hell will
+  UID: 5ba22e4c-74c9-4fa7-85b7-470a34d5e852
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114030439423380738}
+  DataIconnectedTo:
+  - {fileID: 114598526335434246}
+  Duration: 1
+  Delay: 1.5632554
+  RealtimeDelay: 0
+  StartTime: 5.3347654
+  DurationSum: 6.3347654
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114642932959009284
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 62_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 62_Dialogue
+  Text: dont listen to him
+  UID: f0061117-3f2e-43f3-84e9-06a3e63b0eb4
+  CharacterName: NPC 4
+  CallingNodeData: {fileID: 114698898737290762}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114921223921821052}
+  DataIconnectedTo:
+  - {fileID: 114329784982730678}
+  Duration: 1
+  Delay: 2.907424
+  RealtimeDelay: 0
+  StartTime: 6.2951636
+  DurationSum: 7.2951636
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114698310041046166
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 23_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 23_Dialogue
+  Text: 'coming right up '
+  UID: f9f6a0a2-ccf4-4e1f-a7c2-736a294f7b88
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114848196261194716}
+  DataIconnectedTo:
+  - {fileID: 114356744855325268}
+  Duration: 1
+  Delay: 1.1798242
+  RealtimeDelay: 0
+  StartTime: 9.01314
+  DurationSum: 10.01314
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: excited
+--- !u!114 &114698898737290762
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f62fd303fe32d84d939ad01a51f9fdb, type: 3}
+  m_Name: NPC 4
+  m_EditorClassIdentifier: 
+  Name: NPC 4
+  Text: 
+  UID: d6b17f94-ee71-4e8f-904a-4bdb565d5e67
+  CharacterName: NPC 4
+  CallingNodeData: {fileID: 114698898737290762}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe: []
+  DataIconnectedTo:
+  - {fileID: 114921223921821052}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 0
+  OverrideStartTime: 0
+  NodeDataInMyChain:
+  - {fileID: 114642932959009284}
+  - {fileID: 114329784982730678}
+  - {fileID: 114698898737290762}
+  - {fileID: 114921223921821052}
+  CharacterImage: {fileID: 0}
+--- !u!114 &114705290600540810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 25_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 25_Dialogue
+  Text: Got it.
+  UID: 8ee92311-29e3-4960-835f-c7acb9146875
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114848196261194716}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 2.2191932
+  RealtimeDelay: 0
+  StartTime: 9.912053
+  DurationSum: 10.912053
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114723206700001338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86362742d6c0d284f9349e0245004411, type: 3}
+  m_Name: NPC 1 third Route
+  m_EditorClassIdentifier: 
+  Name: NPC 1 third Route
+  Text: 
+  UID: 8fd88e69-1137-40b6-bded-5a08b1c089b6
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114754964549675944}
+  DataIconnectedTo:
+  - {fileID: 114229183897692184}
+  - {fileID: 114882067989828320}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 11.141004
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 1
+  OverrideStartTime: 0
+  RouteID: 0
+  TempRouteID: 0
+  LinkedRoute: {fileID: 0}
+  AutoSwitchValue: 0
+  RoutesLinkedToMe:
+  - {fileID: 114363717951416370}
+  AlternativeRouteTitles: []
+  UseAlternativeRouteTitles: 0
+--- !u!114 &114728617368608146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 46_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 46_Dialogue
+  Text: here yu go, one standard dagger
+  UID: dd08d8ec-49f3-4036-93df-1c97af2b493d
+  CharacterName: NPC 2
+  CallingNodeData: {fileID: 114918251042600018}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114407452439584152}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 4.5871444
+  DurationSum: 5.5871444
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114730691215335766
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f62fd303fe32d84d939ad01a51f9fdb, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  Name: Player
+  Text: 
+  UID: 4497d7fb-a49c-4b58-b3b9-580dff17f340
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe: []
+  DataIconnectedTo:
+  - {fileID: 114567812343068652}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 1
+  OverrideStartTime: 0
+  NodeDataInMyChain:
+  - {fileID: 114882067989828320}
+  - {fileID: 114590060406950896}
+  - {fileID: 114418443510504356}
+  - {fileID: 114437477080851836}
+  - {fileID: 114737929337905804}
+  - {fileID: 114960640237830610}
+  - {fileID: 114536816127278286}
+  - {fileID: 114119596915019474}
+  - {fileID: 114628377720299292}
+  - {fileID: 114754964549675944}
+  - {fileID: 114229183897692184}
+  - {fileID: 114483268056566664}
+  - {fileID: 114580044048799886}
+  - {fileID: 114051060677355438}
+  - {fileID: 114557344617387848}
+  - {fileID: 114598526335434246}
+  - {fileID: 114723206700001338}
+  - {fileID: 114288432886940510}
+  - {fileID: 114345964904879368}
+  - {fileID: 114609590577764570}
+  - {fileID: 114154208853091636}
+  - {fileID: 114131023586335592}
+  - {fileID: 114730691215335766}
+  - {fileID: 114918168047121858}
+  - {fileID: 114162837933287292}
+  - {fileID: 114030439423380738}
+  - {fileID: 114777011688867350}
+  - {fileID: 114567812343068652}
+  CharacterImage: {fileID: 0}
+--- !u!114 &114731382288893390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f62fd303fe32d84d939ad01a51f9fdb, type: 3}
+  m_Name: NPC 3
+  m_EditorClassIdentifier: 
+  Name: NPC 3
+  Text: 
+  UID: f64505b7-49c0-4184-aaa8-cbbe4f24fbd8
+  CharacterName: NPC 3
+  CallingNodeData: {fileID: 114731382288893390}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe: []
+  DataIconnectedTo:
+  - {fileID: 114931276159335332}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 0
+  OverrideStartTime: 0
+  NodeDataInMyChain:
+  - {fileID: 114394597818660324}
+  - {fileID: 114495604420990614}
+  - {fileID: 114931276159335332}
+  - {fileID: 114731382288893390}
+  - {fileID: 114424824299397132}
+  - {fileID: 114454061244250058}
+  - {fileID: 114342406280541818}
+  CharacterImage: {fileID: 0}
+--- !u!114 &114737929337905804
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 47_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 47_Dialogue
+  Text: thank you sir, goodbye
+  UID: 2684e508-7a16-48cd-96ce-46c1e2e0cb7b
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114536816127278286}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 2.5984225
+  RealtimeDelay: 0
+  StartTime: 5.9440255
+  DurationSum: 6.9440255
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114750165044232858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 17_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 17_Dialogue
+  Text: which tier potions would you like ?
+  UID: e04e012b-2a8e-4c01-a28d-8b1cd6a247b1
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114323313281394890}
+  DataIconnectedTo:
+  - {fileID: 114848196261194716}
+  Duration: 1
+  Delay: 1.9242371
+  RealtimeDelay: 0
+  StartTime: 6.8333154
+  DurationSum: 7.8333154
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114754964549675944
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 20_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 20_Dialogue
+  Text: give me the God tier
+  UID: 3ebcd942-defd-40fa-89fc-f5f68cf64766
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114598526335434246}
+  DataIconnectedTo:
+  - {fileID: 114723206700001338}
+  Duration: 1
+  Delay: 1.5590534
+  RealtimeDelay: 0
+  StartTime: 7.893819
+  DurationSum: 8.893819
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114777011688867350
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86362742d6c0d284f9349e0245004411, type: 3}
+  m_Name: NPC 1 First Route
+  m_EditorClassIdentifier: 
+  Name: NPC 1 First Route
+  Text: 
+  UID: 69593acf-a7a0-45e9-8aaf-32ca8b91e2a8
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114567812343068652}
+  DataIconnectedTo:
+  - {fileID: 114030439423380738}
+  - {fileID: 114119596915019474}
+  - {fileID: 114483268056566664}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 2.7714102
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 1
+  OverrideStartTime: 0
+  RouteID: 0
+  TempRouteID: 0
+  LinkedRoute: {fileID: 0}
+  AutoSwitchValue: 0
+  RoutesLinkedToMe:
+  - {fileID: 114519706662432862}
+  AlternativeRouteTitles: []
+  UseAlternativeRouteTitles: 0
+--- !u!114 &114797043918907696
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 45_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 45_Dialogue
+  Text: okay, see you later
+  UID: 8d162151-ee37-4c2a-9a36-dab038b5d48e
+  CharacterName: NPC 2
+  CallingNodeData: {fileID: 114918251042600018}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114491649697734862}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 1.7275997
+  RealtimeDelay: 0
+  StartTime: 3.7275996
+  DurationSum: 4.7275996
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114798611925012922
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 13_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 13_Dialogue
+  Text: one moment
+  UID: efcd7fcf-6940-4724-abe7-b35154ec6c99
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114519706662432862}
+  DataIconnectedTo:
+  - {fileID: 114110616331358532}
+  Duration: 1
+  Delay: 2.1595488
+  RealtimeDelay: 0
+  StartTime: 4.3140497
+  DurationSum: 5.3140497
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114815544691476182
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c8dd975dbe0cf1489594b86179f85ba, type: 3}
+  m_Name: 3_Action
+  m_EditorClassIdentifier: 
+  Name: 3_Action
+  Text: waves
+  UID: 396a2972-23d0-48e5-8f69-7f0bdf186020
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114156549573840928}
+  DataIconnectedTo:
+  - {fileID: 114551209681519314}
+  Duration: 1
+  Delay: 0.14045528
+  RealtimeDelay: 0
+  StartTime: 0.14045528
+  DurationSum: 1.1404552
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  ActionName: 
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114848196261194716
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86362742d6c0d284f9349e0245004411, type: 3}
+  m_Name: 18_Route
+  m_EditorClassIdentifier: 
+  Name: 18_Route
+  Text: 
+  UID: cb07ddab-5c48-4b42-abe8-8b344b2d704e
+  CharacterName: NPC 1
+  CallingNodeData: {fileID: 114156549573840928}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114750165044232858}
+  DataIconnectedTo:
+  - {fileID: 114698310041046166}
+  - {fileID: 114204130114630714}
+  - {fileID: 114705290600540810}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 9.01304
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 0
+  OverrideStartTime: 0
+  RouteID: 0
+  TempRouteID: 0
+  LinkedRoute: {fileID: 114598526335434246}
+  AutoSwitchValue: 0
+  RoutesLinkedToMe: []
+  AlternativeRouteTitles: []
+  UseAlternativeRouteTitles: 0
+--- !u!114 &114882067989828320
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 29_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 29_Dialogue
+  Text: Just a bit of fun
+  UID: c5d72d70-1f39-4d83-8aac-7ea64199483f
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114723206700001338}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114918168047121858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9f62813ceb95dd48802f541722e4a38, type: 3}
+  m_Name: NPC 2 Route
+  m_EditorClassIdentifier: 
+  Name: NPC 2 Route
+  Text: 
+  UID: 1dd9a9c8-1348-41a5-9fb9-2f9b7889a20f
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114567812343068652}
+  DataIconnectedTo:
+  - {fileID: 114557344617387848}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 1
+  OverrideStartTime: 0
+  Loop: 0
+  LoopValue: 0
+  loopRoute: {fileID: 0}
+  _iterationCount: 0
+--- !u!114 &114918251042600018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f62fd303fe32d84d939ad01a51f9fdb, type: 3}
+  m_Name: NPC 2
+  m_EditorClassIdentifier: 
+  Name: NPC 2
+  Text: 
+  UID: e1b63522-bc2e-4bfc-a0e5-8c4698ce2035
+  CharacterName: NPC 2
+  CallingNodeData: {fileID: 114918251042600018}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe: []
+  DataIconnectedTo:
+  - {fileID: 114289018501387026}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 0
+  OverrideStartTime: 0
+  NodeDataInMyChain:
+  - {fileID: 114491649697734862}
+  - {fileID: 114797043918907696}
+  - {fileID: 114918251042600018}
+  - {fileID: 114728617368608146}
+  - {fileID: 114407452439584152}
+  - {fileID: 114567421953640358}
+  - {fileID: 114289018501387026}
+  CharacterImage: {fileID: 0}
+--- !u!114 &114921223921821052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 61_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 61_Dialogue
+  Text: blah blah blah
+  UID: 452d76aa-fe15-46ef-a1be-4af1f193ff59
+  CharacterName: NPC 4
+  CallingNodeData: {fileID: 114698898737290762}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114698898737290762}
+  DataIconnectedTo:
+  - {fileID: 114642932959009284}
+  Duration: 1
+  Delay: 2.3877397
+  RealtimeDelay: 0
+  StartTime: 2.3877397
+  DurationSum: 3.3877397
+  useTime: 1
+  IsPlayer: 0
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 
+--- !u!114 &114931276159335332
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86362742d6c0d284f9349e0245004411, type: 3}
+  m_Name: 49_Route
+  m_EditorClassIdentifier: 
+  Name: 49_Route
+  Text: 
+  UID: bf26d9ae-907f-420c-a6c9-132989b86b09
+  CharacterName: NPC 3
+  CallingNodeData: {fileID: 114731382288893390}
+  EnvironmentName: 
+  Pass: 0
+  DataConnectedToMe:
+  - {fileID: 114731382288893390}
+  DataIconnectedTo:
+  - {fileID: 114454061244250058}
+  - {fileID: 114394597818660324}
+  Duration: 0
+  Delay: 0
+  RealtimeDelay: 0
+  StartTime: 0
+  DurationSum: 0
+  useTime: 0
+  IsPlayer: 0
+  OverrideStartTime: 0
+  RouteID: 0
+  TempRouteID: 0
+  LinkedRoute: {fileID: 0}
+  AutoSwitchValue: 0
+  RoutesLinkedToMe: []
+  AlternativeRouteTitles: []
+  UseAlternativeRouteTitles: 0
+--- !u!114 &114960640237830610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf1569bde5e9b2488d32c839a2baee5, type: 3}
+  m_Name: 22_Dialogue
+  m_EditorClassIdentifier: 
+  Name: 22_Dialogue
+  Text: Regular is fine
+  UID: aedf09b8-e3b9-401d-9f6e-10acc2bfedbe
+  CharacterName: Player
+  CallingNodeData: {fileID: 114730691215335766}
+  EnvironmentName: 
+  Pass: 1
+  DataConnectedToMe:
+  - {fileID: 114598526335434246}
+  DataIconnectedTo: []
+  Duration: 1
+  Delay: 2.163011
+  RealtimeDelay: 0
+  StartTime: 8.385412
+  DurationSum: 9.385412
+  useTime: 1
+  IsPlayer: 1
+  OverrideStartTime: 0
+  VoicedDialogue: {fileID: 0}
+  SoundEffect: {fileID: 0}
+  StoryboardImage: {fileID: 0}
+  Tag: 

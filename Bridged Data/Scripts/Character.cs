@@ -107,11 +107,12 @@ namespace DaiMangou.BridgedData
 
 
 
-            combi = self.NodeDataInMyChain.ToList();
+          var combi = self.NodeDataInMyChain.ToList();
             for (int i = 0; i < CommunicatingCharacters.Count; i++)
             {
                 combi = combi.Concat(CommunicatingCharacters[i].NodeDataInMyChain).ToList();
             }
+
 
 
             //  combi= combi.OrderBy(t => t.StartTime).ToList();
@@ -121,6 +122,7 @@ namespace DaiMangou.BridgedData
                 Characters.Add(character);
 
             Characters.Add(self);
+
 
             //  countlist = new List<int>();
             #region here we will populate the  ActiveChracterDalogueSet at runtime, unlike the NodeDataInMyChain list, this list will have all nodes ordered correctly for execution at runtime
@@ -690,7 +692,6 @@ namespace DaiMangou.BridgedData
         public CharacterNodeData self;
 
         public int targetChararacterIndex;
-        public List<NodeData> combi = new List<NodeData>();
 
         public string CachedUID = "";
     }

@@ -6,7 +6,9 @@ using UnityEngine;
 
 namespace DaiMangou.BridgedData
 {
-
+    /// <summary>
+    /// Representation of Route Node Dara
+    /// </summary>
     [Serializable]
     public class RouteNodeData : NodeData
     {

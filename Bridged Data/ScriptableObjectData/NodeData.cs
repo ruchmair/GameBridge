@@ -11,7 +11,7 @@ namespace DaiMangou.BridgedData
     //public class EvTrigger : UnityEvent<UnityEngine.Object> { }
 
     /// <summary>
-    ///  this is the base class data for the data od the nodes in your story.
+    ///  this is the base class data for the data of the nodes in your story.
     /// </summary>
     [Serializable]
     public class NodeData : ScriptableObject//, ISerializationCallbackReceiver
@@ -62,25 +62,48 @@ namespace DaiMangou.BridgedData
         /// the node data which this data is connected to
         /// </summary>
         public List<NodeData> DataIconnectedTo = new List<NodeData>();
+        /// <summary>
+        /// The type of node data
+        /// </summary>
         [HideInInspector]
-        ///the type of node data 
         public Type type;
+        /// <summary>
+        /// the duration of the node "playback"
+        /// </summary>
         [HideInInspector]
-        // the duration of the node "playback"
         public float Duration;
+        /// <summary>
+        /// This is the delay from the playback of the last nodeData behind this one
+        /// </summary>
         [HideInInspector]
         public float Delay;
+        /// <summary>
+        /// The actual delay time calculated dynamically (not yet setup)
+        /// </summary>
         [HideInInspector]
         public float RealtimeDelay;
+        /// <summary>
+        /// The real time in which the 
+        /// </summary>
         // [HideInInspector]
         public float StartTime;
+        /// <summary>
+        /// 
+        /// </summary>
         [HideInInspector]
         public float DurationSum;
+        /// <summary>
+        /// 
+        /// </summary>
         [HideInInspector]
         public bool useTime;
-
+        /// <summary>
+        /// a flag to check if the Data is a descendant of a character that is designated as the player
+        /// </summary>
         public bool IsPlayer;
-
+        /// <summary>
+        /// flas to check if node data that typically does not use timing is forced to use a start time , e.g RouteNodes
+        /// </summary>
         public bool OverrideStartTime;
 
 
@@ -136,6 +159,9 @@ namespace DaiMangou.BridgedData
 
         }
 
+      /// <summary>
+      /// Overridden in inheriting classes and usd to process specidfic datasets
+      /// </summary>
         public virtual void ProcessData()
         {
             // no longer necessary
@@ -152,8 +178,8 @@ namespace DaiMangou.BridgedData
         }
 
 
-
-        public void AddMeToThisList(List<NodeData> nodeDataList)
+        // No longer Used
+       /* public void AddMeToThisList(List<NodeData> nodeDataList)
         {
 
 
@@ -169,7 +195,7 @@ namespace DaiMangou.BridgedData
                 }
             }
 
-        }
+        }*/
 
     }
 }

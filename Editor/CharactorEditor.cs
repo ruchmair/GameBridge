@@ -128,7 +128,7 @@ namespace DaiMangou.GameBridgeEditor
                         selectedCharacter.gameObject.name = targetCharacter.CharacterName;
                         #endregion
 
-                        var tempNodeDataList = new List<StoryElement>();
+                      //  var tempNodeDataList = new List<StoryElement>();
 
                         // now we update or crreate the Reflected data gameobject if necessary
                         if (selectedCharacter.ReflectedDataSet.Count == 0)

@@ -101,11 +101,10 @@ namespace DaiMangou.BridgedData
                 var data = sceneData.FullCharacterDialogueSet[i];
 
 
-                // each n=NodeData in the combi already has their has value set when the data was first pushed to the Dialoguers SceneData scriptableObject so we just check the values
+                // each NodeData in the FullCharacterDialogueSet already has their pass values set when the data was first pushed to the Dialoguers SceneData scriptableObject so we just check the values
                 if (!data.Pass)
                 {
 
-                    //   countlist.Add(i);
                     // we want to ignore all character and environment nodes
                     if (data.type != typeof(CharacterNodeData) && data.type != typeof(EnvironmentNodeData))
                     {
@@ -176,7 +175,7 @@ namespace DaiMangou.BridgedData
 
             ActiveNodeData = sceneData.ActiveCharacterDialogueSet[ActiveIndex];
             // we call processData on the nodedata that is at ActiveInxex in the ActiveCharacterDialogueSet
-            ActiveNodeData.ProcessData();
+            //ActiveNodeData.ProcessData();
 
             // once there are no more routes processing events then we triger a refrsh
             if (BridgeData.ActiveEvents == 0)
